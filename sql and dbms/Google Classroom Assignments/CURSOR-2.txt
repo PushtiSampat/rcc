@@ -1,0 +1,132 @@
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      CURSOR-2.txt
+ * Copyright: 22-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a cursor to find all employess in Dept passed as a argument
+ *
+ * ========================================================== */
+
+
+===========================================
+
+DELIMITER //
+
+===========================================
+
+CREATE OR REPLACE TABLE emp_details(
+	emp_id INT(4) PRIMARY KEY AUTO_INCREMENT,
+	dept_id char (1)) //
+
+CREATE OR REPLACE TABLE dept_details(
+	dept_id CHAR (1),
+	dept_name VARCHAR (255)) //
+
+===========================================
+
+INSERT INTO emp_details VALUES
+	('', '2'),
+ 	('', '4'), 
+ 	('', '8'), 
+ 	('', '3'), 
+ 	('', '8') //
+
+INSERT INTO dept_details VALUES
+	(1, 'Analyst'),
+ 	(2, 'Coding'), 
+ 	(3, 'Programming'), 
+ 	(4, 'Designing'), 
+ 	(5, 'Senior Manager'),
+	(6 , 'Junior Manager'),	 
+	(7 , 'Assistant Manager'),
+	(8 , 'Tester') //
+
+===========================================
+
+SELECT * FROM emp_details //
+
++--------+---------+
+| emp_id | dept_id |
++--------+---------+
+|      1 | 2       |
+|      2 | 4       |
+|      3 | 8       |
+|      4 | 3       |
+|      5 | 8       |
++--------+---------+
+5 rows in set (0.001 sec)
+
+===========================================
+
+SELECT * FROM dept_details //
+
++---------+-------------------+
+| dept_id | dept_name         |
++---------+-------------------+
+| 1       | Analyst                  |
+| 2       | Coding                  |
+| 3       | Programming         |
+| 4       | Designing              |
+| 5       | Senior Manager      |
+| 6       | Junior Manager      |
+| 7       | Assistant Manager  |
+| 8       | Tester                   |
++---------+-------------------+
+8 rows in set (0.000 sec)
+
+
+===========================================
+
+CREATE OR REPLACE PROCEDURE fetch_emp_from_dept (IN dname varchar (255))
+BEGIN
+
+	DECLARE id INT (4);
+	
+	DECLARE fetching INT DEFAULT  1;
+
+	DECLARE dept_cursor CURSOR FOR SELECT e.emp_id FROM emp_details e JOIN 
+	dept_details d  ON e.dept_id = d.dept_id WHERE d.dept_name = dname;
+
+	DECLARE CONTINUE HANDLER  FOR NOT FOUND SET fetching = 0;
+		
+	OPEN dept_cursor;
+	
+		records : LOOP
+
+			fetch dept_cursor INTO id;
+			IF fetching = 0 THEN
+				LEAVE records;
+			END IF;
+			SELECT id as 'Emp Details';
+
+		END LOOP records;
+	
+	CLOSE dept_cursor;
+
+END //
+
+===========================================
+
+call fetch_emp_from_dept('Tester') //
+
+
++-------------+
+| Emp Details |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.001 sec)
+
++-------------+
+| Emp Details |
++-------------+
+|           5 |
++-------------+
+1 row in set (0.009 sec)
+
+Query OK, 0 rows affected (0.020 sec)
+
+===========================================
+

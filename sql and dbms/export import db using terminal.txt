@@ -1,0 +1,6 @@
+To export
+mysqldump -u mysql_user -p DATABASE_NAME > backup.sql
+
+
+To import
+mysql -u mysql_user -p DATABASE < backup.sql	

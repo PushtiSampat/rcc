@@ -1,0 +1,117 @@
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      CURSOR-1.txt
+ * Copyright: 22-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a cursor to fetch employee Details
+ *
+ * ========================================================== */
+
+DELIMITER //
+
+===========================================
+
+CREATE OR REPLACE TABLE employee_details(
+	emp_id INT(4) PRIMARY KEY AUTO_INCREMENT,
+	emp_name varchar (255),
+	emp_post varchar (255),
+	emp_salary DECIMAL (9, 2)) //
+
+===========================================
+
+INSERT INTO employee_details VALUES
+	('', 'Twisha' , 'Web Developer', 45000.12),
+ 	('', 'Lisa' , 'Programmer', 45948.45), 
+ 	('', 'Test', 'Senior Manager', 87895.25), 
+ 	('', 'Jack', 'Assistant Manager', 87945.26), 
+ 	('', 'John', 'System Analyst', 88552.00) //
+
+
+===========================================
+
+SELECT * FROM employee_details //
+
++--------+----------+-------------------+------------+
+| emp_id | emp_name | emp_post          | emp_salary |
++--------+----------+-------------------+------------+
+|      1 | Twisha   | Web Developer     |   45000.12 |
+|      2 | Lisa     | Programmer        |   45948.45 |
+|      3 | Test     | Senior Manager    |   87895.25 |
+|      4 | Jack     | Assistant Manager |   87945.26 |
+|      5 | John     | System Analyst    |   88552.00 |
++--------+----------+-------------------+------------+
+
+
+===========================================
+
+
+CREATE OR REPLACE procedure fetch_emp_records()
+BEGIN
+	DECLARE id INT (4);
+	DECLARE name varchar (255);
+	DECLARE post varchar (255);
+	DECLARE salary decimal (9, 2);
+	
+	DECLARE is_fetch_completed INT DEFAULT 0;
+	DECLARE emp_cursor CURSOR FOR SELECT * FROM employee_details;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET is_fetch_completed = 1;
+	
+	OPEN emp_cursor;
+	
+	fetch_emp_details : LOOP
+		FETCH emp_cursor INTO id, name, post, salary;
+		IF is_fetch_completed  = 1 THEN
+			LEAVE fetch_emp_details;
+		END IF;
+	SELECT CONCAT ('ID: ', id, ' || NAME: ', name, ' || POST: ' , post, ' || SALARY: ', salary) as 'Employee Details';
+	END LOOP fetch_emp_details;
+
+	CLOSE emp_cursor;
+END //
+
+
+===========================================
+
+call fetch_emp_records() //
+
++------------------------------------------------------------------+
+| Employee Details                                                              |
++------------------------------------------------------------------+
+| ID: 1 || NAME: Twisha || POST: Web Developer || SALARY: 45000.12 |
++------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
++-------------------------------------------------------------+
+| Employee Details                                            |
++-------------------------------------------------------------+
+| ID: 2 || NAME: Lisa || POST: Programmer || SALARY: 45948.45 |
++-------------------------------------------------------------+
+1 row in set (0.016 sec)
+
++-----------------------------------------------------------------+
+| Employee Details                                                |
++-----------------------------------------------------------------+
+| ID: 3 || NAME: Test || POST: Senior Manager || SALARY: 87895.25 |
++-----------------------------------------------------------------+
+1 row in set (0.028 sec)
+
++--------------------------------------------------------------------+
+| Employee Details                                                   |
++--------------------------------------------------------------------+
+| ID: 4 || NAME: Jack || POST: Assistant Manager || SALARY: 87945.26 |
++--------------------------------------------------------------------+
+1 row in set (0.036 sec)
+
++-----------------------------------------------------------------+
+| Employee Details                                                |
++-----------------------------------------------------------------+
+| ID: 5 || NAME: John || POST: System Analyst || SALARY: 88552.00 |
++-----------------------------------------------------------------+
+1 row in set (0.040 sec)
+
+Query OK, 0 rows affected (0.046 sec)
+
+===========================================
+

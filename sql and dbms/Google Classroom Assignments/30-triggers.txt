@@ -1,0 +1,400 @@
+NAME                      :  Ajinkya Rathod
+ROLL                    :  30
+
+
+====================================================================================
+QUESTION 1 : Write a TRIGGER that stores the old data TABLE of student TABLE in student_backup WHILE updating the student TABLE.  
+Student_backup (Stud_ID, Stud_name, Address, Contact_no, Branch, Operation_date) 
+Student (Stud_ID, Stud_name, Address, Contact_no, Branch)  
+====================================================================================
+
+CREATE TABLE student(
+	stud_id int(10),
+	stud_name varchar(20),
+	address varchar(100),
+	contact_no varchar(13),
+	branch varchar(10));
+
+INSERT INTO student values(1, 'Ajinkya', 'PLot 742', '9685479855', 'Analysis');
+
+CREATE OR REPLACE TABLE student_backup(
+	stud_id int(10),
+	stud_name varchar(20),
+	address varchar(20),
+	contact_no varchar(13),
+	branch varchar(10),
+	operation_date date);
+
+DELIMITER //
+CREATE OR REPLACE TRIGGER stud_UPDATE
+BEFORE UPDATE on student
+FOR EACH row
+BEGIN
+INSERT INTO student_backup values(old.stud_id,old.stud_name,old.address,old.contact_no,old.branch,curdate());
+END//
+
+***************************************
+Output:
+SELECT * from student_backup //
+Empty
+
+UPDATE student SET stud_name = 'Dev' WHERE stud_id = 1  //
+
+SELECT * from student_backup //
++---------+-----------+----------+------------+----------+----------------+
+| stud_id | stud_name | address  | contact_no | branch   | operation_date |
++---------+-----------+----------+------------+----------+----------------+
+|       1 | Ajinkya   | PLot 742 | 9685479855 | Analysis | 2020-05-15     |
++---------+-----------+----------+------------+----------+----------------+
+***************************************
+
+====================================================================================
+QUESTION 2 : Write a TRIGGER, that ensures the e_id of emp TABLE is in a format ‘E00001’ (e_id must start with ‘E’ and must be 6 characters long). 
+IF not, than complete e_id with this format BEFORE inserting INTO the employee TABLE. 
+====================================================================================
+
+DELIMITER //
+
+CREATE or REPLACE TRIGGER employee BEFORE INSERT on emp FOR EACH row
+BEGIN
+DECLARE len int;
+DECLARE temp varchar(6);
+DECLARE chr varchar(1);
+
+SET len=length(new.e_id);
+
+IF len>6 then
+signal sqlstate "45000"
+SET message_text="Max 6 ";
+ELSE
+SET chr=substr(new.e_id,1,1);
+IF chr="E" then
+SET temp=substr(new.e_id,2);
+SET new.e_id="E";
+IF len=1 then
+SET new.e_id=concat(new.e_id,"00000");
+ELSEIF len=2 then
+SET new.e_id=concat(new.e_id,"0000",temp);
+ELSEIF len=3 then
+SET new.e_id=concat(new.e_id,"000",temp);
+ELSEIF len=4 then
+SET new.e_id=concat(new.e_id,"00",temp);
+ELSEIF len=5 then
+SET new.e_id=concat(new.e_id,"0",temp);
+ELSEIF len=6 then
+SET new.e_id=concat(new.e_id,temp);
+END IF;
+
+ELSE
+SET temp=new.e_id;
+SET new.e_id="E";
+
+IF len=1 then
+SET new.e_id=concat(new.e_id,"0000",temp);
+ELSEIF len=2 then
+SET new.e_id=concat(new.e_id,"000",temp);
+ELSEIF len=3 then
+SET new.e_id=concat(new.e_id,"00",temp);
+ELSEIF len=4 then
+SET new.e_id=concat(new.e_id,"0",temp);
+ELSEIF len=5 then
+SET new.e_id=concat(new.e_id,temp);
+ELSEIF len=6 then
+signal sqlstate "45000"
+SET message_text="InValid";
+
+END IF;
+END IF;
+END IF;
+END //
+
+
+
+***************************************
+OUTPUT :
+INSERT INTO emp values('','Prem',86000,1,2020/05/08) //
+
+***************************************
+
+==================================================================================
+QUESTION 3 : Write a TRIGGER which checks the age of employee WHILE inserting the record in emp TABLE. IF it is negative than generate the error and 
+display proper message
+==================================================================================
+
+
+DELIMITER //
+CREATE or REPLACE TRIGGER emp_age BEFORE INSERT on emp FOR EACH row
+BEGIN
+IF new.age<0 then
+signal sqlstate "45000"
+SET message_text="Age InValid";
+END IF;
+END //
+
+***************************************
+OUTPUT :
+INSERT INTO emp values('','Lol',10000, 3, NULL, -15) //
+ERROR 1644 (45000): Age InValid
+***************************************
+
+
+====================================================================================
+
+QUESTION 4 : Write a TRIGGER which converts the employee name in upper case
+IF it is inserted in any other case. 
+Change should be done BEFORE insertion only.  
+
+====================================================================================
+
+DELIMITER //
+CREATE or REPLACE TRIGGER emp_name BEFORE INSERT on emp FOR EACH row
+BEGIN
+DECLARE i int default 1;
+DECLARE len int;
+DECLARE ch varchar(1);
+DECLARE temp1 varchar(30);
+DECLARE temp2 varchar(30);
+
+SET len=length(new.e_name);
+
+WHILE i<=len do
+SET ch=substr(new.e_name,i,1);
+
+IF ascii(ch)>96 and ascii(ch)<123 then
+SET ch=chr(ascii(ch)-32);
+SET temp1=substr(new.e_name,1,i-1);
+SET temp2=substr(new.e_name,i+1);
+SET new.e_name=concat(temp1,ch,temp2);
+END IF;
+SET i=i+1;
+END WHILE;
+END //
+
+***************************************
+OUTPUT :
+
+INSERT INTO emp values('','Lol',10000, 3, NULL, 25) //
+
+SELECT * FROM emp //
++------+-----------------+-----------+---------+-----------------+------+
+| e_id | e_name          | e_salary  | dept_id | date_of_joining | age  |
++------+-----------------+-----------+---------+-----------------+------+
+16 | LOL             |  10006.00 |       3 | NULL            |   25 |
++------+-----------------+-----------+---------+-----------------+------+
+
+***************************************
+
+====================================================================================
+QUESTION 5 : WAT that stores the data of emp TABLE in emp_backup TABLE FOR every DELETE operation and store the old data FOR every UPDATE operation.  
+EMP(e_id, Empname, salary);  Emp_Backup(e_id,Empname,Date_of_operation,Type_of_operation (i.e.UPDATE or DELETE));  
+====================================================================================
+
+CREATE TABLE emp2(
+	e_id int(10),
+	empname varchar(10),
+	salary int(10));
+
+CREATE TABLE emp2_backup(
+	emppno int(10),
+	empname varchar(10),
+	date_of_operation date,
+	type_of_operation varchar(10));
+
+INSERT INTO emp values
+(1,'Ajinkya',10000),
+(2,'Dev',20000),
+(3,'Lax',30000),
+(4,'Prad',40000),
+(5,'Neer',50000);
+
+SELECT * FROM emp //
+
+DELIMITER //
+CREATE or REPLACE TRIGGER emp_del BEFORE DELETE on emp2 FOR EACH row
+BEGIN
+INSERT INTO emp2_backup values(old.e_id,old.empname,sysdate(),"DELETE");
+END //
+
+DELIMITER //
+CREATE or REPLACE TRIGGER emp_UPDATE BEFORE UPDATE on emp2 FOR EACH row
+BEGIN
+INSERT INTO emp2_backup values(old.e_id,old.empname,sysdate(),"UPDATE");
+END //
+
+***************************************
+OUTPUT :
+
+DELETE from emp2 where e_id=4 //
+
+UPDATE emp2 SET salary=45000 where e_id=1 //
+***************************************
+
+====================================================================================
+QUESTION 6 : WAT which display the message ‘Updating’,’Deleting’ or ’inserting’ when UPDATE, DELETE or INSERT operation is perFORmed on the 
+emp TABLE respectively.
+====================================================================================
+
+
+DELIMITER //
+CREATE TRIGGER emp_INSERT_res BEFORE INSERT ON emp  FOR EACH ROW
+BEGIN
+SIGNAL SQLSTATE '80000'
+SET MESSAGE_TEXT='inserting An EMP.';
+END //
+
+***************************************
+INSERT INTO emp values('', 'Jinal', 10000, 5, NULL, DEFAULT);
+ERROR 1644 (80000): inserting An EMP.
+***************************************
+
+
+DELIMITER //
+CREATE TRIGGER emp_UPDATE_res BEFORE UPDATE ON emp  FOR EACH ROW
+BEGIN
+SIGNAL SQLSTATE '80000'
+SET MESSAGE_TEXT='Updating An EMP.';
+END //
+
+***************************************
+UPDATE emp SET e_salary=10000 where e_id=3 //
+ERROR 1644 (80000): updating An EMP.
+***************************************
+
+
+DELIMITER //
+CREATE TRIGGER emp_DELETE_res BEFORE DELETE ON emp  FOR EACH ROW
+BEGIN
+SIGNAL SQLSTATE '80000'
+SET MESSAGE_TEXT='Deleting An EMP.';
+END //
+
+***************************************
+DELETE from emp where e_id=1;
+ERROR 1644 (80000): deleting An EMP.
+***************************************
+
+====================================================================================
+QUESTION 7 : WAT which generate an error IF any user try to DELETE from product_master TABLE on weekENDs 
+(i.e. Saturday and Sunday).  
+====================================================================================
+
+CREATE TABLE product_master(
+	pno varchar(10),
+	pname varchar(10),
+	stock int(10)) //
+
+INSERT INTO product_master values
+('p01','usb',10),
+('p02','lappi',15),
+('p03','pen drive',20) //
+
+
+DELIMITER //
+CREATE or REPLACE TRIGGER pro_del BEFORE DELETE on product_master FOR EACH row
+BEGIN
+DECLARE day int;
+SET day = dayofweek(curdate());
+IF day = 1 or day = 7 then
+signal sqlstate "45000"
+SET message_text="DELETE NOT PSSIBLE";
+END IF;
+END //
+
+
+***************************************
+DELETE from product_master where p_id="p01";
+ERROR 1644 (45000): DELETE NOT PSSIBLE 
+***************************************
+
+
+========================================================================================
+QUESTION 8 : We have two TABLEs student_mast and stu_log. student_mast have three column  STUDENT_ID, NAME, ST_CLASS. stu_log TABLE has 
+two columns user_id and description. WAT which INSERTs the student details in stu_log TABLE as soon as we promote the students in
+student master TABLE( e.g. when a student is promoted from sem 2 to 3, auto entry in log TABLE)
+====================================================================================
+
+CREATE TABLE stud_master(
+	student_id int PRIMARY KEY,
+	name varchar(255),
+	class int) //
+
+CREATE TABLE stud_log(
+	user_id int,
+	description varchar(255)) //
+
+INSERT INTO stud_master values(
+	1,'Ajinkya',2), 
+	(2,'Nirav',6) //
+
+DELIMITER //
+CREATE TRIGGER stud_log BEFORE UPDATE ON stud_master  FOR EACH ROW
+BEGIN
+DECLARE DES VARCHAR(255) DEFAULT ' ';
+DECLARE SID INT;
+DECLARE SEM_NEW INT;
+DECLARE SEM_OLD INT;
+SET SEM_OLD=OLD.CLASS;
+SET SEM_NEW =SEM_OLD +1;
+SET DES= CONCAT('student is promoted from sem ',SEM_OLD,'to',SEM_NEW,DES);
+SET SID=OLD.STUDENT_ID;
+INSERT INTO STUD_LOG VALUES(SID,DES);
+END//
+
+
+***************************************
+OUTPUT:
+UPDATE stud_master SET class=class + 1 where student_id = 1 //
+
++---------+------------------------------------+
+| user_id | description                        |
++---------+------------------------------------+
+|       1 | student is promoted from sem 2to3  |
++---------+------------------------------------+
+***************************************
+
+====================================================================================
+QUESTION 9 : WAT to calculate the Income Tax amount and INSERT it in emp TABLE. EMP(emp_no,emp_name, emp_income, income_tax);  
+
+IF emp_income <100000 and >=50000 then incometax = 10% 
+IF emp_income <200000 and >=100000 then incometax = 15%  
+IF emp_income <300000 and >=200000 then incometax = 20% 
+====================================================================================
+
+CREATE TABLE emp3(
+	e_id int(10),
+	empname varchar(20),
+	salary int(10),
+	income_tax decimal(6,2));
+
+DELIMITER //
+CREATE or REPLACE TRIGGER emp3_tax BEFORE INSERT on emp3 FOR EACH row
+BEGIN
+IF new.salary<100000 and new.salary >=50000 then
+SET new.income_tax=(new.salary*10)/100;
+ELSEIF new.salary<200000 and new.salary >=100000 then
+SET new.income_tax=(new.salary*15)/100;
+ELSEIF new.salary<300000 and new.salary >=200000 then
+SET new.income_tax=(new.salary*20)/100;
+ELSE
+SET new.income_tax="0";
+END IF;
+
+END //
+
+
+***************************************
+OUTPUT :
+INSERT INTO emp3(e_id,empname,salary) values(1,'Thindi',60000),(2,'Thindo',78110000) //
+SELECT * FROM emp3 //
+
++------+---------+----------+------------+
+| e_id | empname | salary   | income_tax |
++------+---------+----------+------------+
+|    1 | Thindi  |    60000 |    6000.00 |
+|    2 | Thindo  | 78110000 |       0.00 |
++------+---------+----------+------------+
+***************************************
+
+
+
+==================================================================================**
