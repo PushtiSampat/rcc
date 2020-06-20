@@ -1,0 +1,76 @@
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class ArrayContainer
+{
+	int array[30],n;
+public:
+	void getdata()
+	{
+	int i=0;
+
+		cout<<"\n Enter n:";
+		cin>>n;
+		for(i=0;i<n;i++)
+		{
+			cout<<"\n Enter number:";
+			cin>>array[i];
+		}
+
+	}
+	void display()
+-	{
+		int i=0;
+		for(i=0;i<n;i++)
+		{
+			cout<<"\n Enter number is:"<<array[i];
+		}
+	}
+
+	
+	void operator *(int val)
+	{
+		int res,i=0;
+		for(i=0;i<n;i++)
+		{
+		   array[i] = array[i] * val;
+		}
+		
+		for(i=0;i<n;i++)
+		{
+			cout<<"\n value is:"<<array[i];
+		}
+	}
+};
+
+void main()
+{
+	ArrayContainer array1;
+	
+
+	array1.getdata();
+	array1.display();
+
+	array1*(2);
+	array1.display();
+
+	getch();
+
+}
+
+=================
+Output
+=================
+ Enter n:2
+
+ Enter number:10
+
+ Enter number:20
+
+ Enter number is:10
+ Enter number is:20
+ value is:20
+ value is:40
+ Enter number is:20
+ Enter number is:40

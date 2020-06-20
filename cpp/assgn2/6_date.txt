@@ -1,0 +1,419 @@
+#include<iostream>
+#include<string>
+#include<conio.h>
+using namespace std;
+
+class Date
+{
+	int month,day,year;
+public:
+	void getdate()
+	{
+		cout<<"\n Enter Date:";
+		cin>>day>>month>>year;
+	}
+	void display()
+	{
+		cout<<"\n Date is:"<<day<<'/'<<month<<'/'<<year;
+	}
+
+	void operator +(int tday)
+	{
+		day=day + tday;
+		
+		while(day>30)
+		{
+			day=day-30;
+			month++;
+			if(month>12)
+			{
+				month=1;
+				year++;
+			}
+		}
+	}
+
+	void operator -(int tday)
+	{
+		day=day - tday;
+		
+		while(day<0)
+		{
+			month--;
+			if(month==0)
+			{
+				month=12;
+				year--;
+			}
+			day=30+day;			
+		}
+	}
+	
+	int operator >(Date d2)
+	{
+		int flag=0;
+		
+		if(year>d2.year)
+		{
+			flag=1;
+		
+		}
+		else if(year==d2.year)
+		{
+			if(month>d2.month)
+			{
+				flag=1;
+			}
+			else if(month==d2.month)
+			{
+				if(day>d2.day)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+
+	int operator <(Date d2)
+	{
+		int flag=0;
+		
+		if(year<d2.year)
+		{
+			flag=1;
+		
+		}
+		else if(year==d2.year)
+		{
+			if(month<d2.month)
+			{
+				flag=1;
+			}
+			else if(month==d2.month)
+			{
+				if(day<d2.day)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+	int operator >=(Date d2)
+	{
+		int flag=0;
+		
+		if(year>d2.year)
+		{
+			flag=1;
+		
+		}
+		else if(year==d2.year)
+		{
+			if(month>d2.month)
+			{
+				flag=1;
+			}
+			else if(month==d2.month)
+			{
+				if(day>=d2.day)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+	
+	int operator <=(Date d2)
+	{
+		int flag=0;
+		
+		if(year<d2.year)
+		{
+			flag=1;
+		
+		}
+		else if(year==d2.year)
+		{
+			if(month<d2.month)
+			{
+				flag=1;
+			}
+			else if(month==d2.month)
+			{
+				if(day<=d2.day)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+	void operator ++()
+	{
+		Date d1;
+		if(day==30)
+		{
+			day=1;
+			if(month==12)
+			{
+				month=1;
+				year++;
+			}
+			else 
+				month++;
+		}
+		else
+		{
+			day++;
+		}
+
+	}
+	
+	void operator --()
+	{
+
+		if(day==1)
+		{
+			day=30;
+			if(month==1)
+			{
+				month=12;
+				year--;
+			}
+			else 
+				month--;
+		}
+		else
+		{
+			day--;
+		}
+
+	}
+};
+
+void main()
+{
+	int day,res,flag=0,ch;
+	char ch2='n';
+
+	Date d1,d2;
+	
+	cout<<"\n----------------------";
+	cout<<"\n 1.Addition(+) of Days";
+	cout<<"\n 2.Subtraction(-) of Days";
+	cout<<"\n 3.chack two date (>)";
+	cout<<"\n 4.chack two date (>=)";
+	cout<<"\n 5.chack two date (<)";
+	cout<<"\n 6.chack two date (<=)";
+	cout<<"\n 7.Increment date (++)";
+	cout<<"\n 8.Decrement date (--)";
+	cout<<"\n----------------------";
+
+	do
+	{
+	
+	cout<<"\n\n Enter Your choice:";
+	cin>>ch;
+
+	switch(ch)
+	{
+		case 1:	d1.getdate();
+				cout<<"\n Add Number of days:";
+				cin>>day;
+	
+				d1+(day);
+				cout<<"\n\n Date After Adding "<<day<<"into date ";
+				cout<<"\n---------------------------------------";
+				d1.display();
+				break;
+
+		case 2: d1.getdate();
+				cout<<"\n Subtract Number of days:";
+				cin>>day;
+	
+				d1-(day);
+				cout<<"\n\n Date After Subtracting "<<day<<"into date ";
+				cout<<"\n---------------------------------------";
+				d1.display();
+				break;
+		
+		case 3: d1.getdate();
+			  	d2.getdate();
+
+				res=d1>d2;
+				if(res==1)
+				{
+					cout<<"Date1 is greter.";
+				}
+				else
+				{
+					cout<<"Date1 is not greter.";
+				}
+				break;
+		
+		case 4: d1.getdate();
+			  	d2.getdate();
+
+				res=d1>=d2;
+				if(res==1)
+				{
+					cout<<"Date1 is greter.";
+				}
+				else
+				{
+					cout<<"Date1 is not greter.";
+				}
+				break;
+
+	   	case 5: d1.getdate();
+			  	d2.getdate();
+
+				res=d1<d2;
+				if(res==1)
+				{
+					cout<<"Date2 is greter.";
+				}
+				else
+				{
+					cout<<"Date2 is not greter.";
+				}
+				break;
+		
+		case 6: d1.getdate();
+			  	d2.getdate();
+
+				res=d1<=d2;
+				if(res==1)
+				{
+					cout<<"Date is greter.";
+				}
+				else
+				{
+					cout<<"Date is not greter.";
+				}
+				break;
+	
+		case 7: d1.getdate();
+				d1++;
+				d1.display();
+				break;
+		
+		case 8: d1.getdate();
+				d1--;
+				d1.display();
+				break;
+	
+	}
+	
+	cout<<"\n Do You Want to continue:";
+	cin>>ch2;
+
+	}while(ch2=='y' || ch2=='y');
+
+
+
+
+	getch();
+}
+
+========================
+	Output
+========================
+
+----------------------
+ 1.Addition(+) of Days
+ 2.Subtraction(-) of Days
+ 3.chack two date (>)
+ 4.chack two date (>=)
+ 5.chack two date (<)
+ 6.chack two date (<=)
+ 7.Increment date (++)
+ 8.Decrement date (--)
+----------------------
+
+ Enter Your choice:1
+
+ Enter Date:5 2 2019
+
+ Add Number of days:375
+
+
+ Date After Adding 375into date
+---------------------------------------
+ Date is:20/2/2020
+ Do You Want to continue:y
+
+
+ Enter Your choice:2
+
+ Enter Date:5 1 2019
+
+ Subtract Number of days:25
+
+
+ Date After Subtracting 25into date
+---------------------------------------
+ Date is:10/12/2018
+ Do You Want to continue:y
+
+
+ Enter Your choice:3
+
+ Enter Date:5 2 2018
+
+ Enter Date:1 2 2018
+Date1 is greter.
+ Do You Want to continue:y
+
+
+ Enter Your choice:4
+
+ Enter Date: 4 5 2019
+
+ Enter Date:4 5 2019
+Date1 is greter.
+ Do You Want to continue:y
+
+
+ Enter Your choice:5
+
+ Enter Date:5 4 2019
+
+ Enter Date:1 2 2018
+Date2 is not greter.
+ Do You Want to continue:y
+
+
+ Enter Your choice:7
+
+ Enter Date:30 12 2019
+
+ Date is:1/1/2020
+ Do You Want to continue:y
+
+
+ Enter Your choice:8
+
+ Enter Date:1 1 2019
+
+ Date is:30/12/2018
+ Do You Want to continue:n

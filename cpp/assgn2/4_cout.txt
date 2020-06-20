@@ -1,0 +1,47 @@
+#include<iostream>
+#include<string>
+#include<conio.h>
+using namespace std;
+
+class student
+{
+	int rollno;
+	string name;
+	public:
+		
+		friend ostream & operator <<(ostream & tempout, student & s)
+		{
+			tempout << "\n Roll number is: " << s.rollno << "\n";
+			tempout << "Name is: " << s.name << "\n";  
+			
+			return tempout; 
+		} 
+		friend istream & operator >>(istream & tempin,student & s)
+		{
+			cout<<"Enter Roll no:";
+			tempin>>s.rollno;
+			cout<<"Enter Name:";
+			tempin>>s.name;
+			
+			return tempin;
+		}
+
+};
+
+void main()
+{
+	student s1;
+	
+	cin>>s1;
+	cout<<s1;
+	getch();
+}
+
+===================
+Output
+===================
+Enter Roll no:1
+Enter Name:shivangi
+
+ Roll number is: 1
+Name is: shivangi

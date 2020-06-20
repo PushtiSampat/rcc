@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<iomanip>
+#include<string>
+using namespace std;
+
+ostream & convert(ostream & pout)
+{
+		pout<<setw(5)<<setprecision(5)<<setfill('+')<<setiosflags(ios::right);
+		return pout;
+}
+	
+void main()
+{
+
+	float amt;
+	cout<<"\n Enter Amount:";
+	cin>>amt;
+	cout<<convert;
+	cout<<amt;
+	
+	getch();
+}
+
+/*
+
+ Enter Amount:1.2
+	++1.2
+*/

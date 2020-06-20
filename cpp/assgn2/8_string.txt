@@ -1,0 +1,304 @@
+/*
+
+8) Write a menu driven program that can perform the following functions on
+strings. (Use overloaded operators where possible).(Do not use predefined
+string class)
+1. Compare two strings for equality (== operator)
+2. Check whether first string is smaller than the second (<= operator)
+3. Copy the string to another
+4. Extract a character from the string (Overload [])
+5. Reverse the string
+6. Concatenate two strings (+ operator)
+*/
+
+
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class String
+{
+	// string str; 
+	 char str[20];
+	 public:
+		 void getdata()
+		 {
+			cout<<"\n Enter String:";
+			cin.get(str,20);
+		 }
+		 
+		 void display()
+		 {
+			 int i=0;
+			cout<<"\n";
+			while(str[i]!='\0')
+			{
+				cout<<str[i];
+				i++;
+			}
+			
+		 }	 
+
+		 bool operator ==(String s2)
+		 {
+			 int i=0,j=0,flag=1;
+
+			while(str[i]!='\0' && s2.str[j]!='\0' && str[i]==s2.str[j])
+			{
+						i++;
+						j++;
+			}
+			if(str[i]=='\0' && s2.str[j]=='\0')
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+					
+			}
+				
+
+		 }
+
+		 bool operator <=(String s2)
+		 {
+			 int i=0,j=0,flag=1,res;
+			 cout<<str;
+			while(str[i]!='\0' && s2.str[j]!='\0' && str[i]==s2.str[j])
+			{
+						i++;
+						j++;
+			}
+			if(str[i]=='\0' && s2.str[j]=='\0')
+			{
+				return false;
+			}
+			else
+			{
+				res=str[i]-s2.str[j];
+				if(res<0)
+					return true;
+				else 
+					return false;
+			}
+				
+
+		 }
+
+		 void operator =(String s2)
+		 {
+			int i=0;
+			
+			while(s2.str[i]!='\0')
+			{
+				str[i]=s2.str[i];
+				i++;
+			}
+			str[i]='\0';
+
+		 }
+		 char operator [](int index)
+		 {
+			return str[index];
+		 }
+
+		 String operator +(String s2)
+		 {
+			 String str3;
+			 int i=0,j=0;
+
+			while(str[i]!='\0')
+			{
+				str3.str[i]=str[i];
+				i++;
+			}
+			while(s2.str[j]!='\0')
+			{
+				str3.str[i]=s2.str[j];
+				i++;
+				j++;
+			}
+			str3.str[i]='\0';
+			return str3;
+		 }
+
+		 int length(char str[20])
+		 {
+			
+			int len=0,i=0;
+			while(str[i]!='\0')
+			{
+				i++;
+				len++;
+			}
+			
+			return len;
+		 }
+		 void reverse()
+		 {
+			int i=0,j=0,len,temp;
+			len=length(str);
+
+			i=0;
+			j=len-1;
+			while(i!=(len/2))
+			{
+				temp=str[i];
+				str[i]=str[j];
+				str[j]=temp;
+				i++;
+				j--;
+			}
+
+		 }
+
+};
+
+void main()
+{
+	char ch,cont='n';
+	String s1,s2,s3;
+	bool res; 
+	int index,choice;
+	s1.getdata();
+	flushall();
+	s2.getdata();
+	cout<<"\n--------------------------------------";
+	cout<<"\n 1. Compare two strings for equality";
+	cout<<"\n 2. Check whether first string is smaller than the second";
+	cout<<"\n 3. Copy the string to another";
+	cout<<"\n 4. Extract a character from the string";
+	cout<<"\n 5. Reverse the string";
+	cout<<"\n 6. Concatenate two strings";
+	cout<<"\n--------------------------------------";
+	do
+	{
+		cout<<"\n Enter Your Choice:";
+		cin>>choice;
+
+	switch(choice)
+	{
+		case 1:	
+				
+				if(s1==s2)
+					cout<<"\n Both Strings Are Equal.";
+				else
+					cout<<"\n Both Strings Are Not Equal.";
+				break;
+		case 2:	
+				if(s1<=s2)
+					cout<<"\n First String is Smaller than Secound.";
+				else
+					cout<<"\n First String is Not Smaller than Secound.";
+				break;
+		case 3:
+				
+				s2=s1;
+				cout<<"\n-------------";
+				cout<<"\n Frist String";
+				cout<<"\n-------------\n";
+				s1.display();
+				cout<<"\n-------------";
+				cout<<"\n Secound String";
+				cout<<"\n-------------\n";
+				s2.display();
+				break;				
+		case 4:
+				
+				s1.reverse();
+				cout<<"\n---------------";
+				cout<<"\n Reverse String";
+				cout<<"\n---------------\n";
+				s1.display();
+				break;
+		case 5:
+				cout<<"\n Enter index:";
+				cin>>index;
+				ch=s1[index];
+				cout<<"character is:"<<ch;	
+				break;
+		case 6:
+				s3=s1+s2;
+				cout<<"\n --------";
+				cout<<"\n String:";
+				cout<<"\n --------\n";
+				s3.display();
+				break;
+	}
+		cout<<"\n\n Do You Want to Continue(y/n)";
+		cin>>cont;
+	}while(cont=='Y' || cont=='y');
+
+	getch();
+}
+
+
+/*
+
+ Enter String:Rollwala
+
+ Enter String:DCSGU
+
+--------------------------------------
+ 1. Compare two strings for equality
+ 2. Check whether first string is smaller than the second
+ 3. Copy the string to another
+ 4. Extract a character from the string
+ 5. Reverse the string
+ 6. Concatenate two strings
+--------------------------------------
+ Enter Your Choice:1
+
+ Both Strings Are Not Equal.
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:2
+Rollwala
+ First String is Not Smaller than Secound.
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:3
+
+-------------
+ Frist String
+-------------
+
+Rollwala
+-------------
+ Secound String
+-------------
+
+Rollwala
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:4
+
+---------------
+ Reverse String
+---------------
+
+alawlloR
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:5
+
+ Enter index:2
+character is:a
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:6
+
+ --------
+ String:
+ --------
+
+alawlloRRollwala
+
+ Do You Want to Continue(y/n)
+*/

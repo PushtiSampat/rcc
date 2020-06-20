@@ -1,0 +1,122 @@
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class Matrix
+{
+	int matrix[10][10];
+
+public:
+	Matrix(){}
+
+	void input()
+	{
+		for(int i=0;i<2;i++)
+		{
+			for(int j=0;j<2;j++)
+			{
+				cout<<"\n Enter Value:";
+				cin>>matrix[i][j];
+			}
+		}
+		
+	}
+	void display()
+	{
+		for(int i=0;i<2;i++)
+		{
+			for(int j=0;j<2;j++)
+			{
+				cout<<"\n Value is:"<<matrix[i][j];
+				
+			}
+		}
+	}	
+
+
+	Matrix friend operator *(Matrix m4,int mul)
+	{
+		
+		for(int i=0;i<2;i++)
+		{
+			for(int j=0;j<2;j++)
+			{
+				m4.matrix[i][j]=mul * m4.matrix[i][j];
+				
+			}
+		}
+		return m4;
+	
+	}
+	
+	Matrix friend operator *(int mul,Matrix m4)
+	{
+		
+		for(int i=0;i<2;i++)
+		{
+			for(int j=0;j<2;j++)
+			{
+				m4.matrix[i][j]=mul * m4.matrix[i][j];
+				
+			}
+		}
+		return m4;
+	
+	}
+	
+};
+
+
+void main()
+{
+	Matrix m1,m2,m3;
+	cout<<"\n Enter Value for 2*2 matrix";
+	m1.input();
+	m1.display();
+	cout<<"\n ----------";
+	cout<<"\n Matrix*5";
+	cout<<"\n ----------";
+	m2=m1*5;
+	m2.display();
+	
+	cout<<"\n ----------";
+	cout<<"\n 5*Matrix";
+	cout<<"\n ----------";
+	m3=5*m1;
+	m3.display();
+	getch();
+}
+
+
+=============
+output
+=============
+
+ Enter Value for 2*2 matrix
+ Enter Value:1
+
+ Enter Value:2
+
+ Enter Value:3
+
+ Enter Value:4
+
+ Value is:1
+ Value is:2
+ Value is:3
+ Value is:4
+ ----------
+ Matrix*5
+ ----------
+ Value is:5
+ Value is:10
+ Value is:15
+ Value is:20
+ ----------
+ 5*Matrix
+ ----------
+ Value is:5
+ Value is:10
+ Value is:15
+ Value is:20
+

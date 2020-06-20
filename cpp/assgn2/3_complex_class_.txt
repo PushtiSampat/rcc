@@ -1,0 +1,220 @@
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class Complex
+{
+	int real;
+	float img;
+
+public:
+	Complex()
+	{
+		real=0;
+		img=0.0;
+	}
+	void getdata()
+	{
+		cout<<"\n Enter real no:";
+		cin>>real;
+		cout<<"\n Enter img no:";
+		cin>>img;
+	}
+	void display()
+	{
+		cout<<"\n Real Number is:"<<real;
+		cout<<"\n Img Number is:"<<img;
+	}
+
+	Complex operator +(Complex tmp)
+	{
+		Complex c1 ;
+		c1.real=real+tmp.real;
+		c1.img=img+tmp.img;
+
+		return (c1);
+	}
+	Complex operator -(Complex tmp)
+	{
+		Complex c1 ;
+		c1.real=real-tmp.real;
+		c1.img=img-tmp.img;
+
+		return (c1);
+	}
+	Complex operator *(Complex tmp)
+	{
+		Complex c1;
+		c1.real=real*tmp.real;
+		c1.img=img*tmp.img;
+
+		return (c1);
+	}
+	Complex operator ==(Complex tmp)
+	{
+		Complex c1;
+		
+		if(real==tmp.real)
+		{
+			c1.real=1;
+		}
+		if(img==tmp.img)
+		{
+			c1.img=1.0;
+		}
+
+		return (c1);
+	}
+	Complex operator !=(Complex tmp)
+	{
+		Complex c1;
+		
+		if(real!=tmp.real)
+		{
+			c1.real=1;
+		}
+		if(img!=tmp.img)
+		{
+			c1.img=1.0;
+		}
+
+		return (c1);
+	}
+	void operator =(Complex tmp)
+	{
+		
+		real=tmp.real;
+		img=tmp.img;
+	}
+};
+
+void main()
+{
+	Complex c1,c2,c3;
+
+	c1.getdata();
+	cout<<"\n ------------";
+	cout<<"\n object 1:";
+	cout<<"\n ------------";
+	c1.display();
+
+	c2.getdata();
+	cout<<"\n ------------";
+	cout<<"\n object 2:";
+	cout<<"\n ------------";
+	c2.display();
+
+	
+	cout<<"\n ------------";
+	cout<<"\n Addition:";
+	cout<<"\n ------------";
+	c3=c1+c2;
+	c3.display();
+	
+	cout<<"\n ------------";
+	cout<<"\n Subtraction:";
+	cout<<"\n ------------";
+	c3=c1-c2;
+	c3.display();
+	
+	cout<<"\n ------------";
+	cout<<"\n Multiplication:";
+	cout<<"\n ------------";
+	c3=c1*c2;
+	c3.display();
+
+
+	cout<<"\n ------------";
+	cout<<"\n Equal:";
+	cout<<"\n ------------";
+	c3=c1==c2;
+	c3.display();
+
+	cout<<"\n ------------";
+	cout<<"\n Not Equal:";
+	cout<<"\n ------------";
+	
+	c3=c1!=c2;
+	c3.display();
+	
+	cout<<"\n ------------";
+	cout<<"\n Assignment:";
+	cout<<"\n ------------";
+	
+	c1=c2;
+	cout<<"\n ------------";
+	cout<<"\n object 1:";
+	cout<<"\n ------------";
+	c1.display();
+	cout<<"\n ------------";
+	cout<<"\n object 2:";
+	cout<<"\n ------------";
+	
+	c2.display();
+	getch();
+
+}
+
+/*
+=================
+Output
+=================
+
+ Enter real no:10
+
+ Enter img no:20.10
+
+ ------------
+ object 1:
+ ------------
+ Real Number is:10
+ Img Number is:20.1
+ 
+ Enter real no:40
+
+ Enter img no:20.10
+
+ ------------
+ object 2:
+ ------------
+ Real Number is:40
+ Img Number is:20.1
+ ------------
+ Addition:
+ ------------
+ Real Number is:50
+ Img Number is:40.2
+ ------------
+ Subtraction:
+ ------------
+ Real Number is:-30
+ Img Number is:0
+ ------------
+ Multiplication:
+ ------------
+ Real Number is:400
+ Img Number is:404.01
+ ------------
+ Equal:
+ ------------
+ Real Number is:0
+ Img Number is:1
+ ------------
+ Not Equal:
+ ------------
+ Real Number is:1
+ Img Number is:0
+ ------------
+ Assignment:
+ ------------
+ ------------
+ object 1:
+ ------------
+ Real Number is:40
+ Img Number is:20.1
+ ------------
+ object 2:
+ ------------
+ Real Number is:40
+ Img Number is:20.1
+ */

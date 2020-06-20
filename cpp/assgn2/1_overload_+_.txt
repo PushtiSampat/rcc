@@ -1,0 +1,41 @@
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class Addition 
+{
+	int num;
+public:
+	void getdata()
+	{
+		cout<<"\n Enter value:";
+		cin>>num;
+	}
+
+	void display()
+	{
+		cout<<"\n Value is:"<<num;
+	}
+	
+	Addition operator +(Addition tmp)
+	{
+
+		tmp.num = tmp.num+ num;
+		return tmp;
+	}
+
+};
+
+void main()
+{
+	Addition no1,no2,no3;
+	no1.getdata();
+	no1.display();
+	no2.getdata();
+	no2.display();
+
+	no3=no1+no2;
+	no3.display();
+	getch();
+	
+}

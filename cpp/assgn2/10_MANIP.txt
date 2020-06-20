@@ -1,0 +1,166 @@
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<iomanip>
+#include<string>
+using namespace std;
+
+namespace A
+{
+		ostream & PrintLine(ostream & pout)
+		{
+			pout<<"\n----------------------------------------------------------------------------------------------------"<<endl;
+			return pout;
+		}
+}
+
+class Marksheet
+{
+
+	string sub[3],mark_type[3],course_name;
+	int marks[3][3];
+public:
+	Marksheet()
+	{
+		mark_type[0] = "Term Work";
+		mark_type[1] = "Sessional-1";
+		mark_type[2] = "Sessional-2";
+		sub[0]="Advanced Programming";
+		sub[1]="Object Oriented Programming";
+		sub[2]="Database Management System";
+	}
+	void Input()
+	{
+		int j=0,i=0;
+
+		
+		cout<<"\n Enter Course Name:";
+		getline(cin,course_name);
+				
+		for(i=0;i<3;i++)
+		{
+			cout<<"\n" <<sub[i];
+			cout<<"\n------------------------";
+			for(j=0;j<3;j++)
+			{
+				cout<<"\n Enter " <<mark_type[j]<<" Marks:";
+				cin>>marks[i][j];
+			}
+		}
+
+	}
+	void Display()
+	{
+		int j=0,i=0;
+		
+		cout<<"\n Course Name :"<<course_name;
+		
+		for(i=0;i<3;i++)
+		{
+			cout<<"\n" <<sub[i];
+			cout<<"\n------------------------";
+			for(j=0;j<3;j++)
+			{
+				cout<<"\n Enter " <<mark_type[j]<<" Marks :"<<marks[i][j];
+			}
+		}
+	}
+
+	void PrintMarksheet()
+	{
+		int i,j,sum[3],tot=0;
+
+		cout.width(60);
+		cout.fill(' ');
+		cout<<"GUJRAT UNIVERSITY";
+		
+		cout<<A::PrintLine;
+		
+		//cout<<setw(20);
+		cout.width(70);
+		cout.fill(' ');
+		cout.setf(ios::internal);
+		
+		cout<<course_name;
+		cout.width(30);
+		cout.fill(' ');
+		cout<<"|";
+		cout<<A::PrintLine;
+
+		cout<<setw(30)<<"Subject Name"<<setw(20)<<setiosflags(ios::right)<<setfill(' ')<<mark_type[0]<<setw(15)<<setfill(' ')<<mark_type[1]<<setw(20)<<setfill(' ')<<mark_type[2]<<setw(10)<<setfill(' ')<<"Total"<<setw(5)<<setfill(' ')<<"|";
+		cout<<A::PrintLine;
+		for(i=0;i<3;i++)
+		{			
+			for(j=0;j<1;j++)
+			{
+				sum[i]=marks[i][j]+marks[i][j+1]+marks[i][j+2];
+				cout<<"\n"<<setw(30)<<sub[i]<<setw(20)<<marks[i][j]<<setw(15)<<marks[i][j+1]<<setw(20)<<marks[i][j+2]<<setw(10)<<sum[i]<<setw(5)<<setfill(' ')<<"|";
+			}
+		}
+		
+		for(i=0;i<3;i++)
+		{
+			tot=tot+sum[i];
+		}
+		cout<<A::PrintLine;
+		cout<<setw(40)<<setfill(' ')<<"Percentage is:"<<((tot*100)/900)<<setw(55)<<setfill(' ')<<tot<<setw(2)<<setfill(' ')<<"|";;
+		cout<<A::PrintLine;
+		
+	}
+
+};
+
+	
+void main()
+{
+	Marksheet m1;
+	m1.Input();
+	//m1.Display();
+	m1.PrintMarksheet();
+	getch();
+}
+
+===========================
+OUTPUT
+===========================
+
+ 
+ Enter Course Name:MASTER OF COMPUTER APPLICATIONS
+
+Advanced Programming
+------------------------
+ Enter Term Work Marks:45
+
+ Enter Sessional-1 Marks:78
+
+ Enter Sessional-2 Marks:56
+
+Object Oriented Programming
+------------------------
+ Enter Term Work Marks:66
+
+ Enter Sessional-1 Marks:67
+
+ Enter Sessional-2 Marks:89
+
+Database Management System
+------------------------
+ Enter Term Work Marks:57
+
+ Enter Sessional-1 Marks:54
+
+ Enter Sessional-2 Marks:56
+                                           GUJRAT UNIVERSITY
+----------------------------------------------------------------------------------------------------
+                                       MASTER OF COMPUTER APPLICATIONS                             |
+----------------------------------------------------------------------------------------------------
+                  Subject Name           Term Work    Sessional-1         Sessional-2     Total    |
+----------------------------------------------------------------------------------------------------
+
+          Advanced Programming                  45             78                  56       179    |
+   Object Oriented Programming                  66             67                  89       222    |
+    Database Management System                  57             54                  56       167    |
+----------------------------------------------------------------------------------------------------
+                          Percentage is:63                                                    568 |
+----------------------------------------------------------------------------------------------------
+
