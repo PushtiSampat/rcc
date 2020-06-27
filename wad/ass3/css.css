@@ -1,0 +1,38 @@
+* {
+	font-family: 'Verdana';
+	box-sizing: border-box;
+}
+input[type = text], input[type = number], button, select {
+	font-size: 18pt;
+}
+tr{
+	border-right: none;
+	border-left: none;
+	border-bottom: none;
+	border-top: none;
+}
+td {
+	border-left: none;
+	border-top: none;
+	padding: 10px;
+}
+td:hover{
+	background-color: #ddd;
+	cursor: pointer;
+}
+.rst {
+	background-color: red;
+	color: white;
+}
+.sbt {
+	background-color: green;
+	color: white;
+	font-size: 15pt;
+}
+.text-center {
+	text-align: center;
+}
+
+table {
+	border: 1px solid grey;
+}
