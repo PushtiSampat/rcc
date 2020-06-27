@@ -1,3 +1,9 @@
+
+
+// =========================================================
+// Q4: Rectangle Starts
+
+
 #include<iostream>
 
 using namespace std;
@@ -56,3 +62,9 @@ int main()
 
 	return 0;
 }
+
+
+
+// Q4: Rectangle Ends
+// =========================================================
+

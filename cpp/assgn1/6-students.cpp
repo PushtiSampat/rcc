@@ -1,3 +1,9 @@
+
+
+
+// =========================================================
+// Q6: Students, Mca2 Starts
+
 #include <iostream>
 #include <new> //nothrow
 #include <string>
@@ -230,3 +236,9 @@ int main ()
     return 0;
 
 }
+
+
+
+// Q6: Student, mca2 Starts
+// =========================================================
+

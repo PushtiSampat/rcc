@@ -1,0 +1,87 @@
+Roll No    :6
+Name       :Chotaliya Shivangi Dilipbhai
+Class	   :MCA-2
+Subject    :Object Oriented Concepts & Programming 
+======================================================================================
+Definition :16) WAP to create namespace having function for total_marks. Show its use
+	  in class ‘marks’ of students, display total marks of subjects using namespace.
+======================================================================================
+
+#include<iostream>
+#include<conio.h>
+#include<string>
+using namespace std;
+
+namespace 
+{
+	int total(int marks[],int n)
+	{
+		int sum=0;
+
+		for(int i=0;i<n;i++)
+		{
+			sum=sum+marks[i];
+		}
+		return sum;
+	}
+}
+
+class Marks
+{
+	int rno,marks[5],sum;
+public:
+	void addmarks()
+	{
+		cout<<"\n Enter Roll no:";
+		cin>>rno;
+		for(int i=0;i<5;i++)
+		{
+			cout<<"\n Enter Marks:";
+			cin>>marks[i];
+		}
+	}
+
+	void display()
+	{
+		cout<<"\n Roll no is:"<<rno;
+		for(int i=0;i<5;i++)
+		{
+			cout<<"\n Marks is:"<<marks[i];
+		}
+		sum=total(marks,5);
+		cout<<"\n sum is:"<<sum;
+	}
+
+};
+
+void main()
+{
+	Marks m1;
+	m1.addmarks();
+	m1.display();
+	getch();
+}
+
+=============
+OUTPUT
+=============
+
+ Enter Roll no:1
+
+ Enter Marks:45
+
+ Enter Marks:56
+
+ Enter Marks:44
+
+ Enter Marks:52
+
+ Enter Marks:32
+
+ Roll no is:1
+ Marks is:45
+ Marks is:56
+ Marks is:44
+ Marks is:52
+ Marks is:32
+ sum is:229

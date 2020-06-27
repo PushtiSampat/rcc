@@ -1,3 +1,8 @@
+
+
+// =========================================================
+// Q2: Bank Account Starts
+
 #include<iostream>
 
 using namespace std;
@@ -134,3 +139,9 @@ int main()
 
 	return 0;
 }
+
+
+
+// Q2: Bank Account Ends
+// =========================================================
+

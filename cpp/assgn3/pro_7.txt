@@ -1,0 +1,201 @@
+Roll No    :6
+Name       :Chotaliya Shivangi Dilipbhai
+Class	   :MCA-2
+Subject    :Object Oriented Concepts & Programming 
+======================================================================================
+Definition :7) WAP to create student having data members (rollno, name, stream) as base
+	 class. Derive class subject with marks of 5 subjects and apply respective 
+	 functionality. Calculate final result and display details of each student 
+         from derived class. (multilevel inheritance) 
+======================================================================================
+
+#include<iostream>
+#include<conio.h>
+#include<string>
+using namespace std;
+
+class Student
+{
+	int rno;
+	char name[20];
+	string stream;
+	
+public:
+	void get_stud()
+	{
+		cout<<"\n Enter Rollno:";
+		cin>>rno;
+		cout<<"\n Enter Name:";
+		cin>>name;
+		cout<<"\n Enter stream:";
+		cin>>stream;
+	}
+
+	void display_stud()
+	{
+		cout<<"\n Rollno is:"<<rno;
+		cout<<"\n Name is:"<<name;
+		cout<<"\n stream is:"<<stream;
+	}
+};
+
+class Subject :public Student
+{
+	public:
+	int n,marks[5];
+
+
+	void get_data()
+	{
+		get_stud();
+		cout<<"\n Enter 5 subject marks:";
+		
+		for(int i=0;i<5;i++)
+		{
+			cout<<"\n Enter marks:";
+			cin>>marks[i];
+		}
+	}
+
+	void display()
+	{
+		display_stud();
+	}
+
+};
+
+class Result : public Subject
+{
+	Subject sub;
+	int sum;
+	float res;
+
+public:	
+	void insert_stud()
+	{
+		sub.get_data();
+	}
+
+	void display_stud()
+	{
+		sub.display();
+	}
+	void result()
+	{
+		sum=0;
+		for(int i=0;i<5;i++)
+		{
+			sum=sum+sub.marks[i];
+		}
+		
+		res=sum/5;
+		cout<<"\n Result is:"<<res;
+	}
+};
+
+void main()
+{
+	int n;
+	Result r1[5];
+
+	cout<<"\n Enter the total sutudent:";
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		cout<<"\n---------"<<i+1<<"--------";
+		r1[i].insert_stud();
+		cout<<"\n--------------------------\n";
+	}
+	
+	for(int i=0;i<n;i++)
+	{	
+		cout<<"\n---------"<<i+1<<"--------";
+		r1[i].display_stud();
+		r1[i].result();
+	}
+	getch();
+}
+
+
+===========
+OUTPUT
+===========
+
+ Enter the total sutudent:3
+
+---------1--------
+ Enter Rollno:1
+
+ Enter Name:shivangi
+
+ Enter stream:science
+
+ Enter 5 subject marks:
+ Enter marks:78
+
+ Enter marks:89
+
+ Enter marks:88
+
+ Enter marks:78
+
+ Enter marks:65
+
+--------------------------
+
+---------2--------
+ Enter Rollno:2
+
+ Enter Name:riya
+
+ Enter stream:commerce
+
+ Enter 5 subject marks:
+ Enter marks:78
+
+ Enter marks:89
+
+ Enter marks:88
+
+ Enter marks:65
+
+ Enter marks:45
+
+--------------------------
+
+---------3--------
+ Enter Rollno:3
+
+ Enter Name:priya
+
+ Enter stream:commerce
+
+ Enter 5 subject marks:
+ Enter marks:78
+
+ Enter marks:88
+
+ Enter marks:87
+
+ Enter marks:84
+
+ Enter marks:82
+
+--------------------------
+
+---------1--------
+ Rollno is:1
+ Name is:shivangi
+ stream is:science
+ Result is:79
+---------2--------
+ Rollno is:2
+ Name is:riya
+ stream is:commerce
+ Result is:73
+---------3--------
+ Rollno is:3
+ Name is:priya
+ stream is:commerce
+ Result is:83
+ 

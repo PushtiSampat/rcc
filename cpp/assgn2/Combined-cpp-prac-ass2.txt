@@ -1,0 +1,2098 @@
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+******************* ASSIGNMENT: 2 ********************
+******************* ASSIGNMENT: 2 ********************  
+******************* ASSIGNMENT: 2 ********************
+
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+
+
+
+
+// =========================================================
+// Q10: Maniplautors and good look Starts
+
+
+
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<iomanip>
+#include<string>
+using namespace std;
+
+namespace A
+{
+		ostream & PrintLine(ostream & pout)
+		{
+			pout<<"\n----------------------------------------------------------------------------------------------------"<<endl;
+			return pout;
+		}
+}
+
+class Marksheet
+{
+
+	string sub[3],mark_type[3],course_name;
+	int marks[3][3];
+public:
+	Marksheet()
+	{
+		mark_type[0] = "Term Work";
+		mark_type[1] = "Sessional-1";
+		mark_type[2] = "Sessional-2";
+		sub[0]="Advanced Programming";
+		sub[1]="Object Oriented Programming";
+		sub[2]="Database Management System";
+	}
+	void Input()
+	{
+		int j=0,i=0;
+
+		
+		cout<<"\n Enter Course Name:";
+		getline(cin,course_name);
+				
+		for(i=0;i<3;i++)
+		{
+			cout<<"\n" <<sub[i];
+			cout<<"\n------------------------";
+			for(j=0;j<3;j++)
+			{
+				cout<<"\n Enter " <<mark_type[j]<<" Marks:";
+				cin>>marks[i][j];
+			}
+		}
+
+	}
+	void Display()
+	{
+		int j=0,i=0;
+		
+		cout<<"\n Course Name :"<<course_name;
+		
+		for(i=0;i<3;i++)
+		{
+			cout<<"\n" <<sub[i];
+			cout<<"\n------------------------";
+			for(j=0;j<3;j++)
+			{
+				cout<<"\n Enter " <<mark_type[j]<<" Marks :"<<marks[i][j];
+			}
+		}
+	}
+
+	void PrintMarksheet()
+	{
+		int i,j,sum[3],tot=0;
+
+		cout.width(60);
+		cout.fill(' ');
+		cout<<"GUJRAT UNIVERSITY";
+		
+		cout<<A::PrintLine;
+		
+		//cout<<setw(20);
+		cout.width(70);
+		cout.fill(' ');
+		cout.setf(ios::internal);
+		
+		cout<<course_name;
+		cout.width(30);
+		cout.fill(' ');
+		cout<<"|";
+		cout<<A::PrintLine;
+
+		cout<<setw(30)<<"Subject Name"<<setw(20)<<setiosflags(ios::right)<<setfill(' ')<<mark_type[0]<<setw(15)<<setfill(' ')<<mark_type[1]<<setw(20)<<setfill(' ')<<mark_type[2]<<setw(10)<<setfill(' ')<<"Total"<<setw(5)<<setfill(' ')<<"|";
+		cout<<A::PrintLine;
+		for(i=0;i<3;i++)
+		{			
+			for(j=0;j<1;j++)
+			{
+				sum[i]=marks[i][j]+marks[i][j+1]+marks[i][j+2];
+				cout<<"\n"<<setw(30)<<sub[i]<<setw(20)<<marks[i][j]<<setw(15)<<marks[i][j+1]<<setw(20)<<marks[i][j+2]<<setw(10)<<sum[i]<<setw(5)<<setfill(' ')<<"|";
+			}
+		}
+		
+		for(i=0;i<3;i++)
+		{
+			tot=tot+sum[i];
+		}
+		cout<<A::PrintLine;
+		cout<<setw(40)<<setfill(' ')<<"Percentage is:"<<((tot*100)/900)<<setw(55)<<setfill(' ')<<tot<<setw(2)<<setfill(' ')<<"|";;
+		cout<<A::PrintLine;
+		
+	}
+
+};
+
+	
+void main()
+{
+	Marksheet m1;
+	m1.Input();
+	//m1.Display();
+	m1.PrintMarksheet();
+	getch();
+}
+
+===========================
+OUTPUT
+===========================
+
+ 
+ Enter Course Name:MASTER OF COMPUTER APPLICATIONS
+
+Advanced Programming
+------------------------
+ Enter Term Work Marks:45
+
+ Enter Sessional-1 Marks:78
+
+ Enter Sessional-2 Marks:56
+
+Object Oriented Programming
+------------------------
+ Enter Term Work Marks:66
+
+ Enter Sessional-1 Marks:67
+
+ Enter Sessional-2 Marks:89
+
+Database Management System
+------------------------
+ Enter Term Work Marks:57
+
+ Enter Sessional-1 Marks:54
+
+ Enter Sessional-2 Marks:56
+                                           GUJRAT UNIVERSITY
+----------------------------------------------------------------------------------------------------
+                                       MASTER OF COMPUTER APPLICATIONS                             |
+----------------------------------------------------------------------------------------------------
+                  Subject Name           Term Work    Sessional-1         Sessional-2     Total    |
+----------------------------------------------------------------------------------------------------
+
+          Advanced Programming                  45             78                  56       179    |
+   Object Oriented Programming                  66             67                  89       222    |
+    Database Management System                  57             54                  56       167    |
+----------------------------------------------------------------------------------------------------
+                          Percentage is:63                                                    568 |
+----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+// Q10: Maniplautors and good look Ends
+// =========================================================
+
+
+
+
+
+// =========================================================
+// Q1: Addition Operator Overload Starts
+
+
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class Addition 
+{
+	int num;
+public:
+	void getdata()
+	{
+		cout<<"\n Enter value:";
+		cin>>num;
+	}
+
+	void display()
+	{
+		cout<<"\n Value is:"<<num;
+	}
+	
+	Addition operator +(Addition tmp)
+	{
+
+		tmp.num = tmp.num+ num;
+		return tmp;
+	}
+
+};
+
+void main()
+{
+	Addition no1,no2,no3;
+	no1.getdata();
+	no1.display();
+	no2.getdata();
+	no2.display();
+
+	no3=no1+no2;
+	no3.display();
+	getch();
+	
+}
+
+
+
+
+// Q1: Addition Operator Overload Ends
+// =========================================================
+
+
+
+
+
+
+
+
+
+
+// =========================================================
+// Q2: Multiply Area with * Operator Starts
+
+
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class ArrayContainer
+{
+	int array[30],n;
+public:
+	void getdata()
+	{
+	int i=0;
+
+		cout<<"\n Enter n:";
+		cin>>n;
+		for(i=0;i<n;i++)
+		{
+			cout<<"\n Enter number:";
+			cin>>array[i];
+		}
+
+	}
+	void display()
+-	{
+		int i=0;
+		for(i=0;i<n;i++)
+		{
+			cout<<"\n Enter number is:"<<array[i];
+		}
+	}
+
+	
+	void operator *(int val)
+	{
+		int res,i=0;
+		for(i=0;i<n;i++)
+		{
+		   array[i] = array[i] * val;
+		}
+		
+		for(i=0;i<n;i++)
+		{
+			cout<<"\n value is:"<<array[i];
+		}
+	}
+};
+
+void main()
+{
+	ArrayContainer array1;
+	
+
+	array1.getdata();
+	array1.display();
+
+	array1*(2);
+	array1.display();
+
+	getch();
+
+}
+
+=================
+Output
+=================
+ Enter n:2
+
+ Enter number:10
+
+ Enter number:20
+
+ Enter number is:10
+ Enter number is:20
+ value is:20
+ value is:40
+ Enter number is:20
+ Enter number is:40
+
+
+
+
+
+// Q2: Multiply Area with * Operator Ends
+// =========================================================
+
+
+
+
+
+
+
+
+
+// =========================================================
+// Q3: Complex Class Starts
+
+
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class Complex
+{
+	int real;
+	float img;
+
+public:
+	Complex()
+	{
+		real=0;
+		img=0.0;
+	}
+	void getdata()
+	{
+		cout<<"\n Enter real no:";
+		cin>>real;
+		cout<<"\n Enter img no:";
+		cin>>img;
+	}
+	void display()
+	{
+		cout<<"\n Real Number is:"<<real;
+		cout<<"\n Img Number is:"<<img;
+	}
+
+	Complex operator +(Complex tmp)
+	{
+		Complex c1 ;
+		c1.real=real+tmp.real;
+		c1.img=img+tmp.img;
+
+		return (c1);
+	}
+	Complex operator -(Complex tmp)
+	{
+		Complex c1 ;
+		c1.real=real-tmp.real;
+		c1.img=img-tmp.img;
+
+		return (c1);
+	}
+	Complex operator *(Complex tmp)
+	{
+		Complex c1;
+		c1.real=real*tmp.real;
+		c1.img=img*tmp.img;
+
+		return (c1);
+	}
+	Complex operator ==(Complex tmp)
+	{
+		Complex c1;
+		
+		if(real==tmp.real)
+		{
+			c1.real=1;
+		}
+		if(img==tmp.img)
+		{
+			c1.img=1.0;
+		}
+
+		return (c1);
+	}
+	Complex operator !=(Complex tmp)
+	{
+		Complex c1;
+		
+		if(real!=tmp.real)
+		{
+			c1.real=1;
+		}
+		if(img!=tmp.img)
+		{
+			c1.img=1.0;
+		}
+
+		return (c1);
+	}
+	void operator =(Complex tmp)
+	{
+		
+		real=tmp.real;
+		img=tmp.img;
+	}
+};
+
+void main()
+{
+	Complex c1,c2,c3;
+
+	c1.getdata();
+	cout<<"\n ------------";
+	cout<<"\n object 1:";
+	cout<<"\n ------------";
+	c1.display();
+
+	c2.getdata();
+	cout<<"\n ------------";
+	cout<<"\n object 2:";
+	cout<<"\n ------------";
+	c2.display();
+
+	
+	cout<<"\n ------------";
+	cout<<"\n Addition:";
+	cout<<"\n ------------";
+	c3=c1+c2;
+	c3.display();
+	
+	cout<<"\n ------------";
+	cout<<"\n Subtraction:";
+	cout<<"\n ------------";
+	c3=c1-c2;
+	c3.display();
+	
+	cout<<"\n ------------";
+	cout<<"\n Multiplication:";
+	cout<<"\n ------------";
+	c3=c1*c2;
+	c3.display();
+
+
+	cout<<"\n ------------";
+	cout<<"\n Equal:";
+	cout<<"\n ------------";
+	c3=c1==c2;
+	c3.display();
+
+	cout<<"\n ------------";
+	cout<<"\n Not Equal:";
+	cout<<"\n ------------";
+	
+	c3=c1!=c2;
+	c3.display();
+	
+	cout<<"\n ------------";
+	cout<<"\n Assignment:";
+	cout<<"\n ------------";
+	
+	c1=c2;
+	cout<<"\n ------------";
+	cout<<"\n object 1:";
+	cout<<"\n ------------";
+	c1.display();
+	cout<<"\n ------------";
+	cout<<"\n object 2:";
+	cout<<"\n ------------";
+	
+	c2.display();
+	getch();
+
+}
+
+/*
+=================
+Output
+=================
+
+ Enter real no:10
+
+ Enter img no:20.10
+
+ ------------
+ object 1:
+ ------------
+ Real Number is:10
+ Img Number is:20.1
+ 
+ Enter real no:40
+
+ Enter img no:20.10
+
+ ------------
+ object 2:
+ ------------
+ Real Number is:40
+ Img Number is:20.1
+ ------------
+ Addition:
+ ------------
+ Real Number is:50
+ Img Number is:40.2
+ ------------
+ Subtraction:
+ ------------
+ Real Number is:-30
+ Img Number is:0
+ ------------
+ Multiplication:
+ ------------
+ Real Number is:400
+ Img Number is:404.01
+ ------------
+ Equal:
+ ------------
+ Real Number is:0
+ Img Number is:1
+ ------------
+ Not Equal:
+ ------------
+ Real Number is:1
+ Img Number is:0
+ ------------
+ Assignment:
+ ------------
+ ------------
+ object 1:
+ ------------
+ Real Number is:40
+ Img Number is:20.1
+ ------------
+ object 2:
+ ------------
+ Real Number is:40
+ Img Number is:20.1
+ */
+
+
+
+
+
+
+
+// Q3: Complex Class Ends
+// =========================================================
+
+
+
+
+
+
+// =========================================================
+// Q4: Overload <<, >> Operator Starts
+
+
+#include<iostream>
+#include<string>
+#include<conio.h>
+using namespace std;
+
+class student
+{
+	int rollno;
+	string name;
+	public:
+		
+		friend ostream & operator <<(ostream & tempout, student & s)
+		{
+			tempout << "\n Roll number is: " << s.rollno << "\n";
+			tempout << "Name is: " << s.name << "\n";  
+			
+			return tempout; 
+		} 
+		friend istream & operator >>(istream & tempin,student & s)
+		{
+			cout<<"Enter Roll no:";
+			tempin>>s.rollno;
+			cout<<"Enter Name:";
+			tempin>>s.name;
+			
+			return tempin;
+		}
+
+};
+
+void main()
+{
+	student s1;
+	
+	cin>>s1;
+	cout<<s1;
+	getch();
+}
+
+===================
+Output
+===================
+Enter Roll no:1
+Enter Name:shivangi
+
+ Roll number is: 1
+Name is: shivangi
+
+
+
+
+
+
+
+
+// Q4: Overload <<, >>  Operator Ends
+// =========================================================
+
+
+
+
+
+
+
+
+
+// =========================================================
+// Q5: Matrix Starts
+
+
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class Matrix
+{
+	int matrix[10][10];
+
+public:
+	Matrix(){}
+
+	void input()
+	{
+		for(int i=0;i<2;i++)
+		{
+			for(int j=0;j<2;j++)
+			{
+				cout<<"\n Enter Value:";
+				cin>>matrix[i][j];
+			}
+		}
+		
+	}
+	void display()
+	{
+		for(int i=0;i<2;i++)
+		{
+			for(int j=0;j<2;j++)
+			{
+				cout<<"\n Value is:"<<matrix[i][j];
+				
+			}
+		}
+	}	
+
+
+	Matrix friend operator *(Matrix m4,int mul)
+	{
+		
+		for(int i=0;i<2;i++)
+		{
+			for(int j=0;j<2;j++)
+			{
+				m4.matrix[i][j]=mul * m4.matrix[i][j];
+				
+			}
+		}
+		return m4;
+	
+	}
+	
+	Matrix friend operator *(int mul,Matrix m4)
+	{
+		
+		for(int i=0;i<2;i++)
+		{
+			for(int j=0;j<2;j++)
+			{
+				m4.matrix[i][j]=mul * m4.matrix[i][j];
+				
+			}
+		}
+		return m4;
+	
+	}
+	
+};
+
+
+void main()
+{
+	Matrix m1,m2,m3;
+	cout<<"\n Enter Value for 2*2 matrix";
+	m1.input();
+	m1.display();
+	cout<<"\n ----------";
+	cout<<"\n Matrix*5";
+	cout<<"\n ----------";
+	m2=m1*5;
+	m2.display();
+	
+	cout<<"\n ----------";
+	cout<<"\n 5*Matrix";
+	cout<<"\n ----------";
+	m3=5*m1;
+	m3.display();
+	getch();
+}
+
+
+=============
+output
+=============
+
+ Enter Value for 2*2 matrix
+ Enter Value:1
+
+ Enter Value:2
+
+ Enter Value:3
+
+ Enter Value:4
+
+ Value is:1
+ Value is:2
+ Value is:3
+ Value is:4
+ ----------
+ Matrix*5
+ ----------
+ Value is:5
+ Value is:10
+ Value is:15
+ Value is:20
+ ----------
+ 5*Matrix
+ ----------
+ Value is:5
+ Value is:10
+ Value is:15
+ Value is:20
+
+
+
+
+
+
+
+// Q5: Matrix Ends
+// =========================================================
+
+
+
+
+
+
+
+
+// =========================================================
+// Q6: Date with class Starts
+
+
+
+#include<iostream>
+#include<string>
+#include<conio.h>
+using namespace std;
+
+class Date
+{
+	int month,day,year;
+public:
+	void getdate()
+	{
+		cout<<"\n Enter Date:";
+		cin>>day>>month>>year;
+	}
+	void display()
+	{
+		cout<<"\n Date is:"<<day<<'/'<<month<<'/'<<year;
+	}
+
+	void operator +(int tday)
+	{
+		day=day + tday;
+		
+		while(day>30)
+		{
+			day=day-30;
+			month++;
+			if(month>12)
+			{
+				month=1;
+				year++;
+			}
+		}
+	}
+
+	void operator -(int tday)
+	{
+		day=day - tday;
+		
+		while(day<0)
+		{
+			month--;
+			if(month==0)
+			{
+				month=12;
+				year--;
+			}
+			day=30+day;			
+		}
+	}
+	
+	int operator >(Date d2)
+	{
+		int flag=0;
+		
+		if(year>d2.year)
+		{
+			flag=1;
+		
+		}
+		else if(year==d2.year)
+		{
+			if(month>d2.month)
+			{
+				flag=1;
+			}
+			else if(month==d2.month)
+			{
+				if(day>d2.day)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+
+	int operator <(Date d2)
+	{
+		int flag=0;
+		
+		if(year<d2.year)
+		{
+			flag=1;
+		
+		}
+		else if(year==d2.year)
+		{
+			if(month<d2.month)
+			{
+				flag=1;
+			}
+			else if(month==d2.month)
+			{
+				if(day<d2.day)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+	int operator >=(Date d2)
+	{
+		int flag=0;
+		
+		if(year>d2.year)
+		{
+			flag=1;
+		
+		}
+		else if(year==d2.year)
+		{
+			if(month>d2.month)
+			{
+				flag=1;
+			}
+			else if(month==d2.month)
+			{
+				if(day>=d2.day)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+	
+	int operator <=(Date d2)
+	{
+		int flag=0;
+		
+		if(year<d2.year)
+		{
+			flag=1;
+		
+		}
+		else if(year==d2.year)
+		{
+			if(month<d2.month)
+			{
+				flag=1;
+			}
+			else if(month==d2.month)
+			{
+				if(day<=d2.day)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+	void operator ++()
+	{
+		Date d1;
+		if(day==30)
+		{
+			day=1;
+			if(month==12)
+			{
+				month=1;
+				year++;
+			}
+			else 
+				month++;
+		}
+		else
+		{
+			day++;
+		}
+
+	}
+	
+	void operator --()
+	{
+
+		if(day==1)
+		{
+			day=30;
+			if(month==1)
+			{
+				month=12;
+				year--;
+			}
+			else 
+				month--;
+		}
+		else
+		{
+			day--;
+		}
+
+	}
+};
+
+void main()
+{
+	int day,res,flag=0,ch;
+	char ch2='n';
+
+	Date d1,d2;
+	
+	cout<<"\n----------------------";
+	cout<<"\n 1.Addition(+) of Days";
+	cout<<"\n 2.Subtraction(-) of Days";
+	cout<<"\n 3.chack two date (>)";
+	cout<<"\n 4.chack two date (>=)";
+	cout<<"\n 5.chack two date (<)";
+	cout<<"\n 6.chack two date (<=)";
+	cout<<"\n 7.Increment date (++)";
+	cout<<"\n 8.Decrement date (--)";
+	cout<<"\n----------------------";
+
+	do
+	{
+	
+	cout<<"\n\n Enter Your choice:";
+	cin>>ch;
+
+	switch(ch)
+	{
+		case 1:	d1.getdate();
+				cout<<"\n Add Number of days:";
+				cin>>day;
+	
+				d1+(day);
+				cout<<"\n\n Date After Adding "<<day<<"into date ";
+				cout<<"\n---------------------------------------";
+				d1.display();
+				break;
+
+		case 2: d1.getdate();
+				cout<<"\n Subtract Number of days:";
+				cin>>day;
+	
+				d1-(day);
+				cout<<"\n\n Date After Subtracting "<<day<<"into date ";
+				cout<<"\n---------------------------------------";
+				d1.display();
+				break;
+		
+		case 3: d1.getdate();
+			  	d2.getdate();
+
+				res=d1>d2;
+				if(res==1)
+				{
+					cout<<"Date1 is greter.";
+				}
+				else
+				{
+					cout<<"Date1 is not greter.";
+				}
+				break;
+		
+		case 4: d1.getdate();
+			  	d2.getdate();
+
+				res=d1>=d2;
+				if(res==1)
+				{
+					cout<<"Date1 is greter.";
+				}
+				else
+				{
+					cout<<"Date1 is not greter.";
+				}
+				break;
+
+	   	case 5: d1.getdate();
+			  	d2.getdate();
+
+				res=d1<d2;
+				if(res==1)
+				{
+					cout<<"Date2 is greter.";
+				}
+				else
+				{
+					cout<<"Date2 is not greter.";
+				}
+				break;
+		
+		case 6: d1.getdate();
+			  	d2.getdate();
+
+				res=d1<=d2;
+				if(res==1)
+				{
+					cout<<"Date is greter.";
+				}
+				else
+				{
+					cout<<"Date is not greter.";
+				}
+				break;
+	
+		case 7: d1.getdate();
+				d1++;
+				d1.display();
+				break;
+		
+		case 8: d1.getdate();
+				d1--;
+				d1.display();
+				break;
+	
+	}
+	
+	cout<<"\n Do You Want to continue:";
+	cin>>ch2;
+
+	}while(ch2=='y' || ch2=='y');
+
+
+
+
+	getch();
+}
+
+========================
+	Output
+========================
+
+----------------------
+ 1.Addition(+) of Days
+ 2.Subtraction(-) of Days
+ 3.chack two date (>)
+ 4.chack two date (>=)
+ 5.chack two date (<)
+ 6.chack two date (<=)
+ 7.Increment date (++)
+ 8.Decrement date (--)
+----------------------
+
+ Enter Your choice:1
+
+ Enter Date:5 2 2019
+
+ Add Number of days:375
+
+
+ Date After Adding 375into date
+---------------------------------------
+ Date is:20/2/2020
+ Do You Want to continue:y
+
+
+ Enter Your choice:2
+
+ Enter Date:5 1 2019
+
+ Subtract Number of days:25
+
+
+ Date After Subtracting 25into date
+---------------------------------------
+ Date is:10/12/2018
+ Do You Want to continue:y
+
+
+ Enter Your choice:3
+
+ Enter Date:5 2 2018
+
+ Enter Date:1 2 2018
+Date1 is greter.
+ Do You Want to continue:y
+
+
+ Enter Your choice:4
+
+ Enter Date: 4 5 2019
+
+ Enter Date:4 5 2019
+Date1 is greter.
+ Do You Want to continue:y
+
+
+ Enter Your choice:5
+
+ Enter Date:5 4 2019
+
+ Enter Date:1 2 2018
+Date2 is not greter.
+ Do You Want to continue:y
+
+
+ Enter Your choice:7
+
+ Enter Date:30 12 2019
+
+ Date is:1/1/2020
+ Do You Want to continue:y
+
+
+ Enter Your choice:8
+
+ Enter Date:1 1 2019
+
+ Date is:30/12/2018
+ Do You Want to continue:n
+
+
+
+
+
+
+
+// Q6: Date with class Ends
+// =========================================================
+
+
+
+
+
+
+
+
+// =========================================================
+// Q7: Time with class Starts
+
+
+#include<iostream>
+#include<string>
+#include<conio.h>
+using namespace std;
+
+class Time
+{
+	int hh,mm,ss;
+public:
+
+	void getTime()
+	{
+		cout<<"Enter Hours:";
+		cin>>hh;
+		cout<<"Enter Minute:";
+		cin>>mm;
+		cout<<"Enter Secound:";
+		cin>>ss;
+	
+	}
+	void display()
+	{
+		cout<<"\n";
+		cout<<"\n"<<hh<<":"<<mm<<":"<<ss;
+		
+	}
+
+	void operator +(int tmin)
+	{
+
+		mm+=tmin;
+		
+		while(mm>=60)
+		{
+			mm=mm-60;
+			hh++;
+			
+			if(hh>24)
+			{
+				hh=1;
+			}
+		}
+		if(hh>24)
+		{
+			hh=1;
+		}
+
+	}
+
+	void operator -(int tmin)
+	{
+
+		mm=mm-tmin;
+		
+		while(mm<0)
+		{
+			
+			hh--;
+			
+			if(hh==0)
+			{
+				hh=24;
+			}
+			mm=mm+60;
+		}
+		
+	}
+
+	int operator >(Time t2)
+	{
+		int flag=0;
+		
+		if(hh>t2.hh)
+		{
+			flag=1;
+		
+		}
+		else if(hh==t2.hh)
+		{
+			if(mm>t2.mm)
+			{
+				flag=1;
+			}
+			else if(mm==t2.mm)
+			{
+				if(ss>t2.ss)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+
+	int operator <(Time t2)
+	{
+		int flag=0;
+		
+		if(hh<t2.hh)
+		{
+			flag=1;
+		
+		}
+		else if(hh==t2.hh)
+		{
+			if(mm<t2.mm)
+			{
+				flag=1;
+			}
+			else if(mm==t2.mm)
+			{
+				if(ss<t2.ss)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+
+	int operator >=(Time t2)
+	{
+		int flag=0;
+		
+		if(hh>t2.hh)
+		{
+			flag=1;
+		
+		}
+		else if(hh==t2.hh)
+		{
+			if(mm>t2.mm)
+			{
+				flag=1;
+			}
+			else if(mm==t2.mm)
+			{
+				if(ss>=t2.ss)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+
+
+	int operator <=(Time t2)
+	{
+		int flag=0;
+		
+		if(hh<t2.hh)
+		{
+			flag=1;
+		
+		}
+		else if(hh==t2.hh)
+		{
+			if(mm<t2.mm)
+			{
+				flag=1;
+			}
+			else if(mm==t2.mm)
+			{
+				if(ss<=t2.ss)
+				{
+					flag=1;
+				}
+				else
+				{
+					flag=0;
+				}
+			}
+		}
+		return flag;
+	}
+
+
+	void operator ++()
+	{
+	
+		if(mm==60)
+		{
+			mm=1;
+			hh++;		}
+		else
+		{
+			mm++;
+		}
+
+	}
+	
+
+	void operator --()
+	{
+	
+		if(mm==0)
+		{
+			mm=60;
+			hh--;		}
+		else
+		{
+			mm--;
+		}
+
+	}
+
+
+};
+
+
+void main()
+{
+	int min,res,flag=0,ch;
+	char ch2='n';
+
+	Time t1,t2;
+	
+	cout<<"\n----------------------";
+	cout<<"\n 1.Addition(+) of Days";
+	cout<<"\n 2.Subtraction(-) of Days";
+	cout<<"\n 3.chack two date (>)";
+	cout<<"\n 4.chack two date (>=)";
+	cout<<"\n 5.chack two date (<)";
+	cout<<"\n 6.chack two date (<=)";
+	cout<<"\n 7.Increment date (++)";
+	cout<<"\n 8.Decrement date (--)";
+	cout<<"\n----------------------";
+
+	do
+	{
+	
+	cout<<"\n\n Enter Your choice:";
+	cin>>ch;
+
+	switch(ch)
+	{
+		case 1:	t1.getTime();
+				cout<<"\n Add Number of min:";
+				cin>>min;
+	
+				t1+(min);
+				cout<<"\n\n Time After Adding "<<min<<"into time ";
+				cout<<"\n---------------------------------------";
+				t1.display();
+				break;
+
+		case 2: t1.getTime();
+				cout<<"\n Subtract Number of min:";
+				cin>>min;
+	
+				t1-(min);
+				cout<<"\n\n Time After Adding "<<min<<"into time ";
+				cout<<"\n---------------------------------------";
+				t1.display();
+				break;
+
+		case 3: t1.getTime();
+			  	t2.getTime();
+
+				res=t1>t2;
+				if(res==1)
+				{
+					cout<<"Time1 is greter.";
+				}
+				else
+				{
+					cout<<"Time1 is not greter.";
+				}
+				break;
+		
+		case 4: t1.getTime();
+			  	t2.getTime();
+
+				res=t1>=t2;
+				
+				if(res==1)
+				{
+					cout<<"Time1 is greter.";
+				}
+				else
+				{
+					cout<<"Time1 is not greter.";
+				}
+				break;
+
+	   	case 5: t1.getTime();
+			  	t2.getTime();
+
+				res=t1<t2;
+				if(res==1)
+				{
+					cout<<"Time2 is greter.";
+				}
+				else
+				{
+					cout<<"Time2 is not greter.";
+				}
+				break;
+		
+		case 6: t1.getTime();
+			  	t2.getTime();
+
+				res=t1<=t2;
+				if(res==1)
+				{
+					cout<<"Time2 is greter.";
+				}
+				else
+				{
+					cout<<"Time2 is not greter.";
+				}
+				break;
+	
+		case 7: t1.getTime();
+				t1++;
+				t1.display();
+				break;
+		
+		case 8: t1.getTime();
+				t1--;
+				t1.display();
+				break;
+	
+	}
+	
+	cout<<"\n Do You Want to continue:";
+	cin>>ch2;
+
+	}while(ch2=='y' || ch2=='y');
+
+
+
+getch();
+}
+=======================
+OUTPUT
+=======================
+
+----------------------
+ 1.Addition(+) of Days
+ 2.Subtraction(-) of Days
+ 3.chack two date (>)
+ 4.chack two date (>=)
+ 5.chack two date (<)
+ 6.chack two date (<=)
+ 7.Increment date (++)
+ 8.Decrement date (--)
+----------------------
+
+Enter Your choice:1
+Enter Hours:12
+Enter Minute:45
+Enter Secound:10
+
+ Add Number of min:110
+
+
+ Time After Adding 110into time
+---------------------------------------
+
+14:35:10
+ Do You Want to continue:y
+
+
+Enter Your choice:2
+Enter Hours:12
+Enter Minute:00
+Enter Secound:10
+
+ Subtract Number of min:60
+
+
+ Time After Adding 60into time
+---------------------------------------
+
+11:0:10
+ Do You Want to continue:y
+
+
+Enter Your choice:3
+Enter Hours:10
+Enter Minute:45
+Enter Secound:07
+Enter Hours:10
+Enter Minute:45
+Enter Secound:07
+Time1 is not greter.
+ Do You Want to continue:y
+
+
+Enter Your choice:4
+Enter Hours:23
+Enter Minute:21
+Enter Secound:12
+Enter Hours:23
+Enter Minute:21
+Enter Secound:12
+Time1 is greter.
+ Do You Want to continue:y
+
+
+ Enter Your choice:5
+Enter Hours:10
+Enter Minute:10
+Enter Secound:10
+Enter Hours:10
+Enter Minute:9
+Enter Secound:45
+Time2 is not greter.
+ Do You Want to continue:6
+
+
+
+
+Enter Your choice:6
+Enter Hours:14
+Enter Minute:24
+Enter Secound:60
+Enter Hours:15
+Enter Minute:10
+Enter Secound:14
+Time2 is greter.
+ Do You Want to continue:y
+
+
+Enter Your choice:7
+Enter Hours:25
+Enter Minute:56
+Enter Secound:50
+
+
+25:57:50
+ Do You Want to continue:y
+
+
+Enter Your choice:8
+Enter Hours:60
+Enter Minute:0
+Enter Secound:45
+
+
+59:60:45
+ Do You Want to continue:n
+
+
+
+
+
+
+
+
+// Q7: Time Ends
+// =========================================================
+
+
+
+
+
+
+
+
+// =========================================================
+// Q8 Starts
+/*
+
+Q8) Write a menu driven program that can perform the following functions on
+strings. (Use overloaded operators where possible).(Do not use predefined
+string class)
+1. Compare two strings for equality (== operator)
+2. Check whether first string is smaller than the second (<= operator)
+3. Copy the string to another
+4. Extract a character from the string (Overload [])
+5. Reverse the string
+6. Concatenate two strings (+ operator)
+*/
+
+
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class String
+{
+	// string str; 
+	 char str[20];
+	 public:
+		 void getdata()
+		 {
+			cout<<"\n Enter String:";
+			cin.get(str,20);
+		 }
+		 
+		 void display()
+		 {
+			 int i=0;
+			cout<<"\n";
+			while(str[i]!='\0')
+			{
+				cout<<str[i];
+				i++;
+			}
+			
+		 }	 
+
+		 bool operator ==(String s2)
+		 {
+			 int i=0,j=0,flag=1;
+
+			while(str[i]!='\0' && s2.str[j]!='\0' && str[i]==s2.str[j])
+			{
+						i++;
+						j++;
+			}
+			if(str[i]=='\0' && s2.str[j]=='\0')
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+					
+			}
+				
+
+		 }
+
+		 bool operator <=(String s2)
+		 {
+			 int i=0,j=0,flag=1,res;
+			 cout<<str;
+			while(str[i]!='\0' && s2.str[j]!='\0' && str[i]==s2.str[j])
+			{
+						i++;
+						j++;
+			}
+			if(str[i]=='\0' && s2.str[j]=='\0')
+			{
+				return false;
+			}
+			else
+			{
+				res=str[i]-s2.str[j];
+				if(res<0)
+					return true;
+				else 
+					return false;
+			}
+				
+
+		 }
+
+		 void operator =(String s2)
+		 {
+			int i=0;
+			
+			while(s2.str[i]!='\0')
+			{
+				str[i]=s2.str[i];
+				i++;
+			}
+			str[i]='\0';
+
+		 }
+		 char operator [](int index)
+		 {
+			return str[index];
+		 }
+
+		 String operator +(String s2)
+		 {
+			 String str3;
+			 int i=0,j=0;
+
+			while(str[i]!='\0')
+			{
+				str3.str[i]=str[i];
+				i++;
+			}
+			while(s2.str[j]!='\0')
+			{
+				str3.str[i]=s2.str[j];
+				i++;
+				j++;
+			}
+			str3.str[i]='\0';
+			return str3;
+		 }
+
+		 int length(char str[20])
+		 {
+			
+			int len=0,i=0;
+			while(str[i]!='\0')
+			{
+				i++;
+				len++;
+			}
+			
+			return len;
+		 }
+		 void reverse()
+		 {
+			int i=0,j=0,len,temp;
+			len=length(str);
+
+			i=0;
+			j=len-1;
+			while(i!=(len/2))
+			{
+				temp=str[i];
+				str[i]=str[j];
+				str[j]=temp;
+				i++;
+				j--;
+			}
+
+		 }
+
+};
+
+void main()
+{
+	char ch,cont='n';
+	String s1,s2,s3;
+	bool res; 
+	int index,choice;
+	s1.getdata();
+	flushall();
+	s2.getdata();
+	cout<<"\n--------------------------------------";
+	cout<<"\n 1. Compare two strings for equality";
+	cout<<"\n 2. Check whether first string is smaller than the second";
+	cout<<"\n 3. Copy the string to another";
+	cout<<"\n 4. Extract a character from the string";
+	cout<<"\n 5. Reverse the string";
+	cout<<"\n 6. Concatenate two strings";
+	cout<<"\n--------------------------------------";
+	do
+	{
+		cout<<"\n Enter Your Choice:";
+		cin>>choice;
+
+	switch(choice)
+	{
+		case 1:	
+				
+				if(s1==s2)
+					cout<<"\n Both Strings Are Equal.";
+				else
+					cout<<"\n Both Strings Are Not Equal.";
+				break;
+		case 2:	
+				if(s1<=s2)
+					cout<<"\n First String is Smaller than Secound.";
+				else
+					cout<<"\n First String is Not Smaller than Secound.";
+				break;
+		case 3:
+				
+				s2=s1;
+				cout<<"\n-------------";
+				cout<<"\n Frist String";
+				cout<<"\n-------------\n";
+				s1.display();
+				cout<<"\n-------------";
+				cout<<"\n Secound String";
+				cout<<"\n-------------\n";
+				s2.display();
+				break;				
+		case 4:
+				
+				s1.reverse();
+				cout<<"\n---------------";
+				cout<<"\n Reverse String";
+				cout<<"\n---------------\n";
+				s1.display();
+				break;
+		case 5:
+				cout<<"\n Enter index:";
+				cin>>index;
+				ch=s1[index];
+				cout<<"character is:"<<ch;	
+				break;
+		case 6:
+				s3=s1+s2;
+				cout<<"\n --------";
+				cout<<"\n String:";
+				cout<<"\n --------\n";
+				s3.display();
+				break;
+	}
+		cout<<"\n\n Do You Want to Continue(y/n)";
+		cin>>cont;
+	}while(cont=='Y' || cont=='y');
+
+	getch();
+}
+
+
+/*
+
+ Enter String:Rollwala
+
+ Enter String:DCSGU
+
+--------------------------------------
+ 1. Compare two strings for equality
+ 2. Check whether first string is smaller than the second
+ 3. Copy the string to another
+ 4. Extract a character from the string
+ 5. Reverse the string
+ 6. Concatenate two strings
+--------------------------------------
+ Enter Your Choice:1
+
+ Both Strings Are Not Equal.
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:2
+Rollwala
+ First String is Not Smaller than Secound.
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:3
+
+-------------
+ Frist String
+-------------
+
+Rollwala
+-------------
+ Secound String
+-------------
+
+Rollwala
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:4
+
+---------------
+ Reverse String
+---------------
+
+alawlloR
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:5
+
+ Enter index:2
+character is:a
+
+ Do You Want to Continue(y/n)y
+
+ Enter Your Choice:6
+
+ --------
+ String:
+ --------
+
+alawlloRRollwala
+
+ Do You Want to Continue(y/n)
+*/
+
+
+
+
+
+
+// Q8: Ends
+// =========================================================
+
+
+
+
+
+
+
+
+// =========================================================
+// Q9: Use Manipulators Starts
+
+
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<iomanip>
+#include<string>
+using namespace std;
+
+ostream & convert(ostream & pout)
+{
+		pout<<setw(5)<<setprecision(5)<<setfill('+')<<setiosflags(ios::right);
+		return pout;
+}
+	
+void main()
+{
+
+	float amt;
+	cout<<"\n Enter Amount:";
+	cin>>amt;
+	cout<<convert;
+	cout<<amt;
+	
+	getch();
+}
+
+/*
+
+ Enter Amount:1.2
+	++1.2
+*/
+
+
+
+
+
+
+// Q9: Use manipulators Ends
+// =========================================================
+
+
+

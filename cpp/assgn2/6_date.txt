@@ -1,3 +1,14 @@
+
+
+
+
+
+
+// =========================================================
+// Q6: Date with class Starts
+
+
+
 #include<iostream>
 #include<string>
 #include<conio.h>
@@ -417,3 +428,15 @@ Date2 is not greter.
 
  Date is:30/12/2018
  Do You Want to continue:n
+
+
+
+
+
+
+
+// Q6: Date with class Ends
+// =========================================================
+
+
+

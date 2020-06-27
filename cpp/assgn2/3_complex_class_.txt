@@ -1,3 +1,12 @@
+
+
+
+
+
+// =========================================================
+// Q3: Complex Class Starts
+
+
 #include<iostream>
 #include<conio.h>
 using namespace std;
@@ -218,3 +227,14 @@ Output
  Real Number is:40
  Img Number is:20.1
  */
+
+
+
+
+
+
+
+// Q3: Complex Class Ends
+// =========================================================
+
+

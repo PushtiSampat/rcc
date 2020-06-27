@@ -1,0 +1,170 @@
+Roll No    :6
+Name       :Chotaliya Shivangi Dilipbhai
+Class	   :MCA-2
+Subject    :Object Oriented Concepts & Programming 
+======================================================================================
+Definition :5) WAP Implement template sort with a non type size.  
+======================================================================================
+
+#include<iostream>
+#include<conio.h>
+#include<string>
+using namespace std;
+
+template <typename T>
+
+void Bubble_sort(T arr[],int n) //Non-Type Argument
+{
+	int i,j;
+	T temp;
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n-i-1;j++)
+		{
+			if(arr[j]>arr[j+1])
+			{
+				temp=arr[j];
+				arr[j]=arr[j+1];
+				arr[j+1]=temp;
+			}
+		}
+	}
+	cout<<"\n Sorted Completed.";
+}
+
+template <typename T>
+
+void Display(T arr[])
+{
+	int i;
+	cout<<"\n------------------------------";
+	for(i=0;i<5;i++)
+	{
+		cout<<"\n Value is:"<<arr[i];
+	}				
+
+}
+
+void main()
+{
+	int arr[5],i;
+	float farr[5];
+	char carr[5];
+
+	int ch,val,res;
+	char choice='n';
+
+					
+	cout<<"\n--------------------";
+	cout<<"\n 1.Int";
+	cout<<"\n 2.Float";
+	cout<<"\n 3.char";
+	cout<<"\n--------------------";
+	
+	do
+	{
+		cout<<"\n Enter Your Choice:";
+		cin>>ch;
+
+		switch(ch)
+		{
+			case 1:	
+					for(i=0;i<5;i++)
+					{
+						cout<<"\n Enter Value:";
+						cin>>arr[i];
+					}
+	
+					Bubble_sort<int>(arr,5);
+					Display<int>(arr);
+					break;
+			case 2:
+					for(i=0;i<5;i++)
+					{
+						cout<<"\n Enter Value:";
+						cin>>farr[i];
+					}
+	
+					Bubble_sort<float>(farr,5);
+					Display<float>(farr);
+					break;
+			case 3:
+					cout<<"Enter String:";
+					cin>>carr;
+
+					Bubble_sort<char>(carr,5);
+					Display<char>(carr);
+					break;
+			case 4:
+					
+					break;
+		}
+		cout<<"\n Do You Want to continue:";
+		cin>>choice;
+
+	}while(choice=='Y' || choice=='y');
+	getch();
+}
+
+=================
+OUTPUT
+=================
+
+--------------------
+ 1.Int
+ 2.Float
+ 3.char
+--------------------
+ Enter Your Choice:1
+
+ Enter Value:4
+
+ Enter Value:5
+
+ Enter Value:2
+
+ Enter Value:7
+
+ Enter Value:1
+
+ Sorted Completed.
+------------------------------
+ Value is:1
+ Value is:2
+ Value is:4
+ Value is:5
+ Value is:7
+ Do You Want to continue:y
+
+ Enter Your Choice:2
+
+ Enter Value:12.4
+
+ Enter Value:7.8
+
+ Enter Value:0.1
+
+ Enter Value:2.3
+
+ Enter Value:78.20
+
+ Sorted Completed.
+------------------------------
+ Value is:0.1
+ Value is:2.3
+ Value is:7.8
+ Value is:12.4
+ Value is:78.2
+ Do You Want to continue:y
+
+ Enter Your Choice:3
+Enter String:users
+
+ Sorted Completed.
+------------------------------
+ Value is:e
+ Value is:r
+ Value is:s
+ Value is:s
+ Value is:u
+ Do You Want to continue:n

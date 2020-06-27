@@ -1,3 +1,11 @@
+
+
+
+
+// =========================================================
+// Q2: Multiply Area with * Operator Starts
+
+
 #include<iostream>
 #include<conio.h>
 using namespace std;
@@ -74,3 +82,14 @@ Output
  value is:40
  Enter number is:20
  Enter number is:40
+
+
+
+
+
+// Q2: Multiply Area with * Operator Ends
+// =========================================================
+
+
+
+

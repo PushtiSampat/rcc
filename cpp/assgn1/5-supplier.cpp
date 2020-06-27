@@ -1,3 +1,8 @@
+
+
+// =========================================================
+// Q5: Supplier Starts
+
 #include<iostream>
 #include<string>
 #include <new> // nothrow
@@ -103,3 +108,9 @@ int main ()
     cout << endl;
     return 0;
 }
+
+
+
+// Q5: Supplier Ends
+// =========================================================
+

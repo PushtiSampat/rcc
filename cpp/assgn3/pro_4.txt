@@ -1,0 +1,111 @@
+Roll No    :6
+Name       :Chotaliya Shivangi Dilipbhai
+Class	   :MCA-2
+Subject    :Object Oriented Concepts & Programming 
+======================================================================================
+Definition :4) Write a template function called find(). This function searches an array
+	    for an object. It returns either the index of the matching object (if one is
+            found) or -1 if no match is found. 
+======================================================================================
+
+#include<iostream>
+#include<string>
+#include<conio.h>
+using namespace std;
+
+class Student
+{
+	public:
+	int rno;
+	string name;
+public:
+	void addstudent()
+	{
+		cout<<"\n Enter Roll no:";
+		cin>>rno;
+		cout<<"\n Enter Name:";
+		cin>>name;
+	}
+	void display()
+	{
+		cout<<"\n roll no is:"<<rno;
+		cout<<"\n Name is:"<<name;
+	}
+
+};
+
+template <typename T>
+
+int find(T arrayobj[] ,int rollno,int n)
+{
+	int flag=0,index=0;
+	for(int i=0;i<n;i++)
+	{
+		if(arrayobj[i].rno==rollno)
+		{	flag=1;
+			index=i;
+			break;
+		}
+	}
+	if(flag==0)
+		return -1;
+	else
+		return index;
+}
+
+void main()
+{
+	Student s1[20];
+	int rollno,n,index;
+
+	cout<<"\n Enter total value of student data:";
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		s1[i].addstudent();
+	}
+	
+	cout<<"\n Total Student is:";
+	
+	cout<<"\n-------------------";
+	for(int i=0;i<n;i++)
+	{
+		s1[i].display();
+	}
+	cout<<"\n-------------------";
+
+	cout<<"\n Enter roll no which you want to find:";
+	cin>>rollno;
+	
+	index=find<Student>(s1,rollno,n);
+	if(index==-1)
+		cout<<"\n rollno is not found";
+	else
+		cout<<"\n rollo is foud";
+	getch();
+}
+
+===========
+OUTPUT
+===========
+
+ Enter total value of student data:2
+
+ Enter Roll no:1
+
+ Enter Name:sa
+
+ Enter Roll no:2
+
+ Enter Name:mina
+
+ Total Student is:
+-------------------
+ roll no is:1
+ Name is:sa
+ roll no is:2
+ Name is:mina
+-------------------
+ Enter roll no which you want to find:4
+
+ rollno is not found

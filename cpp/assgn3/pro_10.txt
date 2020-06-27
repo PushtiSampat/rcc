@@ -1,0 +1,125 @@
+Roll No    :6
+Name       :Chotaliya Shivangi Dilipbhai
+Class	   :MCA-2
+Subject    :Object Oriented Concepts & Programming 
+======================================================================================
+Definition :10) Create a class student from which the classes test and sports are derived.
+	    The class student has the name and rollno of the student. The class test has
+	    the marks of the internal test and the sports class has the marks of the 
+	    sports test. The class student contains a virtual function display() which
+            are implemented in the classes test and sports. Write a program which will
+            take relative information and display it using pointer of the base class. 
+======================================================================================
+
+#include<iostream>
+#include<conio.h>
+#include<string>
+using namespace std;
+
+class Student
+{
+protected:
+	int rno;
+	string name;
+	public :
+		void add()
+		{
+			cout<<"\n Enter rollno:";
+			cin>>rno;
+			cout<<"\n Enter name:";
+			cin>>name;
+		}
+		virtual void display()
+		{
+			cout<<"\n rollno is:"<<rno;
+			cout<<"\n name is:"<<name;
+		}
+};
+
+class Test : public Student
+{
+protected:
+	int internal_marks[5];
+public:
+	void add_marks()
+	{
+		for(int i=0;i<3;i++)
+		{
+		cout<<"\n Enter Internal marks:";
+		cin>>internal_marks[i];
+		}
+	}
+	void display()
+	{
+		for(int i=0;i<3;i++)
+		{
+			cout<<"\n Internal marks is:"<<internal_marks[i];
+		}
+	}
+};
+
+class Sports : public Student
+{
+protected:
+	int sports_mark;
+public:
+	void add_sports_marks()
+	{	
+		cout<<"\n Enter sports marks:";
+		cin>>sports_mark;
+		
+	}
+	void display()
+	{
+		cout<<"\n sports marks is:"<<sports_mark;
+		
+	}
+
+};
+
+
+void main()
+{
+	Student *s,s1;
+	Test t1;
+	Sports sp1;
+
+	s=&s1;
+	s->add();
+	t1.add_marks();
+	sp1.add_sports_marks();
+	s->display();
+
+	
+	s=&t1;
+	s->display();
+
+	s=&sp1;
+	s->display();
+
+	
+	getch();
+}
+
+=============
+OUTPUT
+=============
+
+ Enter rollno:1
+
+ Enter name:priya
+
+ Enter Internal marks:45
+
+ Enter Internal marks:89
+
+ Enter Internal marks:78
+
+ Enter sports marks:56
+
+ rollno is:1
+ name is:priya
+ Internal marks is:45
+ Internal marks is:89
+ Internal marks is:78
+ sports marks is:56

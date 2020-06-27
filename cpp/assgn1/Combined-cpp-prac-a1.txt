@@ -1,0 +1,1062 @@
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+******************* ASSIGNMENT: 1 ********************
+******************* ASSIGNMENT: 1 ********************  
+******************* ASSIGNMENT: 1 ********************
+
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+
+
+// =========================================================
+// Q1: Static Starts
+
+#include<iostream>
+#include<iomanip>
+
+using namespace std;
+
+class Static_count 
+{
+	private :
+		static int count;
+
+	public :
+		Static_count()
+		{
+			count++;
+		}
+
+		void countObj();
+
+};
+
+void Static_count :: countObj()
+{
+	cout << "Static int count: " << count << endl;
+}
+
+int Static_count :: count;
+
+// Driver Program
+int main()
+{
+	Static_count sc1;
+	sc1.countObj();
+
+	Static_count sc2;
+	sc2.countObj();
+
+	Static_count sc3;
+	sc3.countObj();
+
+	return 0;
+}
+
+
+
+// Q1: Static Ends
+// =========================================================
+
+
+
+// =========================================================
+// Q2: Bank Account Starts
+
+#include<iostream>
+
+using namespace std;
+
+class BankAccount
+{
+	private :
+	static int count;
+	int id;
+	int balance = 0;
+
+	public :
+	BankAccount()
+	{
+		id = count++;
+	}
+
+	int askChoice();
+	void display();
+	void deposit();
+	void withdraw();
+	void task(int);
+};
+
+int BankAccount :: askChoice()
+{
+	int choice = 0;
+	
+	while (!choice) { 
+		cout << endl << " =========Enter Choice=========== \n\n";
+		cout << "\n\nEnter your choice" << endl << " 1. Check balance" << endl <<" 2. Deposit" << endl
+		<< " 3. Withdraw" << endl;
+
+		cin >> choice;
+		
+		if(choice < 1 || choice > 3) {
+
+			cout << endl << " *** Invalid Choice *** ";
+			cout << endl << " * T R Y _ A G A I N * ";
+			choice = 0;
+		}
+	}
+
+	return choice;
+}
+
+int askAccountId()
+{ 
+	int accountId;
+	cout << endl << "Enter your accountId: ";
+	cin >> accountId;
+	if(accountId < 1 || accountId > 10) {
+		cout << endl << " *** Invalid Id *** ";
+		cout << endl << " * T R Y _ A G A I N * ";
+		accountId = askAccountId();
+	}
+	return accountId;
+}
+
+void BankAccount :: display()
+{
+	cout << endl;
+	cout << endl << " ==========Bank balance========== \n\n";
+	cout << " Id:  "   <<    id << endl;
+	cout << " Bal. " << balance << endl;
+}
+
+void BankAccount :: task(int choice)
+{		
+	if 		( choice == 1 ) { display();  }
+	else if ( choice == 2 ) { deposit();  }
+	else if ( choice == 3 ) { withdraw(); }
+
+	else    { cout << "Invalid Choice"; }
+
+}
+
+void BankAccount :: deposit()
+{
+	int deposit_amt;
+	cout << endl << " =========Deposit=========== \n\n";
+	cout << "Enter amount to deposit: ";
+	cin >> deposit_amt;
+
+	this->balance += deposit_amt;
+	this->display();
+}
+
+void BankAccount :: withdraw()
+{
+	int withdraw_amt = 0;
+	cout << endl << " =========Withdraw=========== \n\n";
+
+	while(!withdraw_amt) {
+
+		cout << "Enter amount to withdraw: ";
+		cin >> withdraw_amt;
+
+		if(withdraw_amt <= this->balance) {
+			this->balance -= withdraw_amt;
+		}
+		else {
+			withdraw_amt = 0;
+			cout << endl << " *** Amount you entered is more than current balance*** ";
+		}
+		this->display();
+	}
+
+}
+
+
+int BankAccount :: count = 1;
+
+int main()
+{
+	BankAccount ba[10];
+
+	for (int i = 0; i < 10; ++i) {
+		ba[i].display();	
+	}
+
+	int bank_task = 0;
+	while(!bank_task) {
+
+		int accountId = askAccountId();
+
+		int choice    = ba[accountId - 1].askChoice();
+
+		ba[accountId - 1].task(choice);
+		cout << endl << "Enter 0 to continue: ";
+		cin >> bank_task;
+
+	}
+
+	return 0;
+}
+
+
+
+// Q2: Bank Account Ends
+// =========================================================
+
+
+
+// =========================================================
+// Q3: Student-Class Starts
+
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+class Student
+{
+	private :
+	static int count;
+	int roll;
+	char name[50];
+	int age;
+	int marks[3];
+
+	public :
+	Student();
+	void getData();
+	void display();
+	void editDetails();
+
+};
+
+Student :: Student()
+{
+	int subjects = 3;
+	roll = ++count;
+	for (int i = 0; i < subjects; ++i) {
+		marks[i] = 35;
+	}
+}
+
+void Student :: getData()
+{
+	cout << "Enter name of Roll No. " << this->roll << ": "; 
+	cin >> this->name;
+
+	cout << "Enter age of Roll No. " << this->roll << ": "; 
+	cin >> this->age;
+
+	cout << endl;
+}
+
+void Student :: display()
+{
+	int subjects = 3;
+	
+	cout << endl << " Roll no: " << roll;
+	cout << endl << " Name:    " << name;
+	cout << endl << " Age:     " << age;
+
+	for (int i = 0; i < subjects; ++i) {
+		cout << endl << " Subject" << i << ": " << marks[i]; 
+	} 
+
+	cout << "\n\n";
+}
+
+void Student :: editDetails()
+{
+	int marks;
+	for (int i = 0; i < 3; ++i) {
+		cout << "Enter marks of Subject " << i << endl;
+		cin >> marks;
+		this->marks[i] = marks;
+	}
+}
+
+int askRoll()
+{
+	int roll;
+	cout << endl << "Enter roll no whose details you want to edit " << endl;
+	cin >> roll;
+	return roll;
+}
+
+int Student :: count;
+
+int main()
+{	
+	int stud_count = 3;
+	Student stud[3];
+	for (int i = 0; i < stud_count; ++i) {
+		stud[i].getData();
+		stud[i].display();
+	}
+
+	int editNo = 1;
+
+	while (editNo) {
+		editNo = askRoll() - 1;
+		stud[editNo].editDetails();
+		cout << endl << "Press any  key to continue or 0 to exit : ";
+		cin >> editNo;
+	}
+
+	for (int i = 0; i < stud_count; ++i) {
+		stud[i].display();
+	}
+
+	return 0;
+
+}
+
+
+
+
+// Q3: Student Class Ends
+// =========================================================
+
+
+
+
+// =========================================================
+// Q4: Rectangle Starts
+
+
+#include<iostream>
+
+using namespace std;
+
+class Rectangle
+{
+	private :
+	float width;
+	float height;
+
+	public :
+	Rectangle()
+	{
+		width = 1.0;
+		height = 1.0;
+
+		this->width = width; 
+		this->height = height; 
+	}
+
+	void getData();
+	float area();
+	float perimeter();
+};
+
+void Rectangle :: getData()
+{
+	cout << endl;
+	do {
+		cout << "Enter Height(0.0 - 20.00) ";
+		cin >> this->height;
+
+		cout << "Enter Width(0.0 - 20.00) ";
+		cin >> this->width;
+
+	} while(height < 0.0 || height > 20.00 || width < 0.0 || width > 20.00);
+}
+
+float Rectangle :: area()
+{
+	return this->width * this->height;
+}
+
+float Rectangle :: perimeter()
+{
+	return 2 * (this->width + this->height);
+}
+
+int main()
+{
+	Rectangle r;
+	r.getData();
+	
+	cout << endl <<  "Perimeter: " << r.perimeter() << endl;
+	cout << endl << "Area: " << r.area() << endl;
+
+	return 0;
+}
+
+
+
+// Q4: Rectangle Ends
+// =========================================================
+
+
+
+// =========================================================
+// Q5: Supplier Starts
+
+#include<iostream>
+#include<string>
+#include <new> // nothrow
+
+
+using namespace std;
+
+//class Suppliers
+class Suppliers
+{
+    private :
+        char supplier_name[50];
+        int no_of_items;
+        
+    public:
+        int getData(void);
+        int putData(void);
+};
+
+
+// class items
+class Items
+{
+    private :
+        char items[5][50];
+    public :
+        void getData(int);
+        void putData(int);
+};
+
+
+// Functions of Suppliers Class
+int Suppliers :: getData(void)
+{
+    this -> no_of_items = 0;
+
+    cout << endl << "Enter Name of Supplier: ";
+    cin >> this -> supplier_name;
+
+    while (this -> no_of_items < 1) {
+        cout << endl << "Enter no of items supplied by " << this -> supplier_name << ": ";
+        cin >> this -> no_of_items;
+
+        if (this -> no_of_items < 1 || this -> no_of_items > 5)
+            cout << endl << "Enter number of items between 1-5";
+    }
+
+    return this -> no_of_items;
+}
+
+int Suppliers :: putData(void)
+{
+    cout << endl << "============"  << endl;
+    cout << this -> supplier_name;
+
+    return this -> no_of_items;
+}
+
+
+//Functions of item class
+
+void Items :: getData(int no_of_items)
+{
+    for (int i = 0; i < no_of_items; i++) {
+        cout << "Enter Item name: " << i + 1 <<": ";
+        cin >> this -> items[i];
+    }
+}
+
+void Items :: putData(int no_of_items)
+{
+    for (int i = 0; i < no_of_items; i++) {
+        cout << endl << "\t" << this -> items[i];
+    }
+}
+
+
+// Driver Code
+int main ()
+{
+    int number_of_suppliers;
+    int no_of_items;
+    cout << "How many suppliers are there ";
+    cin >> number_of_suppliers;
+
+    Suppliers *suppliers = new(nothrow) Suppliers[number_of_suppliers];
+    Items *items = new(nothrow) Items[number_of_suppliers];
+
+    if(!suppliers || !items) {
+        perror ("Error");
+    }
+
+    for (int i = 0; i < number_of_suppliers; i++) {
+        no_of_items = suppliers[i].getData();
+        items[i].getData(no_of_items);
+    }
+
+    for (int i = 0; i < number_of_suppliers; i++) {
+        no_of_items = suppliers[i].putData();
+        items[i].putData(no_of_items);
+    }
+    
+    cout << endl;
+    return 0;
+}
+
+
+
+// Q5: Supplier Ends
+// =========================================================
+
+
+
+
+// =========================================================
+// Q6: Students, Mca2 Starts
+
+#include <iostream>
+#include <new> //nothrow
+#include <string>
+
+using namespace std;
+
+class Students
+{
+    public:
+        int   roll;
+        char  name[20];
+        int   marks[3];
+        int   max_marks;
+        float per;
+
+    public :
+        int getRoll();
+        void getData(void);
+        void putData(void);
+
+    Students ()
+    {
+        this -> max_marks = 0;
+    }
+};
+
+class Mca2 : public Students // public derivation
+{
+    public :
+        void add(int n);
+        void remove(int);
+        void modify(int);
+        void replace(int, int);
+};
+
+void Students :: getData (void) 
+{
+    int total = 0;
+    cout << endl << "Enter roll no: ";
+    cin >> this -> roll;
+
+    cout << endl << "Enter name: ";
+    cin >> this -> name;
+
+    for (int i = 0; i < 3 ; i++) {
+        cout << endl << "Enter marks of Sub " << i + 1 << ": " ;
+        cin >> this -> marks[i];
+
+        total += this -> marks[i];
+
+        if (this -> marks[i] > this -> max_marks) {
+            this -> max_marks = this -> marks[i];
+        }
+    }
+
+    this -> per = total / 3;
+
+}
+
+void Students :: putData (void) 
+{
+    if (!this -> roll) {
+        return;    
+    }
+
+    cout << endl << "========" << endl;
+
+    cout << "Roll: " << this -> roll << endl;
+    cout << "Name: " << this -> name << endl;
+
+    cout << "Marks : ";
+    for (int i = 0; i < 3 ; i++) {
+        cout << this -> marks[i] << "  ";
+    }
+
+    cout << endl;
+
+    cout << "Max Marks: " << max_marks << endl;
+    cout << "Per: " << per << endl;
+
+}
+
+
+void Mca2 :: remove(int roll)
+{
+    if (this -> roll == roll) {
+        this -> roll = 0;
+    }
+}
+
+
+void Mca2 :: modify(int roll)
+{
+
+    if (this -> roll != roll) {
+        return;
+    }
+
+    int total = 0;
+
+    cout << endl <<"Modifying record for roll:" << this -> roll; 
+
+    cout << endl << "Enter roll no: ";
+    cin >> this -> roll;
+
+    cout << endl << "Enter name: ";
+    cin >> this -> name;
+
+    for (int i = 0; i < 3 ; i++) {
+        cout << endl << "Enter marks of Sub " << i + 1 << ": " ;
+        cin >> this -> marks[i];
+
+        total += this -> marks[i];
+
+        if (this -> marks[i] > this -> max_marks) {
+            this -> max_marks = this -> marks[i];
+        }
+    }
+
+    this -> per = total / 3;
+
+}
+
+
+void Mca2 :: replace(int roll1, int roll2)
+{
+    if (this -> roll == roll1) {
+        this -> roll = roll2;
+    }
+    else if (this -> roll == roll2) {
+        this -> roll = roll1;
+    }
+}
+
+//Driver Code
+int main ()
+{
+    int n = 0, choice = 1;
+
+    cout << "Enter number of students in Mca2: ";
+    cin >> n;
+
+    Mca2 *mca2 = new(nothrow) Mca2[50];
+
+    if (!mca2) {
+        perror ("Error: ");
+    }
+    
+    for (int i = 0; i < n; i++) {
+        mca2[i].getData();
+    }
+
+    for (int i = 0; i < n; i++) {
+        mca2[i].putData();
+    }
+
+    while (choice) {
+       cout << endl << "Enter your choice: " << endl;
+       cout << "1. Add" << endl << "2. Remove" << endl << "3. Modify" << endl << "4. Replace" << endl << "0. Exit"<< endl;
+       cin >> choice;
+
+        if (choice == 1) {
+            int add_n = 0;
+
+            while (add_n < 1) {
+                cout << endl << "How many students you want to add: ";
+                cin >> add_n;
+
+                if (add_n < 1) {
+                    cout << endl <<  "Enter a positive number : ";
+                }
+            }
+
+            n += add_n;
+            
+            for (int i = n - add_n; i < n; i++) {
+                mca2[i].getData();
+            }
+
+        }
+
+       else if(choice == 2) {
+            int roll;
+            
+            cout << "Enter roll no you want to remove: ";
+            cin >> roll;
+            
+            for (int i = 0; i < n; i++) {
+                mca2[i].remove(roll);
+            }
+       }
+
+
+       else if(choice == 3) {
+            int roll;
+            
+            cout << "Enter roll no you want to modify: ";
+            cin >> roll;
+            
+            for (int i = 0; i < n; i++) {
+                mca2[i].modify(roll);
+            }
+       }
+
+
+       else if(choice == 4) {
+            int roll1, roll2;
+            
+            cout << "Enter roll no you want to modify: ";
+            cin >> roll1 >> roll2;
+            
+            for (int i = 0; i < n; i++) {
+                mca2[i].replace(roll1, roll2);
+            }
+       }
+
+
+        else if(choice == 5) {
+            for (int i = 0; i < n; i++) {
+                mca2[i].putData();
+            }
+        }
+
+    }
+
+    for (int i = 0; i < n; i++) {
+        mca2[i].putData();
+    }
+
+    return 0;
+
+}
+
+
+
+// Q6: Student, mca2 Ends
+// =========================================================
+
+
+
+// =========================================================
+// Q7: Cars Starts
+
+#include <iostream>
+#include <new> //nothrow
+#include <string>
+
+using namespace std;
+
+class Car
+{
+    public:
+        int   make;
+        char  color[20];
+        int   size;
+        float cost;
+
+    public :
+        int getRoll();
+        void getData(void);
+        void putData(void);
+
+
+    friend class CarCollection;
+};
+
+class CarCollection
+{
+    public :
+        void add(int n);
+        void remove(Car &, int);
+        void modify(Car &, int);
+        void replace(Car &,int, int);
+};
+
+void Car :: getData (void) 
+{
+    cout << endl << "===========";
+    cout << endl << "Enter make no: ";
+    cin >> this -> make;
+
+    cout << endl << "Enter color: ";
+    cin >> this -> color;
+
+    cout << endl << "Enter size: ";
+    cin >> this -> size;
+
+    cout << endl << "Enter cost: ";
+    cin >> this -> cost;
+
+}
+
+void Car :: putData (void) 
+{
+    if (!this -> make) {
+        return;    
+    }
+
+    cout << endl << "========" << endl;
+
+    cout << "Make: " << this -> make << endl;
+    cout << "Color: " << this -> color << endl;
+    cout << "Size: " << this -> size << endl;
+    cout << "Cost: " << this -> cost << endl;
+}
+
+
+void CarCollection :: remove(Car& s, int make)
+{
+    if (s.make == make) {
+        s.make = 0;
+    }
+}
+
+
+void CarCollection :: modify(Car& s,int make)
+{
+
+    if (s.make != make) {
+        return;
+    }
+
+
+    cout << endl <<"Modifying record for make:" << s.make; 
+
+    cout << endl << "Enter make no: ";
+    cin >> s.make;
+
+    cout << endl << "Enter color: ";
+    cin >> s.color;
+
+    cout << endl << "Enter size: ";
+    cin >> s.size;
+
+    cout << endl << "Enter cost: ";
+    cin >> s.cost;
+}
+
+
+
+void CarCollection :: replace(Car& s,int make1, int make2)
+{
+    if (s.make == make1) {
+        s.make = make2;
+    }
+    else if (s.make == make2) {
+        s.make = make1;
+    }
+}
+
+//Driver Code
+int main ()
+{
+    int n = 0, choice = 1;
+
+    cout << "Enter number of car: ";
+    cin >> n;
+
+    CarCollection *mca2 = new(nothrow) CarCollection[50];
+    Car *car = new(nothrow) Car[50];
+
+    if (!mca2) {
+        perror ("Error: ");
+    }
+    
+    for (int i = 0; i < n; i++) {
+        car[i].getData();
+    }
+
+    for (int i = 0; i < n; i++) {
+        car[i].putData();
+    }
+
+    while (choice) {
+       cout << endl << "Enter your choice: " << endl;
+       cout << "1. Add" << endl << "2. Remove" << endl << "3. Modify" << endl << "4. Replace" << endl << "0. Exit"<< endl;
+       cin >> choice;
+
+        if (choice == 1) {
+            int add_n = 0;
+
+            while (add_n < 1) {
+                cout << endl << "How many car you want to add: ";
+                cin >> add_n;
+
+                if (add_n < 1) {
+                    cout << endl <<  "Enter a positive number : ";
+                }
+            }
+
+            n += add_n;
+            
+            for (int i = n - add_n; i < n; i++) {
+                car[i].getData();
+            }
+
+        }
+
+       else if(choice == 2) {
+            int make;
+            
+            cout << "Enter make no you want to remove: ";
+            cin >> make;
+            
+            for (int i = 0; i < n; i++) {
+                mca2[i].remove(car[i], make);
+            }
+       }
+
+
+       else if(choice == 3) {
+            int make;
+            
+            cout << "Enter make no you want to modify: ";
+            cin >> make;
+            
+            for (int i = 0; i < n; i++) {
+                mca2[i].modify(car[i],make);
+            }
+       }
+
+
+       else if(choice == 4) {
+            int make1, make2;
+            
+            cout << "Enter make no you want to modify: ";
+            cin >> make1 >> make2;
+            
+            for (int i = 0; i < n; i++) {
+                mca2[i].replace(car[i], make1, make2);
+            }
+       }
+
+
+        else if(choice == 5) {
+            for (int i = 0; i < n; i++) {
+                car[i].putData();
+            }
+        }
+
+    }
+
+    for (int i = 0; i < n; i++) {
+        car[i].putData();
+    }
+
+    return 0;
+
+}
+
+
+
+// Q7: Cars Ends
+// =========================================================
+
+
+
+
+// =========================================================
+// Q8: Employee, Employee Collection Starts
+
+#include <iostream>
+#include <new> //nothrow
+#include <string>
+
+using namespace std;
+
+class Employee;
+
+class EmpCollection
+{
+    public :
+        void getData(Employee &);
+        void putData(Employee &);
+};
+
+class Employee
+{
+    public:
+        int   id;
+        char  emp_name[20];
+
+    public :
+        int getRoll();
+        friend void EmpCollection :: getData(Employee &);
+        friend void EmpCollection :: putData(Employee &);
+
+
+};
+
+void EmpCollection :: getData (Employee &c) 
+{
+    cout << endl << "===========";
+    cout << endl << "Enter id no: ";
+    cin >> c.id;
+
+    cout << endl << "Enter emp_name: ";
+    cin >> c.emp_name;
+
+}
+
+
+void EmpCollection :: putData (Employee &c) 
+{
+
+    cout << endl << "========" << endl;
+
+    cout << "Make: " << c.id << endl;
+    cout << "Color: " << c.emp_name << endl;
+}
+
+//Driver Code
+int main ()
+{
+    int n = 0;
+
+    cout << "Enter number of employee: ";
+    cin >> n;
+
+    Employee *employee = new(nothrow) Employee[50];
+    EmpCollection *empCollection = new(nothrow) EmpCollection[50];
+
+    
+    for (int i = 0; i < n; i++) {
+        empCollection[i].getData(employee[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        empCollection[i].putData(employee[i]);
+    }
+
+    return 0;
+
+}
+
+
+
+
+// Q8: Employee, Employee Collection Ends
+// =========================================================
