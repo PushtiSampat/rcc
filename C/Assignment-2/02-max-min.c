@@ -1,3 +1,9 @@
+
+/* ==================================================================
+Max-min from Pointer
+================================================================== */
+
+
 #include<stdio.h>
 
 int findmax(int max, int myArray[], int n)
@@ -35,3 +41,20 @@ int main()
 	printf("%d is max element\n", max);
 	return 0;
 }
+
+
+
+/* ==================================================================
+Output:
+
+	Enter N: 5
+	Enter number 01: 10
+	Enter number 02: 20
+	Enter number 03: 40
+	Enter number 04: 30
+	Enter number 05: 5
+	40 is max element
+
+================================================================== */
+
+

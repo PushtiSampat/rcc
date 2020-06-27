@@ -1,0 +1,2845 @@
+
+/*
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+******************* ASSIGNMENT: 3 ********************
+******************* ASSIGNMENT: 3 ********************  
+******************* ASSIGNMENT: 3 ********************
+
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+*/
+
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      1-fifo.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program to create a singly linked list 
+ * 			and display its elements in FIFO pattern.
+ * 			Also display the number of elements in the list  
+ * 
+ * ========================================================== */
+
+
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h> 
+
+
+// Structure -> Node
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+
+// Function for -> Getting N
+int getN()
+{
+	int n;
+
+	printf("Enter No. of nodes you want to enter: ");
+	scanf("%d",&n);
+	
+	return n;
+}
+
+
+// Function for -> Getting data
+int getData()
+{
+	int data;
+
+	printf("\nEnter Data: ");
+	scanf("%d",&data);
+	
+	return data;
+}
+
+
+
+
+// Function For -> Inserting Data
+struct Node *insertData(struct Node *pHead, int n)
+{
+	int i, data;
+	struct Node *new_node;
+	struct Node *temp;
+
+	if(pHead == NULL) {
+		pHead = createNode();
+
+		pHead -> data = getData();
+		pHead -> next = NULL;
+		
+		if (n == 1) { return pHead; } // only 1 element
+	}
+
+	for(i = 1; i < n; i++) {
+
+		temp = pHead;
+		
+		// Creating new node
+		new_node = createNode();
+
+		new_node -> data = getData();
+		new_node -> next = NULL;
+
+		while(temp->next != NULL) {
+			temp = temp->next;
+		}
+
+		temp->next = new_node;
+
+	}
+
+	return pHead;
+}
+
+
+// Function for -> Displaying all elements of Linked List 
+void display(struct Node *pHead)
+{
+	struct Node *curr = pHead;
+
+	printf("\n ========== Result Starts ========== \n");
+
+	while(curr != NULL) {
+		printf("\ncurr -> data: %d\n", curr -> data);
+		printf("curr -> next: %d\n", curr -> next);
+		curr = curr -> next;
+	}
+
+	printf("\n ========== Result Ends========== \n");
+}
+
+
+// Function for -> Counting nodes
+int countNodes(struct Node *p)
+{
+	int count = 0;
+	
+	while (p != NULL) {
+		count ++;
+		p = p -> next;		
+	}
+
+	return count;
+}
+
+
+// Driver Code
+int main()
+{
+	struct Node *pHead = NULL;
+	int num = getN();
+
+	pHead = insertData(pHead, num);
+
+	display(pHead); //Display all Nodes
+
+	printf("\nThere are %d elements in the list\n", countNodes(pHead));
+
+	return 0;
+}
+
+/* =================================================================
+ * Output :
+
+	Enter No. of nodes you want to enter: 6
+
+	Enter Data: 10
+
+	Enter Data: 50
+
+	Enter Data: 20
+
+	Enter Data: 30
+
+	Enter Data: 40
+
+	Enter Data: 90
+
+	 ========== Result Starts ==========
+
+	curr -> data: 10
+	curr -> next: 8197576
+
+	curr -> data: 50
+	curr -> next: 8200880
+
+	curr -> data: 20
+	curr -> next: 8200896
+
+	curr -> data: 30
+	curr -> next: 8200912
+
+	curr -> data: 40
+	curr -> next: 8200928
+
+	curr -> data: 90
+	curr -> next: 0
+	
+	 ========== Result Ends==========
+
+	There are 6 elements in the list
+
+ ================================================================= */
+
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      10-split.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a C program to split a given linked list into two.  
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h> 
+
+
+// Structure -> Node
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+
+// Function for -> Getting N
+int getN()
+{
+	int n;
+
+	printf(" Enter No. of nodes you want to enter: ");
+	scanf("%d",&n);
+	
+	return n;
+}
+
+
+// Function for -> Getting data
+int getData()
+{
+	int data;
+
+	printf("\n Enter Data: ");
+	scanf("%d",&data);
+	
+	return data;
+}
+
+
+// Function for -> Creating Node 
+struct Node *createNode()
+{
+	struct  Node *new_node;
+
+	if((new_node = (struct Node *) malloc(sizeof(struct Node))) == NULL) {
+		perror ("Error");
+		exit(1);
+	}
+
+	return new_node;
+}
+
+
+// Function For -> Inserting Data
+struct Node *insertData(struct Node *pHead, int n)
+{
+	int i, data;
+	struct Node *new_node;
+	struct Node *temp;
+
+	if(pHead == NULL) {
+		pHead = createNode();
+
+		pHead -> data = getData();
+		pHead -> next = NULL;
+		
+		if (n == 1) { return pHead; }
+	}
+
+	for(i = 1; i < n; i++) {
+
+		temp = pHead;
+		
+		new_node = createNode();
+
+		new_node -> data = getData();
+		new_node -> next = NULL;
+
+		while(temp->next != NULL) {
+			temp = temp->next;
+		}
+
+		temp->next = new_node;
+
+	}
+
+	return pHead;
+}
+
+
+
+int countNodes(struct Node *p)
+{
+	int count = 0;
+	
+	while (p != NULL) {
+		count ++;
+		p = p -> next;		
+	}
+
+	return count;
+}
+
+
+void printStylish(int count)
+{
+	printf("\n ********");
+	for (int i = 0; i < count; ++i) { 
+		printf("************"); 
+	}
+	printf("\n");
+}
+
+// Function for -> Displaying all elements of Linked List 
+void display(struct Node *pHead)
+{
+	int i = 0, count;
+	struct Node *curr = pHead;
+
+	count = countNodes(pHead);
+
+	if(pHead == NULL) {
+		printf(" ********* Empty List ********* \n");
+		return;
+	}
+
+	printStylish(count);
+	
+	printf(" * Index *");
+	while(curr != NULL) {
+		printf(" %8d * ", ++i);
+		curr = curr -> next;
+	}
+
+	printStylish(count);
+	curr = pHead;
+
+	printf(" * Data  *");
+	while(curr != NULL) {
+		printf(" %8d * ", curr -> data);
+		curr = curr -> next;
+	}
+
+	printStylish(count);
+	curr = pHead;
+
+	printf(" * Next  *");
+	while(curr != NULL) {
+		printf(" %8d * ", curr -> next);
+		curr = curr -> next;
+	}
+
+	printStylish(count);
+	
+}
+
+
+int askSplitType()
+{
+	int splitType;
+	
+	printf(" How do you want to split \n\t 1. Using Index  \n\t 2. Using Value: \n \t ");
+	scanf ("%d",&splitType);
+
+	if(splitType == 1 || splitType == 2) { 
+		return splitType;
+	}
+	else {
+		printf(" *** Enter valid option *** \n");
+		splitType = askSplitType();		
+	}
+
+}
+
+
+int askIndex(int count)
+{
+	int n, index;
+
+	printf("\n From which Index do you want to create a new List: ");
+	scanf("%d",&index);
+
+	if(index > 0 && index <= count) { 
+		return index;
+	}
+	printf("Enter valid Index\n");
+	n = askIndex(count);
+	
+}
+
+struct Node *split(struct Node **pHead, int type)
+{
+	struct Node *curr = *pHead;
+	struct Node *prev = *pHead;
+	struct Node *newList;
+
+	int i = 0, index, count, data, foundData;
+
+	count = countNodes(*pHead);
+	
+	if(type == 1) {
+		index = askIndex(count);
+		while (curr != NULL) {
+			if(++i == index){
+				if(index == 1) {
+					newList = *pHead;
+					*pHead = NULL;
+					return newList; 
+				}
+				newList = prev -> next;
+				prev -> next = NULL;
+				return newList; 
+			}
+			prev = curr;
+			curr = curr -> next;		
+		}
+	} 
+
+	else if(type == 2) {
+		foundData = 0;
+		data = getData();
+		while (curr != NULL) {
+			i++;
+			if(data == curr -> data){
+				foundData = 1;
+				
+				// Finding Duplicate Data
+				curr = curr -> next;
+				while (curr != NULL) {
+					if(data == curr -> data) {
+						printf(" ********* Duplicate record found. Enter Index no to split *********\n");
+						newList = split(&(*pHead), 1);						
+						return newList;
+					}
+					curr = curr -> next;
+				}
+
+				if(i == 1) {
+					newList = *pHead;
+					*pHead = NULL;
+					return newList; 
+				}
+				newList = prev -> next;
+				prev -> next = NULL;
+				return newList; 
+			}
+			prev = curr;
+			curr = curr -> next;		
+		}
+		if(!foundData) {
+			printf(" \n ********* Data not found ********* \n");
+		}
+		
+	}
+}
+
+
+int main()
+{
+	struct Node *pHead = NULL;
+	struct Node *newList;
+	
+	int type;
+	int num = getN();
+
+	pHead = insertData(pHead, num);
+
+	display(pHead);
+
+	type = askSplitType();
+
+	newList = split(&pHead, type);
+
+	printf(" \n ========== List 1 ==========\n");
+	display(pHead);
+
+	printf(" \n ========== List 2 ==========\n");
+	display(newList);
+
+	return 0;
+}
+
+
+/* =================================================================
+* Output :
+
+	 Enter No. of nodes you want to enter: 5
+
+	 Enter Data: 10
+
+	 Enter Data: 20
+
+	 Enter Data: 30
+
+	 Enter Data: 20
+
+	 Enter Data: 50
+
+	 ********************************************************************
+	 * Index *        1 *         2 *         3 *         4 *         5 *
+	 ********************************************************************
+	 * Data  *       10 *        20 *        30 *        20 *        50 *
+	 ********************************************************************
+	 * Next  * 12785096 *  12788400 *  12788416 *  12788432 *         0 *
+	 ********************************************************************
+	 How do you want to split
+	         1. Using Index
+	         2. Using Value:
+	         2
+
+	 Enter Data: 20
+	 ********* Duplicate record found. Enter Index no to split *********
+
+	 From which Index do you want to create a new List: 3
+
+	 ========== List 1 ==========
+
+	 ********************************
+	 * Index *        1 *         2 *
+	 ********************************
+	 * Data  *       10 *        20 *
+	 ********************************
+	 * Next  * 12785096 *         0 *
+	 ********************************
+
+	 ========== List 2 ==========
+
+	 ********************************************
+	 * Index *        1 *         2 *         3 *
+	 ********************************************
+	 * Data  *       30 *        20 *        50 *
+	 ********************************************
+	 * Next  * 12788416 *  12788432 *         0 *
+	 ********************************************
+
+==================================================================== */
+
+
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      2-lifo.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program to create a singly linked list 
+ * 			and display its elements in LIFO pattern.
+ * 			Also display the number of elements in the list  
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+// Function for -> Asking number of Elements
+int num()
+{
+	int n;
+
+	printf("How much elements you wanna enter: ");
+	scanf("%d",&n);
+
+	return n;
+}
+
+// Function for -> Getting Data from user
+int getElement()
+{
+	int data;
+
+	printf("Enter Data: ");
+	printf("     ^^^^^\n");
+
+	scanf("%d",&data);
+
+	return data;
+}
+
+// Function for -> Creating new node
+struct Node *createNode()
+{
+	struct  Node *new_node;
+
+	// Sufficient memory not available
+	if((new_node = (struct Node *) malloc(sizeof(struct Node))) == NULL ) {
+		perror ("Error");
+		exit(1);
+	}
+
+	return new_node;
+}
+
+
+
+void printStylish(struct Node *new_node)
+{
+	int j, k;
+	
+	for(j = 17; j < 24; j++) {
+	
+		for (k = 0; k < j; k++) {
+			printf(" ");
+		}
+
+		for (k = 0; k < j - 17; k++) {
+			printf("     ");
+		}
+
+		printf("*****\n");
+	
+	}
+
+	printf("                                                            \\/\\/\\/\\/\\/ \n");
+	printf("**********************************************************************\n");
+	printf("** new_node: %8d || ", new_node);
+	printf(" data    : %8d || ", new_node->data);
+	printf(" next    : %8d ** ", new_node->next);
+	printf("\n**********************************************************************\n");
+}
+
+
+// Function for -> Inserting Data
+struct Node *insert(struct Node *pHead, int n)
+{
+	int i, j, k, data;
+	struct  Node *new_node; 
+	struct Node *temp;
+
+	new_node = createNode();
+
+	printf("\n                 ********\n");
+	printf("                 * NULL *\n");
+	printf("                 ********\n");
+
+	if(pHead == NULL) {
+
+		pHead = new_node;
+
+		new_node -> data = getElement();
+		new_node -> next = NULL;
+
+		if(n == 1) { return pHead; }
+		printStylish(new_node);
+	
+	}
+
+	for (i = 1; i < n; ++i) {
+		
+		temp = new_node;	
+
+		new_node = createNode();
+		new_node -> data = getElement();
+		new_node -> next = temp;
+		
+		printStylish(new_node);
+
+	}
+
+	return new_node;
+}
+
+
+// Function for -> Displaying Nodes
+void display(struct Node *first)
+{
+	struct Node *disp = first;
+
+	printf("\n========== Result ==========\n");
+	
+	while(disp != NULL) {
+
+		printf("\ndisp: %d\n", disp);
+		printf("disp -> data: %d\n", disp -> data);
+		printf("disp -> next: %d\n", disp -> next);
+		
+		disp = disp -> next;
+	}
+
+	printf("\ndisp: %d\n", disp);
+}
+
+
+// Function for -> Counting nodes
+int countNodes(struct Node *p)
+{
+	int count = 0;
+	
+	while (p != NULL) {
+		count ++;
+		p = p -> next;		
+	}
+
+	return count;
+}
+
+
+// Driver Code
+int main()
+{
+	struct Node *pHead = NULL;
+	struct Node *first;
+
+	first = insert(pHead, num());
+
+	display(first);
+
+	printf("\nThere are %d elements in the list\n", countNodes(first));
+
+	
+	return 0;
+}
+
+/* =================================================================
+ * Output :
+
+	 How much elements you wanna enter: 5
+
+	                 ********
+	                 * NULL *
+	                 ********
+	Enter Data:      ^^^^^
+	20
+	                 *****
+	                       *****
+	                             *****
+	                                   *****
+	                                         *****
+	                                               *****
+	                                                     *****
+	                                                            \/\/\/\/\/
+	**********************************************************************
+	** new_node:  7083416 ||  data    :       20 ||  next    :        0 **
+	**********************************************************************
+	Enter Data:      ^^^^^
+	10
+	                 *****
+	                       *****
+	                             *****
+	                                   *****
+	                                         *****
+	                                               *****
+	                                                     *****
+	                                                            \/\/\/\/\/
+	**********************************************************************
+	** new_node:  7083464 ||  data    :       10 ||  next    :  7083416 **
+	**********************************************************************
+	Enter Data:      ^^^^^
+	30
+	                 *****
+	                       *****
+	                             *****
+	                                   *****
+	                                         *****
+	                                               *****
+	                                                     *****
+	                                                            \/\/\/\/\/
+	**********************************************************************
+	** new_node:  7086768 ||  data    :       30 ||  next    :  7083464 **
+	**********************************************************************
+	Enter Data:      ^^^^^
+
+	40
+	                 *****
+	                       *****
+	                             *****
+	                                   *****
+	                                         *****
+	                                               *****
+	                                                     *****
+	                                                            \/\/\/\/\/
+	**********************************************************************
+	** new_node:  7086784 ||  data    :       40 ||  next    :  7086768 **
+	**********************************************************************
+	Enter Data:      ^^^^^
+	50
+	                 *****
+	                       *****
+	                             *****
+	                                   *****
+	                                         *****
+	                                               *****
+	                                                     *****
+	                                                            \/\/\/\/\/
+	**********************************************************************
+	** new_node:  7086800 ||  data    :       50 ||  next    :  7086784 **
+	**********************************************************************
+
+	========== Result ==========
+
+	disp: 7086800
+	disp -> data: 50
+	disp -> next: 7086784
+
+	disp: 7086784
+	disp -> data: 40
+	disp -> next: 7086768
+
+	disp: 7086768
+	disp -> data: 30
+	disp -> next: 7083464
+
+	disp: 7083464
+	disp -> data: 10
+	disp -> next: 7083416
+
+	disp: 7083416
+	disp -> data: 20
+	disp -> next: 0
+
+	disp: 0
+
+	There are 5 elements in the list
+
+ ================================================================= */
+
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      3-insert-delete.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content:  Write a menu driven program to create a singly linked list 
+ *			 and perform following operations on it:
+ *       
+ *   		 a. Insert an element 
+ * 			 b. Delete an element
+ * 			 c. Display the list
+ * 
+ * ========================================================== */
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+// Structure
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+
+// Function for -> asking choice
+int askChoice()
+{
+	int choice;
+	
+	// printf("\n =============== Asking Choice ===============\n");
+	printf("\n Enter your Choice\n\n\t 0. Exit\n\t 1. Insert\n\t 2. Display\n\t 3. Delete\n");
+	
+	printf("\n\t My choice is: ");
+	scanf("%d",&choice);
+	
+	return choice;
+}
+
+
+// Function for -> Style
+void printStylish(int count)
+{
+	printf("\n ********");
+	for (int i = 0; i < count; ++i) { 
+		printf("************"); 
+	}
+	printf("\n");
+}
+
+
+// Function for -> Couting Nodes
+int countNodes(struct Node *p)
+{
+	int count = 0;
+	
+	while (p != NULL) {
+		count ++;
+		p = p -> next;		
+	}
+	return count;
+}
+
+
+// Function for -> Displaying all elements of Linked List 
+void display(struct Node *pHead)
+{
+	int i = 0, count;
+	struct Node *curr = pHead;
+
+	count = countNodes(pHead);
+
+	if(pHead == NULL) {
+		printf("\n ********* Empty List ********* \n");
+		return;
+	}
+
+	printStylish(count);
+	
+	printf(" * Index *");
+	while(curr != NULL) {
+		printf(" %8d * ", ++i);
+		curr = curr -> next;
+	}
+
+	printStylish(count);
+	curr = pHead;
+
+	printf(" * Data  *");
+	while(curr != NULL) {
+		printf(" %8d * ", curr -> data);
+		curr = curr -> next;
+	}
+
+	printStylish(count);
+	curr = pHead;
+
+	printf(" * Next  *");
+	while(curr != NULL) {
+		printf(" %8d * ", curr -> next);
+		curr = curr -> next;
+	}
+
+	printStylish(count);
+	
+}
+
+// Function for -> asking any element to Insert 
+int askElement ()
+{
+	int element;
+
+	printf("Enter data: ");
+	scanf("%d",&element);
+	
+	return element;	
+}
+
+void insertAtLast(struct Node **pHead, int data)
+{
+	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+	struct Node *last = *pHead;
+
+	new_node->data = data;
+	new_node->next = NULL;
+
+	while(last->next != NULL) {
+		last = last->next;
+	}
+
+	last->next = new_node;
+	
+	return;
+}
+
+
+void insertAtStart(struct Node **pHead, int data)
+{
+	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+
+	new_node->data = data;
+	new_node->next = *pHead;
+	*pHead = new_node;
+	
+	return;
+}
+
+
+int askIndex(int count)
+{
+	int n, index;
+
+	printf("\n After which Index do you want to create a new Node: ");
+	scanf("%d",&index);
+
+	if(index > 0 && index <= count) { 
+		return index;
+	}
+	printf("\n Enter valid Index");
+	n = askIndex(count);	
+}
+
+
+int askIndexToDel(int count)
+{
+	int n, index;
+
+	printf("\n Which Index do you want to delete: ");
+	scanf("%d",&index);
+
+	if(index > 0 && index <= count) { 
+		return index;
+	}
+	printf("Enter valid Index\n");
+	n = askIndex(count);	
+}
+
+
+void insertAtSpecific(struct Node **pHead, int data)
+{
+	int position, index, i = 0;
+	struct Node *curr = *pHead;
+	struct Node *temp;
+	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+
+	display(*pHead);
+	index = askIndex(countNodes(*pHead));
+
+
+	while (curr != NULL) {
+
+		if(++i == index) {
+
+			new_node -> data = data;
+			
+			if(curr -> next == NULL) {
+				curr -> next = new_node;
+				new_node -> next = NULL;
+			} 
+
+			else {
+				temp = curr -> next;
+				curr -> next = new_node;
+				new_node -> next = temp;
+			}
+
+		}	
+
+		curr = curr -> next	;
+
+	}
+
+}
+
+
+static void delete(struct Node **pHead)
+{
+	int position, index, i = 0, count;
+	struct Node *curr = *pHead;
+	struct Node *prev = NULL;
+	if(*pHead == NULL) {
+		return;
+	}
+	display(*pHead);
+
+	count = countNodes(*pHead);
+	index = askIndexToDel(count);
+
+	while (curr != NULL) {
+
+		if(++i == index) {
+
+			if(i == 1) {
+
+				if(count == 0) {
+					free(*pHead);
+					*pHead = NULL;
+					printf("\n\t *** Index Deleted *** \n");
+					return;
+				}
+
+				else {
+					*pHead = curr -> next;
+					free(curr);
+					printf("\n\t *** Index Deleted *** \n");
+					return;
+				}
+
+			}
+
+			else {
+
+				if(curr -> next == NULL) {
+					free(curr);
+					prev -> next = NULL;					
+					printf("\n\t *** Index Deleted *** \n");
+					return;
+				}
+
+				else {
+					prev -> next = curr -> next;
+					free(curr);
+					printf("\n\t *** Index Deleted *** \n");
+					return;
+				}
+
+			}
+
+		}	
+
+		prev = curr;
+		curr = curr -> next	;
+
+	}
+
+}
+
+
+void insert(struct Node **pHead, int data)
+{
+	struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
+	int insertChoice;
+
+	// If linked List is empty 
+	if(*pHead == NULL) {
+		*pHead = new_node;
+		new_node->data = data;
+		new_node->next = NULL;
+		display(*pHead);
+		return;
+	}
+
+	printf("\nWhere do you want to insert \n\t 1. Enter at Beginning \n\t 2. Enter at desired location \n"
+		" \t 3. Enter at  end \n\n\t Enter Option: ");
+	scanf("%d",&insertChoice);
+
+	if(insertChoice == 1) {
+		insertAtStart(pHead, data);
+	}
+
+	else if (insertChoice == 2) {
+		insertAtSpecific(pHead, data);
+	} 
+
+	else if (insertChoice == 3) {
+		insertAtLast(pHead, data);
+	}
+
+	display(*pHead);
+}
+
+
+
+// Function for -> performing tasks as per choice
+void doTask(struct Node **pHead, int choice)
+{
+	if(choice == 1) {
+		printf("\n ========== Enter data you want to insert ==========\n");
+		insert(pHead, askElement());
+	} 
+
+	else if(choice == 2) {
+		display(*pHead);
+	} 
+
+	else if(choice == 3) {
+		delete(&(*pHead));
+		display(*pHead);
+	}
+
+	else {
+		printf("\n * * * Invalid Choice * * * \n"); 
+	}
+}
+
+// Driver Function
+int main()
+{
+	struct Node *pHead = NULL;
+	int choice = 1;
+	
+	while(choice = askChoice()) {
+		doTask(&pHead, choice);
+	}
+	
+	return 0;
+}
+
+
+
+
+
+
+/* =================================================================
+
+Output :
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 1
+
+	 ========== Enter data you want to insert ==========
+	Enter data: 20
+
+	 ********************
+	 * Index *        1 *
+	 ********************
+	 * Data  *       20 *
+	 ********************
+	 * Next  *        0 *
+	 ********************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 1
+
+	 ========== Enter data you want to insert ==========
+	Enter data: 10
+
+	Where do you want to insert
+	         1. Enter at Beginning
+	         2. Enter at desired location
+	         3. Enter at  end
+
+	         Enter Option: 1
+
+	 ********************************
+	 * Index *        1 *         2 *
+	 ********************************
+	 * Data  *       10 *        20 *
+	 ********************************
+	 * Next  *  7607704 *         0 *
+	 ********************************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 1
+
+	 ========== Enter data you want to insert ==========
+	Enter data: 40
+
+	Where do you want to insert
+	         1. Enter at Beginning
+	         2. Enter at desired location
+	         3. Enter at  end
+
+	         Enter Option: 3
+
+	 ********************************************
+	 * Index *        1 *         2 *         3 *
+	 ********************************************
+	 * Data  *       10 *        20 *        40 *
+	 ********************************************
+	 * Next  *  7607704 *   7611088 *         0 *
+	 ********************************************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 1
+
+	 ========== Enter data you want to insert ==========
+	Enter data: 30
+
+	Where do you want to insert
+	         1. Enter at Beginning
+	         2. Enter at desired location
+	         3. Enter at  end
+
+	         Enter Option: 2
+
+	 ********************************************
+	 * Index *        1 *         2 *         3 *
+	 ********************************************
+	 * Data  *       10 *        20 *        40 *
+	 ********************************************
+	 * Next  *  7607704 *   7611088 *         0 *
+	 ********************************************
+
+	 After which Index do you want to create a new Node: 3
+
+	 ********************************************************
+	 * Index *        1 *         2 *         3 *         4 *
+	 ********************************************************
+	 * Data  *       10 *        20 *        40 *        30 *
+	 ********************************************************
+	 * Next  *  7607704 *   7611088 *   7611120 *         0 *
+	 ********************************************************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 1
+
+	 ========== Enter data you want to insert ==========
+	Enter data: 50
+
+	Where do you want to insert
+	         1. Enter at Beginning
+	         2. Enter at desired location
+	         3. Enter at  end
+
+	         Enter Option: 2
+
+	 ********************************************************
+	 * Index *        1 *         2 *         3 *         4 *
+	 ********************************************************
+	 * Data  *       10 *        20 *        40 *        30 *
+	 ********************************************************
+	 * Next  *  7607704 *   7611088 *   7611120 *         0 *
+	 ********************************************************
+
+	 After which Index do you want to create a new Node: 4
+
+	 ********************************************************************
+	 * Index *        1 *         2 *         3 *         4 *         5 *
+	 ********************************************************************
+	 * Data  *       10 *        20 *        40 *        30 *        50 *
+	 ********************************************************************
+	 * Next  *  7607704 *   7611088 *   7611120 *   7611152 *         0 *
+	 ********************************************************************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 1
+
+	 ========== Enter data you want to insert ==========
+	Enter data: 60
+
+	Where do you want to insert
+	         1. Enter at Beginning
+	         2. Enter at desired location
+	         3. Enter at  end
+
+	         Enter Option: 2
+
+	 ********************************************************************
+	 * Index *        1 *         2 *         3 *         4 *         5 *
+	 ********************************************************************
+	 * Data  *       10 *        20 *        40 *        30 *        50 *
+	 ********************************************************************
+	 * Next  *  7607704 *   7611088 *   7611120 *   7611152 *         0 *
+	 ********************************************************************
+
+	 After which Index do you want to create a new Node: 6
+	 
+	 Enter valid Index
+	 After which Index do you want to create a new Node: 0
+	 
+	 Enter valid Index
+	 After which Index do you want to create a new Node: 5
+
+	 ********************************************************************************
+	 * Index *        1 *         2 *         3 *         4 *         5 *         6 *
+	 ********************************************************************************
+	 * Data  *       10 *        20 *        40 *        30 *        50 *        60 *
+	 ********************************************************************************
+	 * Next  *  7607704 *   7611088 *   7611120 *   7611152 *   7611184 *         0 *
+	 ********************************************************************************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 3
+
+	 ********************************************************************************
+	 * Index *        1 *         2 *         3 *         4 *         5 *         6 *
+	 ********************************************************************************
+	 * Data  *       10 *        20 *        40 *        30 *        50 *        60 *
+	 ********************************************************************************
+	 * Next  *  7607704 *   7611088 *   7611120 *   7611152 *   7611184 *         0 *
+	 ********************************************************************************
+
+	 Which Index do you want to delete: 6
+
+	         *** Index Deleted ***
+
+	 ********************************************************************
+	 * Index *        1 *         2 *         3 *         4 *         5 *
+	 ********************************************************************
+	 * Data  *       10 *        20 *        40 *        30 *        50 *
+	 ********************************************************************
+	 * Next  *  7607704 *   7611088 *   7611120 *   7611152 *         0 *
+	 ********************************************************************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 3
+
+	 ********************************************************************
+	 * Index *        1 *         2 *         3 *         4 *         5 *
+	 ********************************************************************
+	 * Data  *       10 *        20 *        40 *        30 *        50 *
+	 ********************************************************************
+	 * Next  *  7607704 *   7611088 *   7611120 *   7611152 *         0 *
+	 ********************************************************************
+
+	 Which Index do you want to delete: 1
+
+	         *** Index Deleted ***
+
+	 ********************************************************
+	 * Index *        1 *         2 *         3 *         4 *
+	 ********************************************************
+	 * Data  *       20 *        40 *        30 *        50 *
+	 ********************************************************
+	 * Next  *  7611088 *   7611120 *   7611152 *         0 *
+	 ********************************************************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 3
+
+	 ********************************************************
+	 * Index *        1 *         2 *         3 *         4 *
+	 ********************************************************
+	 * Data  *       20 *        40 *        30 *        50 *
+	 ********************************************************
+	 * Next  *  7611088 *   7611120 *   7611152 *         0 *
+	 ********************************************************
+
+	 Which Index do you want to delete: 3
+
+	         *** Index Deleted ***
+
+	 ********************************************
+	 * Index *        1 *         2 *         3 *
+	 ********************************************
+	 * Data  *       20 *        40 *        50 *
+	 ********************************************
+	 * Next  *  7611088 *   7611152 *         0 *
+	 ********************************************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 3
+
+	 ********************************************
+	 * Index *        1 *         2 *         3 *
+	 ********************************************
+	 * Data  *       20 *        40 *        50 *
+	 ********************************************
+	 * Next  *  7611088 *   7611152 *         0 *
+	 ********************************************
+
+	 Which Index do you want to delete: 3
+
+	         *** Index Deleted ***
+
+	 ********************************
+	 * Index *        1 *         2 *
+	 ********************************
+	 * Data  *       20 *        40 *
+	 ********************************
+	 * Next  *  7611088 *         0 *
+	 ********************************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 3
+
+	 ********************************
+	 * Index *        1 *         2 *
+	 ********************************
+	 * Data  *       20 *        40 *
+	 ********************************
+	 * Next  *  7611088 *         0 *
+	 ********************************
+
+	 Which Index do you want to delete: 2
+
+	         *** Index Deleted ***
+
+	 ********************
+	 * Index *        1 *
+	 ********************
+	 * Data  *       20 *
+	 ********************
+	 * Next  *        0 *
+	 ********************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 2
+
+	 ********************
+	 * Index *        1 *
+	 ********************
+	 * Data  *       20 *
+	 ********************
+	 * Next  *        0 *
+	 ********************
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 3
+
+	 ********************
+	 * Index *        1 *
+	 ********************
+	 * Data  *       20 *
+	 ********************
+	 * Next  *        0 *
+	 ********************
+
+	 Which Index do you want to delete: 1
+
+	         *** Index Deleted ***
+
+	 ********* Empty List *********
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 3
+
+	 ********* Empty List *********
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 4
+
+	 * * * Invalid Choice * * *
+
+	 Enter your Choice
+
+	         0. Exit
+	         1. Insert
+	         2. Display
+	         3. Delete
+
+	         My choice is: 0
+
+ ================================================================= */
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      4-ordered.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program to create an ordered linked list 
+ * 
+ * ========================================================== */
+
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+// Structure created
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+// Function for -> Getting Number of elements user wants to enter
+int getN()
+{
+	int n;
+
+	printf("Enter No. of nodes you want to enter: ");
+	scanf("%d",&n);
+
+	if(n < 1) { 
+		printf("Enter positive natural number\n");
+		n = getN();
+	}
+	
+	return n;
+}
+
+
+// Function for -> Getting element
+int getData()
+{
+	int data;
+
+	printf("\nEnter Data: ");
+	scanf("%d",&data);
+	
+	return data;
+}
+
+
+// Function for -> Creating Node 
+struct Node *createNode()
+{
+	struct  Node *new_node;
+
+	if((new_node = (struct Node *) malloc(sizeof(struct Node))) == NULL) {
+		perror ("Error");
+		exit(1);
+	}
+
+	return new_node;
+}
+
+
+// Function for inserting data order wise
+struct Node *insert(struct Node *pHead, int n)
+{
+	int i, data;
+
+	struct Node *new_node;
+	struct Node *curr;
+	struct Node *prev = NULL;
+
+	if(pHead == NULL) {
+		pHead = createNode();
+
+		pHead -> data = getData();
+		pHead -> next = NULL;
+
+		if(n == 1) { return pHead; }
+	}
+
+	for(i = 1; i < n; i++) {
+
+		curr = pHead;
+
+		data = getData();
+		new_node = createNode();
+		
+		while(curr != NULL) {
+
+			if(curr -> data >= data) {
+				new_node -> data = data;
+				new_node -> next = curr;
+				
+				if(curr == pHead) {
+					pHead = new_node;
+				}
+
+				else {
+					prev -> next = new_node;
+				}
+
+				break;
+			} 
+
+			prev = curr;
+			curr = curr ->next;
+
+		}
+
+		if(curr == NULL) {
+			prev -> next = new_node;
+			new_node -> data = data;
+			new_node -> next = NULL;
+		}
+
+	}
+
+	return pHead;
+}
+
+// Function for -> Displaying all elements of Linked List
+void display(struct Node *pHead)
+{
+	struct Node *curr = pHead;
+
+	printf("\n ========== Result Starts ========== \n");
+
+	while(curr != NULL) {
+		printf("\n \t         curr: %10d\n", curr);
+		printf(" \t curr -> data: %10d\n", curr -> data);
+		printf(" \t curr -> next: %10d\n", curr -> next);
+		curr = curr -> next;
+	}
+
+	printf("\n ========== Result Ends========== \n");
+}
+
+// Driver Function
+int main()
+{
+	struct Node *pHead = NULL;
+
+	pHead = insert(pHead, getN());
+
+	display(pHead);
+
+	return 0;
+}
+
+/* =================================================================
+ * Output :
+	 Enter No. of nodes you want to enter: 7
+
+	Enter Data: 30
+
+	Enter Data: 40
+
+	Enter Data: 20
+
+	Enter Data: 10
+
+	Enter Data: 60
+
+	Enter Data: 50
+
+	Enter Data: 70
+
+	 ========== Result Starts ==========
+
+	                 curr:   10363584
+	         curr -> data:         10
+	         curr -> next:   10363568
+
+	                 curr:   10363568
+	         curr -> data:         20
+	         curr -> next:   10360216
+
+	                 curr:   10360216
+	         curr -> data:         30
+	         curr -> next:   10360264
+
+	                 curr:   10360264
+	         curr -> data:         40
+	         curr -> next:   10363616
+
+	                 curr:   10363616
+	         curr -> data:         50
+	         curr -> next:   10363600
+
+	                 curr:   10363600
+	         curr -> data:         60
+	         curr -> next:   10363632
+
+	                 curr:   10363632
+	         curr -> data:         70
+	         curr -> next:          0
+
+	 ========== Result Ends==========
+
+ ================================================================= */
+
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      5-reverse.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program to reverse a given linked list 
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h> 
+
+
+// Structure -> Node
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+
+// Function for -> Getting Number of elements user wants to enter
+int getN()
+{
+	int n;
+
+	printf("Enter No. of nodes you want to enter: ");
+	scanf("%d",&n);
+
+	if(n < 1) { 
+		printf("Enter positive natural number\n");
+		n = getN();
+	}
+	
+	return n;
+}
+
+
+// Function for -> Getting element
+int getData()
+{
+	int data;
+
+	printf("\nEnter Data: ");
+	scanf("%d",&data);
+	
+	return data;
+}
+
+
+// Function for -> Creating Node 
+struct Node *createNode()
+{
+	struct  Node *new_node;
+
+	if((new_node = (struct Node *) malloc(sizeof(struct Node))) == NULL) {
+		perror ("Error");
+		exit(1);
+	}
+
+	return new_node;
+}
+
+// Function For -> Inserting Data
+struct Node *insertData(struct Node *pHead, int n)
+{
+	int i, data;
+
+	struct Node *new_node;
+	struct Node *temp;
+
+	if(pHead == NULL) {
+
+		pHead = createNode();
+
+		pHead -> data = getData();
+		pHead -> next = NULL;
+		
+		if (n == 1) { return pHead; }
+	}
+
+	for(i = 1; i < n; i++) {
+
+		temp = pHead;
+		
+		new_node = createNode();
+
+		new_node -> data = getData();
+		new_node -> next = NULL;
+
+		while(temp->next != NULL) {
+			temp = temp->next;
+		}
+
+		temp->next = new_node;
+
+	}
+
+	return pHead;
+}
+
+
+/* gcc file-1.c file-2.c 
+It will give error if any static func() exists
+
+Static word is used to avoid conflict
+By default, all functions are global. 
+Reverse function may be used by any other program. 
+By writing static, this function will work on this file only */
+
+
+// Function for -> Reversing data 
+static struct Node *reverse(struct Node *pHead)
+{
+    struct Node *temp; 
+	struct Node *prev = NULL;
+	struct Node *current = pHead; 
+
+    while (current != NULL) { 
+
+        temp = current -> next; 
+
+        // Reverse current node's pointer 
+        current -> next = prev; 
+  
+        // Move pointer one position ahead. 
+        prev = current; 
+
+        current = temp; 
+
+    } 
+    
+    pHead = prev; 
+
+    return pHead;
+}
+
+// Function for -> Displaying all elements of Linked List 
+void display(struct Node *pHead)
+{
+	struct Node *rev = pHead;
+
+	printf("\n ========== Result Starts ========== \n");
+
+	while(rev != NULL) {
+		printf("\n \t rev -> data: %d\n", rev -> data);
+		rev = rev -> next;
+	}
+
+	printf("\n ========== Result Ends========== \n");
+}
+
+
+// Driver Code 
+int main()
+{
+	struct Node *pHead = NULL;
+
+	int num = getN();
+	pHead = insertData(pHead, num);
+
+	pHead = reverse(pHead);
+
+	display(pHead);
+
+	return 0;
+}
+
+
+/* =================================================================
+Output :
+
+	Enter No. of nodes you want to enter: 5
+
+	Enter Data: 10
+
+	Enter Data: 20
+
+	Enter Data: 30
+
+	Enter Data: 40
+
+	Enter Data: 50
+
+	 ========== Result Starts ==========
+
+	         rev -> data: 50
+
+	         rev -> data: 40
+
+	         rev -> data: 30
+
+	         rev -> data: 20
+
+	         rev -> data: 10
+
+	 ========== Result Ends==========
+
+ =================================================================*/
+
+
+
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      6-sum.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content:  Write a program to calculate the summation 
+ *           of all elements of the linked list.
+ * 
+ * ========================================================== */
+
+
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h> 
+
+
+// Structure -> Node
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+
+// Function for -> Getting N
+int getN()
+{
+	int n;
+
+	printf("Enter No. of nodes you want to enter: ");
+	scanf("%d",&n);
+	
+	return n;
+}
+
+
+// Function for -> Getting data
+int getData()
+{
+	int data;
+
+	printf("\nEnter Data: ");
+	scanf("%d",&data);
+	
+	return data;
+}
+
+// Function For -> Inserting Data
+struct Node *insertData(struct Node *pHead, int n)
+{
+	int i, data;
+	struct Node *new_node;
+	struct Node *temp;
+
+	if(pHead == NULL) {
+		if((pHead = (struct Node *) malloc(sizeof(struct Node))) == NULL) {
+			perror("\n Error");
+			exit(1);
+		}
+
+		pHead -> data = getData();
+		pHead -> next = NULL;
+		
+		if (n == 1) { return pHead; }
+	}
+
+	for(i = 1; i < n; i++) {
+
+		temp = pHead;
+		
+		if((new_node = (struct Node *) malloc(sizeof(struct Node))) == NULL) {
+			perror("\n Error");
+			exit(1);
+		}
+
+		new_node -> data = getData();
+		new_node -> next = NULL;
+
+		while(temp->next != NULL) {
+			temp = temp->next;
+		}
+
+		temp->next = new_node;
+
+	}
+
+	return pHead;
+}
+
+
+// Function for -> Add all elements of Linked List 
+void add(struct Node *pHead)
+{
+	struct Node *add = pHead;
+	int total = 0;
+
+	printf("\n");
+	while(add != NULL) {
+		printf("%d ", add -> data);
+		if(add -> next != NULL) {
+			printf(" + ");
+		}
+
+		total = total + add->data;
+		add = add -> next;
+	}
+	printf("= %d\n", total);
+}
+
+
+int main()
+{
+	struct Node *pHead;
+	int num = getN();
+	
+	pHead = NULL;
+
+	pHead = insertData(pHead, num);
+
+	add(pHead); //Add all Nodes
+
+	return 0;
+}
+
+
+/* =================================================================
+
+Output :
+
+	Enter No. of nodes you want to enter: 6
+
+	Enter Data: 10
+
+	Enter Data: 50
+
+	Enter Data: 30
+
+	Enter Data: 40
+
+	Enter Data: 20
+
+	Enter Data: 60
+	
+	10  + 50  + 30  + 40  + 20  + 60 = 210
+
+  =================================================================*/
+
+
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      7-append.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content:  Write a program to create two linked list and 
+ * 			 append the second list after the first
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h> 
+
+
+// Structure -> Node
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+
+// Function for -> Getting N
+int getN()
+{
+	int n;
+
+	printf("Enter No. of nodes you want to enter: ");
+	scanf("%d",&n);
+	
+	return n;
+}
+
+
+// Function for -> Getting data
+int getData()
+{
+	int data;
+
+	printf("\nEnter Data: ");
+	scanf("%d",&data);
+	
+	return data;
+}
+
+// Function For -> Inserting Data
+struct Node *insertData(struct Node *pHead, int n)
+{
+	int i, data;
+	struct Node *new_node;
+	struct Node *temp;
+
+	if(pHead == NULL) {
+		if((pHead = (struct Node *) malloc(sizeof(struct Node))) == NULL) {
+			perror("\n Error");
+			exit(1);
+		}
+
+		pHead -> data = getData();
+		pHead -> next = NULL;
+		
+		if (n == 1) { return pHead; }
+	}
+
+	for(i = 1; i < n; i++) {
+
+		temp = pHead;
+		
+		if((new_node = (struct Node *) malloc(sizeof(struct Node))) == NULL) {
+			perror("\n ** Sufficient Memory Not Available ** \n");
+			exit(1);
+		}
+
+		new_node -> data = getData();
+		new_node -> next = NULL;
+
+		while(temp->next != NULL) {
+			temp = temp->next;
+		}
+
+		temp->next = new_node;
+
+	}
+
+	return pHead;
+}
+
+
+// Function for -> Appending List2 with List1 
+void appendList(struct Node *L1, struct Node *L2)
+{
+	struct Node *temp = L1;
+	while(temp != NULL) {
+			
+		if(temp -> next == NULL) {
+			temp -> next = L2;
+			break;
+		}
+
+		temp = temp -> next;
+	}
+}
+
+// Function for -> Displaying all elements of Linked List 1
+void display(struct Node *pHead)
+{
+	struct Node *append = pHead;
+
+	printf("\n ========== Result Starts ========== \n");
+
+	while(append != NULL) {
+		printf("\nappend -> data: %d\n", append -> data);
+		append = append -> next;
+	}
+
+	printf("\n ========== Result Ends========== \n");
+}
+
+int main()
+{
+	struct Node *list1 = NULL;
+	struct Node *list2 = NULL;
+
+	printf("\n ========== Linked List 1 ==========\n");
+	int num = getN();
+	list1 = insertData(list1, num);
+
+	printf("\n ========== Linked List 2 ==========\n");
+	
+	num = getN();
+	list2 = insertData(list2, num);
+
+	appendList(list1, list2);
+
+	display(list1);
+
+	return 0;
+}
+
+/* =================================================================
+
+Output :
+
+	 ========== Linked List 1 ==========
+	Enter No. of nodes you want to enter: 4
+
+	Enter Data: 50
+
+	Enter Data: 20
+
+	Enter Data: 10
+
+	Enter Data: 60
+
+	 ========== Linked List 2 ==========
+	Enter No. of nodes you want to enter: 3
+
+	Enter Data: 30
+
+	Enter Data: 40
+
+	Enter Data: 70
+
+	 ========== Result Starts ==========
+
+	append -> data: 50
+
+	append -> data: 20
+
+	append -> data: 10
+
+	append -> data: 60
+
+	append -> data: 30
+
+	append -> data: 40
+
+	append -> data: 70
+
+	 ========== Result Ends==========
+
+ ================================================================= */
+
+
+
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      8-swap-consecutive-using-values.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content:  Write a program to swap two consecutive elements 
+ * 			 ( Swap only values )
+ * 
+ * ========================================================== */
+
+
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h> 
+
+
+// Structure -> Node
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+
+// Function for -> Getting N
+int getN()
+{
+	int n;
+
+	printf("Enter No. of nodes you want to enter: ");
+	scanf("%d",&n);
+	
+	return n;
+}
+
+
+// Function for -> Getting data
+int getData()
+{
+	int data;
+
+	printf("\nEnter Data: ");
+	scanf("%d",&data);
+	
+	return data;
+}
+
+
+// Function for -> Creating Node 
+struct Node *createNode()
+{
+	struct  Node *new_node;
+
+	if((new_node = (struct Node *) malloc(sizeof(struct Node))) == NULL) {
+		perror ("Error");
+		exit(1);
+	}
+
+	return new_node;
+}
+
+
+// Function For -> Inserting Data
+struct Node *insertData(struct Node *pHead, int n)
+{
+	int i, data;
+	struct Node *new_node;
+	struct Node *temp;
+
+	if(pHead == NULL) {
+
+		pHead = createNode();
+
+		pHead -> data = getData();
+		pHead -> next = NULL;
+
+		if (n == 1) { return pHead; }
+	}
+
+	for(i = 1; i < n; i++) {
+
+		temp = pHead;
+		
+		new_node = createNode();
+
+		new_node -> data = getData();
+		new_node -> next = NULL;
+
+
+		while(temp->next != NULL) {
+			temp = temp->next;
+		}
+
+		temp->next = new_node;
+	}
+
+	return pHead;
+}
+
+
+// Function for -> Displaying all elements of Linked List 
+void display(struct Node *pHead)
+{
+	struct Node *iterate = pHead;
+
+	while(iterate != NULL) {
+		printf("\niterate -> data: %d\n", iterate -> data);
+		printf("iterate -> data: %d\n", iterate -> next);
+		iterate = iterate -> next;
+	}
+
+}
+
+
+// Function for -> Swapping consecutive elements 
+void swap(struct Node *pHead)
+{
+	struct Node *curr;
+	struct Node *prev = pHead;
+
+	int swap;
+
+	if(pHead -> next == NULL) {
+		printf("Swap not possible in 1 element \n");
+		exit(0);
+	}
+
+	curr = pHead -> next;
+
+	while(curr != NULL) {
+
+		swap = prev -> data;
+		prev -> data = curr -> data;
+		curr -> data = swap;
+
+		if(curr -> next == NULL || curr -> next -> next == NULL) {
+			return;
+		}
+
+		prev = curr -> next;
+		curr = curr -> next -> next;
+
+	}
+	
+}
+
+
+// Driver Code
+int main()
+{
+	struct Node *pHead = NULL;
+	int num = getN();
+
+	pHead = insertData(pHead, num);
+
+	printf("\n ========== Before Swap ========== \n");
+	display(pHead); //Display all Nodes before swap
+
+	swap(pHead);
+
+	printf("\n ========== After Swap ========== \n");
+	display(pHead); //Display all Nodes after swap
+
+	return 0;
+}
+
+/* =================================================================
+
+Output :
+
+	Enter No. of nodes you want to enter: 5
+
+	Enter Data: 10
+
+	Enter Data: 20
+
+	Enter Data: 30
+
+	Enter Data: 40
+
+	Enter Data: 50
+
+	 ========== Before Swap ==========
+
+	iterate -> data: 10
+	iterate -> data: 7083464
+
+	iterate -> data: 20
+	iterate -> data: 7086768
+
+	iterate -> data: 30
+	iterate -> data: 7086784
+
+	iterate -> data: 40
+	iterate -> data: 7086800
+
+	iterate -> data: 50
+	iterate -> data: 0
+
+	 ========== After Swap ==========
+
+	iterate -> data: 20
+	iterate -> data: 7083464
+
+	iterate -> data: 10
+	iterate -> data: 7086768
+
+	iterate -> data: 40
+	iterate -> data: 7086784
+
+	iterate -> data: 30
+	iterate -> data: 7086800
+
+	iterate -> data: 50
+	iterate -> data: 0
+
+ ================================================================= */
+
+
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      9-swap-consecutive-using-addr.c
+ * Copyright: 29-Apr-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content:  Write a program to swap two consecutive elements 
+ * 			 ( Swap only address )
+ * 
+ * ========================================================== */
+
+
+#include <stdio.h>
+// #include <conio.h>
+#include <stdlib.h> 
+
+
+// Structure -> Node
+struct Node
+{
+	int data;
+	struct Node *next;
+};
+
+
+// Function for -> Getting N
+int getN()
+{
+	int n;
+
+	printf("Enter No. of nodes you want to enter: ");
+	scanf("%d",&n);
+	
+	return n;
+}
+
+
+// Function for -> Getting data
+int getData()
+{
+	int data;
+
+	printf("\nEnter Data: ");
+	scanf("%d",&data);
+	
+	return data;
+}
+
+
+// Function for -> Creating Node 
+struct Node *createNode()
+{
+	struct  Node *new_node;
+
+	if((new_node = (struct Node *) malloc(sizeof(struct Node))) == NULL) {
+		perror ("Error");
+		exit(1);
+	}
+
+	return new_node;
+}
+
+
+// Function For -> Inserting Data
+struct Node *insertData(struct Node *pHead, int n)
+{
+	int i, data;
+	struct Node *new_node;
+	struct Node *temp;
+
+	if(pHead == NULL) {
+
+		pHead = createNode();
+
+		pHead -> data = getData();
+		pHead -> next = NULL;
+
+		if (n == 1) { return pHead; }
+	}
+
+	for(i = 1; i < n; i++) {
+
+		temp = pHead;
+		
+		new_node = createNode();
+
+		new_node -> data = getData();
+		new_node -> next = NULL;
+
+
+		while(temp->next != NULL) {
+			temp = temp->next;
+		}
+
+		temp->next = new_node;
+	}
+
+	return pHead;
+}
+
+
+// Function for -> Displaying all elements of Linked List 
+void display(struct Node *pHead)
+{
+	struct Node *iterate = pHead;
+
+	while(iterate != NULL) {
+		printf("\niterate -> data: %d\n", iterate -> data);
+		printf("iterate -> next: %d\n", iterate -> next);
+		iterate = iterate -> next;
+	}
+
+}
+
+
+// Function for -> Swapping consecutive elements 
+void swap(struct Node **pHead)
+{
+	struct Node *curr;
+	struct Node *temp;
+	struct Node *prev = *pHead;
+
+	if((*pHead) -> next == NULL) {
+		printf("Swap not possible in 1 element \n");
+		exit(0);
+	}
+
+	curr = (*pHead) -> next;
+	
+	*pHead = curr;
+
+	while(curr != NULL) {
+
+		if(curr -> next == NULL) {
+			curr -> next = prev;
+			prev -> next = NULL;
+			return;
+		}	
+
+		else {
+			
+			if(curr -> next -> next ==  NULL) {
+				prev -> next = curr ->next;
+				curr -> next = prev;
+				return;
+			} 
+
+			else {
+				temp = curr -> next;
+				prev -> next = curr -> next -> next;
+				curr -> next = prev;
+				
+				if(prev -> next -> next == NULL) {
+					prev -> next -> next = temp;
+					temp -> next = NULL;
+					return;
+				}
+
+			}
+
+		}	
+		
+		prev = temp;
+		curr = curr -> next -> next;
+
+	}
+	
+}
+
+
+// Driver Code
+int main()
+{
+	struct Node *pHead = NULL;
+	int num = getN();
+
+	pHead = insertData(pHead, num);
+
+	printf("\n ========== Before Swap ========== \n");
+	display(pHead); //Display all Nodes before swap
+
+	swap(&pHead);
+
+	printf("\n ========== After Swap ========== \n");
+	display(pHead); //Display all Nodes after swap
+
+	return 0;
+}
+
+/* =================================================================
+
+Output :
+
+	Enter No. of nodes you want to enter: 7
+
+	Enter Data: 10
+
+	Enter Data: 20
+
+	Enter Data: 30
+
+	Enter Data: 40
+
+	Enter Data: 50
+
+	Enter Data: 60
+
+	Enter Data: 70
+
+	 ========== Before Swap ========== 
+
+	iterate -> data: 10
+	iterate -> next: 29098032
+
+	iterate -> data: 20
+	iterate -> next: 29098064
+
+	iterate -> data: 30
+	iterate -> next: 29098096
+
+	iterate -> data: 40
+	iterate -> next: 29098128
+
+	iterate -> data: 50
+	iterate -> next: 29098160
+
+	iterate -> data: 60
+	iterate -> next: 29098192
+
+	iterate -> data: 70
+	iterate -> next: 0
+
+	 ========== After Swap ========== 
+
+	iterate -> data: 20
+	iterate -> next: 29098000
+
+	iterate -> data: 10
+	iterate -> next: 29098096
+
+	iterate -> data: 40
+	iterate -> next: 29098064
+
+	iterate -> data: 30
+	iterate -> next: 29098160
+
+	iterate -> data: 60
+	iterate -> next: 29098128
+
+	iterate -> data: 50
+	iterate -> next: 29098192
+
+	iterate -> data: 70
+	iterate -> next: 0	
+
+ ================================================================= */
+

@@ -1,5 +1,7 @@
+
+
  /* ===========================================================
- * File:      1-bisection.cpp
+ * File:      2-false-position.cpp
  * Copyright: 10-Feb-2020 by Ajinkya Rathod(ajinzrathod)
  * 
  * Content:   False Position Method
@@ -111,3 +113,5 @@ int main()
   0.111264 |  0.111264 |      2.58582e-017 |   -9.8554e-017 |            0.111264 |        -9.8554e-017
  
  * ========================================================== */
+
+

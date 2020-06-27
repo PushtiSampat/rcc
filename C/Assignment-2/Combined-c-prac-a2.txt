@@ -1,0 +1,2249 @@
+/*
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+******************* ASSIGNMENT: 2 ********************
+******************* ASSIGNMENT: 2 ********************  
+******************* ASSIGNMENT: 2 ********************
+
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+*/
+
+#include<stdio.h>
+int getData(int myArray[], int n)
+{
+	int i;
+	int *p = myArray;
+	for (i = 0; i < n; ++i) {
+		printf("Enter number %d: ", i + 1);
+		scanf("%d",p);
+		p++;
+	}
+}
+
+int reverseData(int myArray[], int n)
+{
+	int i, *p = myArray + n - 1;
+
+	printf("\n ===== Numbers in reverse Order ===== \n");
+	
+	for (i = 0; i < n; ++i) {
+		printf("%d: ", *p);
+		p--;
+	}
+}
+
+int main()
+{
+	int myArray[10], n, i;
+	int *p = myArray;
+	printf("Enter N: ");
+	scanf("%d",&n);
+
+	getData(myArray, n);
+	reverseData(myArray, n);
+
+	printf("\n");
+	return 0;
+}
+
+
+/* ==================================================================
+Output:
+Enter N: 5
+Enter number 1: 10
+Enter number 2: 20
+Enter number 3: 30
+Enter number 4: 40
+Enter number 5: 50
+
+ ===== Numbers in reverse Order =====
+50: 40: 30: 20: 10:
+================================================================== */
+
+/* ==================================================================
+Max-min from Pointer
+================================================================== */
+
+
+#include<stdio.h>
+
+int findmax(int max, int myArray[], int n)
+{
+	int i;
+	int *p = myArray;
+
+	for (i = 1; i < n; ++i) {
+		printf("Enter number %02d: ", i + 1);
+		scanf("%d",p);
+	
+		if(*p > max) {
+			max  = *p;
+		}
+		p++;
+	
+	}
+	return max;
+}
+
+int main()
+{
+	int myArray[10], n, i, max;
+	int *p = myArray;
+
+	printf("Enter N: ");
+	scanf("%d",&n);
+
+	printf("Enter number 01: ");
+	scanf("%d",p);
+
+	max = *p;
+	max = findmax(max, myArray, n);
+
+	printf("%d is max element\n", max);
+	return 0;
+}
+
+
+
+/* ==================================================================
+Output:
+
+	Enter N: 5
+	Enter number 01: 10
+	Enter number 02: 20
+	Enter number 03: 40
+	Enter number 04: 30
+	Enter number 05: 5
+	40 is max element
+
+================================================================== */
+
+
+
+/* ==================================================================
+Read String Using Pointers
+================================================================== */
+
+#include<stdio.h>
+#include<string.h>
+
+char strupr(char *str)
+{
+
+  unsigned char *p = (unsigned char *)str;
+
+  while (*p) {
+     *p = toupper((unsigned char)*p);
+      p++;
+  }
+
+}
+
+int filterString(char string1[])
+{
+	char *cptr;
+	int vowels = 0, consonants = 0, numbers = 0, whitespaces = 0, special_characters = 0;
+
+	// string1 = strupr(string1);
+
+	cptr = string1;
+
+	while(*cptr != '\0') {
+
+		// Vowels should always come before consonants, else consonants will always be increased
+		if(*cptr == 65 || *cptr == 69 || *cptr == 73 || *cptr == 79 || *cptr == 85) {
+			printf("Vowel: %c is stored at %d \n", *cptr, cptr);
+			vowels++;
+		}
+		
+		else if (*cptr > 47 && *cptr < 58) {
+			printf("Number: %c is stored at %d \n", *cptr, cptr);
+			numbers++;
+		}
+
+		else if(*cptr == 9 || *cptr == 32) {
+			printf("Whitespace: %c is stored at %d \n", *cptr, cptr);
+			whitespaces++;
+		}
+
+		else if(*cptr > 64 && *cptr < 91){
+			printf("Consonant: %c is stored at %d \n", *cptr, cptr);
+			consonants++;
+		}
+		
+		else {
+			printf("Special Character: %c is stored at %d \n", *cptr, cptr);
+			special_characters++;
+		}
+
+		cptr++;
+	}
+
+	printf("\n Vowels: %d\n", vowels);
+	printf("\n Numbers: %d\n", numbers);
+	printf("\n Whitespaces: %d\n", whitespaces);
+	printf("\n Consonants: %d\n", consonants);
+	printf("\n Special Characters: %d\n", special_characters);
+
+	return 0;
+}
+
+
+int main()
+{
+	char string1[50];
+	
+	printf("Enter String\n");
+	scanf("%[^\n]",string1);
+	
+	strupr(string1);
+
+	filterString(string1);
+
+	printf("\n");
+
+	return 0;
+}
+
+
+
+/* ==================================================================
+================================================================== */
+
+
+
+/* ==================================================================
+Transpose using pointer
+================================================================== */
+
+#include <stdio.h>
+
+
+void readData(int matrix[][5], int rows, int cols)
+{
+	int i, j;
+
+	int (*arrptr)[5] = matrix;
+
+	for (i = 0; i < rows; ++i) {
+		printf("Enter row %d: \n", i + 1);
+		
+		for (j = 0; j < cols; ++j) {
+			printf("Enter Col %d: ", j + 1);
+			// scanf("%d",arrptr + (i * j) + j);
+			scanf("%d",*(arrptr + i) + j);
+			printf("Value: %d \n",*(*(arrptr + i) + j));
+		}
+
+	}
+}
+
+void displayData(int matrix[][5], int rows, int cols)
+{
+	int i, j;
+	int (*arrptr)[5] = matrix;
+
+	printf("\nMatrix Entered: \n");
+
+	for (i = 0; i < rows; ++i) {
+		
+		for (j = 0; j < cols; ++j) {
+			printf("%d \t ",*(*(arrptr + i) + j));
+		}
+
+		printf("\n");
+	}
+}
+
+void transpose(int matrix[][5], int rows, int cols)
+{
+	int i, j;
+	int (*arrptr)[5] = matrix;
+
+	printf("\nOutput: \n");
+
+	for (i = 0; i < cols; ++i) {
+		
+		for (j = 0; j < rows; ++j) {
+			printf("%d \t ",*(*(arrptr + j) + i));
+		}
+
+		printf("\n");
+	}
+}
+
+int main()
+{
+	int matrix[5][5];
+	int rows, cols;
+	
+	printf("Enter Rows and cols\n");
+	scanf("%d %d",&rows, &cols);
+
+	if(rows > 5 || cols > 5) {
+		printf("Invalid Input \n");
+		// exit(0);
+	}
+
+	readData(matrix, rows, cols);
+	displayData(matrix, rows, cols);
+	transpose(matrix, rows, cols);
+
+	printf("\n");
+}
+
+
+
+/* ==================================================================
+	Output:
+	Enter Rows and cols
+	3
+	3
+	Enter row 1:
+	Enter Col 1: 10
+	Value: 10
+	Enter Col 2: 20
+	Value: 20
+	Enter Col 3: 30
+	Value: 30
+	Enter row 2:
+	Enter Col 1: 40
+	Value: 40
+	Enter Col 2: 50
+	Value: 50
+	Enter Col 3: 60
+	Value: 60
+	Enter row 3:
+	Enter Col 1: 70
+	Value: 70
+	Enter Col 2: 80
+	Value: 80
+	Enter Col 3: 90
+	Value: 90
+
+	Matrix Entered:
+	10       20      30
+	40       50      60
+	70       80      90
+
+	Output:
+	10       40      70
+	20       50      80
+	30       60      90
+================================================================== */
+
+
+/* ==================================================================
+Matrix Multiplication using Pointers
+================================================================== */
+
+
+#include <stdio.h>
+
+void readData(int matrix[][5], int rows, int cols)
+{
+	int i, j;
+
+	int (*arrptr)[5] = matrix;
+
+	for (i = 0; i < rows; ++i) {
+		printf("Enter row %d: \n", i + 1);
+		
+		for (j = 0; j < cols; ++j) {
+			printf("Enter Col %d: ", j + 1);
+			// scanf("%d",*(arrptr + (i * j) + j));
+			scanf("%d",*(arrptr + i) + j);
+			printf("Value: %d \n",*(*(arrptr + i) + j));
+		}
+
+	}
+}
+
+void displayData(int matrix[][5], int rows, int cols)
+{
+	int i, j;
+	int (*arrptr)[5] = matrix;
+
+	printf("\nMatrix Entered: \n");
+
+	for (i = 0; i < rows; ++i) {
+
+		for (j = 0; j < cols; ++j) {
+			printf(" %3d \t",*(*(arrptr + i) + j));
+		}
+		printf("\n");
+	}
+
+	printf("\n");
+
+}
+
+void multiply(int matrix1[][5], int matrix2[][5], int rows1, int cols1, int cols2)
+{
+	int i, j, k, total, pdt;
+	int matrix3[5][5];
+
+	int (*arrptr1)[5] = matrix1;
+	int (*arrptr2)[5] = matrix2;
+	int (*arrptr3)[5] = matrix3;
+
+
+	printf("\nMultiplication : \n");
+
+	for (i = 0; i < rows1; ++i) {
+		
+		for (j = 0; j < cols2; ++j) {
+			
+			total = 0;
+			
+			for (k = 0; k < cols1; ++k) {
+				total += *(*(arrptr1 + i) + k) * *(*(arrptr2 + k) + j);
+			}
+
+			*(*(arrptr3 + i) + j) = total;
+			
+		}
+
+	}
+
+
+	for (i = 0; i < rows1; i++) {
+
+		for (j = 0; j < cols2; j++) { 
+
+			printf ("%3d\t", *(*(arrptr3 + i) + j)); 
+		} 
+
+		printf("\n");
+
+	} 
+
+}
+
+int main()
+{
+
+	int matrix1[5][5];
+	int matrix2[5][5];
+
+	int rows1, cols1, rows2, cols2;
+	
+	printf("Enter Rows and cols of matrix1\n");
+	scanf("%d %d",&rows1, &cols1);
+
+	printf("Enter Rows and cols of matrix1\n");
+	scanf("%d %d",&rows2, &cols2);
+
+	if(rows2 != cols1) { printf("Invalid Input \n"); }
+
+	readData(matrix1, rows1, cols1);
+	displayData(matrix1, rows1, cols1);
+
+	readData(matrix2, rows2, cols2);
+	displayData(matrix2, rows2, cols2);
+	
+	multiply(matrix1, matrix2, rows1, cols1, cols2);
+
+	printf("\n");
+
+	return 0;
+
+}
+
+
+
+/* ==================================================================
+Output:
+	Enter Rows and cols of matrix1
+	2
+	3
+	Enter Rows and cols of matrix1
+	3
+	2
+	Enter row 1:
+	Enter Col 1: 10
+	Value: 10
+	Enter Col 2: 20
+	Value: 20
+	Enter Col 3: 30
+	Value: 30
+	Enter row 2:
+	Enter Col 1: 40
+	Value: 40
+	Enter Col 2: 50
+	Value: 50
+	Enter Col 3: 60
+	Value: 60
+
+	Matrix Entered:
+	  10      20      30
+	  40      50      60
+
+	Enter row 1:
+	Enter Col 1: 70
+	Value: 70
+	Enter Col 2: 80
+	Value: 80
+	Enter row 2:
+	Enter Col 1: 90
+	Value: 90
+	Enter Col 2: 100
+	Value: 100
+	Enter row 3:
+	Enter Col 1: 110
+	Value: 110
+	Enter Col 2: 120
+	Value: 120
+
+	Matrix Entered:
+	  70      80
+	  90     100
+	 110     120
+
+
+	Multiplication :
+	5800    6400
+	13900   15400
+================================================================== */
+
+
+/* ==================================================================
+Sum of Matrix Using Pointers
+================================================================== */
+
+
+#include <stdio.h>
+
+void readData(int matrix[][5], int rows, int cols)
+{
+	int i, j;
+
+	int (*arrptr)[5] = matrix;
+
+	for (i = 0; i < rows; ++i) {
+		printf("\nEnter row %d: \n", i + 1);
+		
+		for (j = 0; j < cols; ++j) {
+			printf("Enter Col %d: ", j + 1);
+			scanf("%d",*(arrptr + i) + j);
+		}
+
+	}
+}
+
+void displayData(int matrix[][5], int rows, int cols)
+{
+	int i, j, rowTotal, colTotal;
+	int (*arrptr)[5] = matrix;
+
+	printf("\nMatrix Entered: \n");
+
+	for (i = 0; i < rows; ++i) {
+
+		rowTotal = 0;
+		for (j = 0; j < cols; ++j) {
+			rowTotal += *(*(arrptr + i) + j);
+			printf(" %3d \t",*(*(arrptr + i) + j));
+		}
+		printf("| %d\n", rowTotal);
+	}
+
+	for (i = 0; i <= cols; ++i) {
+		printf(" --- \t");
+	}
+
+	printf("\n");
+
+	for (i = 0; i < cols; ++i) {
+		
+		colTotal = 0;
+		for (j = 0; j < rows; ++j) {
+			colTotal += *(*(arrptr + j) + i);
+		}
+
+		printf(" %3d \t", colTotal);
+	}
+
+	printf("\n");
+
+}
+
+void sum(int matrix[][5], int rows, int cols)
+{
+	int i, j, total = 0;
+
+	int (*arrptr)[5] = matrix;
+
+	for (i = 0; i < rows; ++i) {
+		
+		for (j = 0; j < cols; ++j) {
+			total = total + *(*(arrptr + i) + j);	
+		}
+
+	}
+
+	printf("\nAddition : %d\n", total);
+
+}
+
+int main()
+{
+
+	int matrix[5][5];
+
+	int rows, cols;
+	
+	printf("Enter Rows and cols of matrix1\n");
+	scanf("%d %d",&rows, &cols);
+
+	readData(matrix, rows, cols);
+	displayData(matrix, rows, cols);
+	
+	sum(matrix, rows, cols);
+
+	printf("\n");
+
+	return 0;
+
+}
+
+/* ==================================================================
+Output:
+	Enter Rows and cols of matrix1
+	3
+	3
+
+	Enter row 1:
+	Enter Col 1: 10
+	Enter Col 2: 20
+	Enter Col 3: 30
+
+	Enter row 2:
+	Enter Col 1: 40
+	Enter Col 2: 50
+	Enter Col 3: 60
+
+	Enter row 3:
+	Enter Col 1: 80
+	Enter Col 2: 70
+	Enter Col 3: 90
+
+	Matrix Entered:
+	  10      20      30    | 60
+	  40      50      60    | 150
+	  80      70      90    | 240
+	 ---     ---     ---     ---
+	 130     140     180
+
+	Addition : 450
+================================================================== */
+
+// ==========================================================================================**
+// 8. Write function that receives a sorted array of integers and an integer value, 
+// and inserts the value in correct place.	
+// ==========================================================================================**
+
+#include<stdio.h>
+#include<conio.h>
+
+void readnum(int[],int,int*);
+void addnum(int[],int*,int*);
+void display(int[],int);
+
+void main()
+{
+	int num[10],limit,n=0;
+	printf("Enter how many numbers are in your array: ");
+	scanf("%d",&limit);
+	readnum(num,limit,&n);
+	addnum(num,&limit,&n);
+	display(num,limit);
+	getch();
+}
+
+void readnum(int num[],int limit,int *new_num)					//passing the number which user want ot add in a pointer so 
+{										//it can be used in other function without returning from here..
+	int i,*iptr;
+	iptr=num;
+	printf("Enter %d sorted numbers: ",limit);
+
+	for(i=0;i<limit;i++)
+	{
+		scanf("%d",iptr);
+		iptr++;
+	}
+		printf("Enter number to add in your sorted array: ");
+		scanf("%d",new_num);
+	
+}
+
+void addnum(int num[],int *new_limit,int *new_num)				//Again passing address of limit and new number..
+{
+	int *iptr,i,j,flag=0;
+	iptr=num;
+	for(i=0;i<*new_limit;i++)
+	{
+		if(*new_num < *(iptr+i))					//finding the greater number than our number so we can add new number in the sorted array
+		{
+			for(j=*(new_limit)-1;j>=i;j--)
+			{
+				*(iptr+j+1)=*(iptr+j);
+			}
+			*(iptr+i)=*new_num;
+			(*new_limit)++;						//increasing limit by 1
+			flag=1;
+			break;
+		}	
+	}
+	if(!flag)								//if flag is off that means new number is gretest among sorted array..
+	{
+		*(iptr+i)=*new_num;
+		*new_limit=*new_limit+1;
+	}
+}
+
+void display(int num[],int limit)
+{
+	int i,*iptr;
+
+	iptr=num;
+	printf("New Array: \n");
+	for(i=0;i<limit;i++)
+	{
+		printf("%d ",*iptr);
+		iptr++;
+	}
+}
+
+/* ==========================================================================================**
+// output:
+
+Enter how many numbers are in your array: 5
+Enter 5 sorted numbers: 10 20 30 50 60
+Enter number to add in your sorted array: 40
+New Array:
+10 20 30 40 50 60
+
+// ==========================================================================================*/
+
+
+
+
+/* ==========================================================================================**
+9.  Write a function that will round a floating point number to an indicated decimal place 
+	eg: The number 17.457 would yield the 
+    value 17.46 when it is rounded off to two decimal places	
+
+==========================================================================================**/
+
+
+#include<stdio.h>
+#include<conio.h>
+
+void round(char[],int);
+
+void main()
+{
+	char num[10];
+	int digits;
+	printf("Enter number: ");
+	gets(num);
+	printf("Enter number of decimal places you want: ");
+	scanf("%d",&digits);
+	round(num,digits);
+	printf("Rounded off number: ");
+	puts(num);
+	getch();
+}
+
+
+void round(char num[],int digits)
+{
+	int decimal=0,i=0;
+	char *cptr;
+	cptr=num;
+	while(*cptr != '.')
+	{
+		i++;
+		cptr++;
+	}
+	if(*(cptr+digits+1)>52 )
+	{
+		(*(cptr+digits))++;
+	}
+	*(cptr+digits+1)='\0';
+}
+
+
+/* ==========================================================================================**
+
+output:
+Enter number: 23.786
+Enter number of decimal places you want: 2
+Rounded off number: 23.79
+
+==========================================================================================**/
+
+
+
+
+
+/* ==========================================================================================**
+10. Write a function using pointers to exchange the value stored in two locations in the memory.
+==========================================================================================**/
+
+
+#include<stdio.h>
+#include<conio.h>
+void input_data10(int *a,int *b)
+{
+	int *ptra,*ptrb;
+	ptra=a;
+	ptrb=b;
+	printf("Enter Number 1 : ");
+	scanf("%d",ptra);
+	printf("Enter Number 2 : ");
+	scanf("%d",ptrb);
+}
+void disp_data10(int a,int b)
+{
+	printf("\nA = %d",a);
+	printf("\nB = %d\n",b);
+}
+void swap(int *a,int *b)
+{
+	int *ptra,*ptrb;
+	int temp;
+	ptra=a;
+	ptrb=b;
+	temp=*ptra;
+	*ptra=*ptrb;
+	*ptrb=temp;
+
+}
+
+int main()
+{
+	int a=0,b=0;
+
+	input_data10(&a,&b);
+
+	printf("\tBEFORE SWAP");
+	
+	disp_data10(a,b);
+	
+	swap(&a,&b);
+	
+	printf("\tAFTER SWAP");
+	
+	disp_data10(a,b);
+
+	return 0;
+}
+
+ /* ==========================================================================================**
+output:
+
+Enter Number 1 : 10
+Enter Number 2 : 20
+
+        BEFORE SWAP
+
+A = 10
+B = 20
+
+        AFTER SWAP
+
+A = 20
+B = 10
+
+==========================================================================================* */
+/* ==========================================================================================**
+
+11_a. Find the first occurrence of a character in the given string. The function should return the
+position in the string.
+
+==========================================================================================**/
+
+#include<stdio.h>
+#include<conio.h>
+void disp_str(char *ptr)
+{
+	//char *ptr;
+	//ptr=str;
+	printf("String = ");
+	while(*ptr != '\0')
+	{
+		printf("%c",*ptr);
+		ptr++;
+	}
+}
+
+int search_char(char *ptr, char ch)
+{
+	int i,val = -1;
+	//char *ptr;
+	//ptr = str;
+	for(i = 0 ; *ptr != '\0' ; i++)
+	{
+		if(*ptr == ch)
+		{
+			val = i;
+			break;
+		}
+		ptr++;
+	}
+	return val;
+}
+
+
+int main()
+{
+	char str[50],ch,*ptr;
+	int search_val;
+	
+	printf("Enter String :");
+	gets(str);
+	
+	ptr = str;
+	
+	disp_str(ptr);
+	
+	printf("\nWhich Character You Find :");
+	scanf("%c",&ch);
+	
+	search_val = search_char(ptr,ch);
+	
+	if (search_val == -1)
+		printf("\nCharacter %c is not found..",ch);
+	
+	else
+		printf("Character %c is found at %d",ch,search_val);
+	
+	return 0;
+}
+
+/* ==========================================================================================**
+
+Enter String :Ajinkya
+String = Ajinkya
+Which Character You Find :k
+Character k is found at 4
+
+==========================================================================================**/
+
+
+
+
+/*==========================================================================================**
+11_b.	Find the first occurrence of a string in another string. The function should return the position in the string.
+
+==========================================================================================**/
+
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+
+int search(char str1[],char str2[])
+{
+	int i,j,found=1,index,itemp;
+	char *sptr1,*sptr2;
+	sptr1=str1;
+	sptr2=str2;
+
+	for(i=0; *(sptr1+i) != '\0'; i++)
+	{
+		if(*(sptr1+i) == *(sptr2))
+		{
+			index=i;
+			itemp=i;
+			itemp++;
+			for(j=1;*(sptr2+j) != '\0';j++,itemp++)
+			{
+				if(*(sptr2+j) != *(sptr1+itemp))
+				{
+					found=0;
+					break;
+				}
+			}
+			if(found)
+			{
+				return index;
+			}
+			found=1;
+		}
+	}
+	
+	return -1;
+}
+
+void main()
+{
+	char str1[10],str2[10];
+	int index;
+	printf("Enter first string: ");
+	gets(str1);
+	printf("Enter second string: ");
+	gets(str2);
+
+	index=search(str1,str2);
+	if(index == -1)
+	{
+		printf("Second string not found in first string!!");
+	}
+	else
+	{
+		printf("Second string found at index %d in first string",index);
+	}
+	getch();
+}
+
+
+/*==========================================================================================**
+Enter first string: Ajinkya
+Enter second string: ink
+Second string found at index 2 in first string
+==========================================================================================**/
+
+
+
+/* ==========================================================================================**
+
+11_c. Delete all occurrences of a character from a string.
+
+==========================================================================================**/
+
+#include<stdio.h>
+#include<conio.h>
+void input_data(char str[])
+{
+	printf("Enter String =");
+	gets(str);
+}
+void display11_c(char *ptr)
+{
+	printf("\nString = ");
+	while(*ptr != '\0')
+	{
+		printf("%c",*ptr);
+		ptr++;
+	}
+	printf("\n");
+}
+void delete_char(char *ptr,char ch,char str2[])
+{
+	char *ptr2;
+	ptr2 = str2;
+	while(*ptr != '\0')
+	{
+		//printf("aer");
+		if(*ptr != ch)
+		{
+			*ptr2 = *ptr;
+			ptr2++;
+		}
+		ptr++;
+	}
+	*ptr2 = '\0';
+}
+
+int main()
+{	
+	char str[50],str2[50],ch;
+	char *ptr;
+	
+	input_data(str);
+	
+	ptr = str;
+	
+	display11_c(ptr);
+	
+	printf("\nEnter Which Character You want to delete :");
+	scanf("%c",&ch);
+	
+	delete_char(ptr,ch,str2);
+	
+	printf("\nAfter Deleting Character:");
+	display11_c(str2);
+
+	return 0;
+}
+
+/*==========================================================================================**
+
+Enter String =ajinkya
+
+String = ajinkya
+
+Enter Which Character You want to delete :a
+
+After Deleting Character:
+String = jinky
+
+==========================================================================================**/
+
+/* ==========================================================================================**
+11_d.	Delete all occurrences of a string from another string.
+
+==========================================================================================**/
+#include<stdio.h>
+#include<string.h>
+
+void remove_s(char str1[],char str2[])
+{
+	int i,j,k,found=1,index,itemp,len1,len2;
+	char *sptr1,*sptr2;
+	len1=strlen(str1);
+	len2=strlen(str2);
+	sptr1=str1;
+	sptr2=str2;
+
+	for(i=0; i<len1; i++)
+	
+	{
+		if(*(sptr1+i) == *(sptr2))						
+		{
+			index=i;							
+			itemp=i;
+			itemp++;
+			for(j=1;j<len2;j++,itemp++)			
+			{	
+				if(*(sptr2+j) != *(sptr1+itemp))			
+				{
+					found=0;
+					break;
+				}
+			}
+			if(found)
+			{
+				for(k=0;k<len1;k++)
+				{					
+				
+					*(sptr1+index+k)=*(sptr1+index+len2+k);	
+				}
+				len1-=len2;
+				*(str1+len1)='\0';
+				i--;
+			}
+			found=1;
+		}
+	}
+}
+
+int main()
+{
+	char str1[50],str2[40];
+	int index;
+
+	printf("Enter first string: ");
+	gets(str1);
+	
+	printf("Enter second string: ");
+	gets(str2);
+	
+	remove_s(str1,str2);
+	
+	printf("After removing second string: \n");
+	
+	puts(str1);														
+	
+	return 0;
+
+ }
+
+
+/* ==========================================================================================**
+	Enter first string: Ajinkya
+	Enter second string: ky
+	After removing second string:
+	Ajina
+==========================================================================================**/
+
+
+
+
+/* ==========================================================================================**
+11_e.	Delete all occurrences of a character from a string. Ignore Case.
+
+==========================================================================================**/
+
+#include<stdio.h>
+#include<string.h>
+
+void delete_char(char str[],char ch)
+{
+	char *sptr=str;
+	int i,j,length,index;
+	length=strlen(str);
+
+	for(i=0;i<length;i++)
+	{
+		if(*(sptr+i) == ch ||*(sptr+i) == ch-32 || *(sptr+i) == ch+32  )
+		{
+			j=i;
+			while(j<length-1)
+			{
+				*(sptr+j)=*(sptr+j+1);
+				j++;
+			}
+			*(sptr+length-1)='\0';
+			length--;
+			i--;
+		}
+	}
+}
+
+int main()
+{
+	char str[10],ch;
+
+	printf("Enter string: ");
+	gets(str);
+	
+	printf("Enter character to delete its all occurrences: ");
+	scanf("%c",&ch);
+	
+	delete_char(str,ch);
+	
+	printf("Result: ");
+	puts(str);
+
+	return 0;
+
+}
+
+
+/* ==========================================================================================**
+Enter string: aajjiinnkkyyaa
+Enter character to delete its all occurrences: i
+Result: aajjnnkkyyaa
+==========================================================================================**/
+
+
+
+
+/*==========================================================================================**
+11_f.	Delete all occurrences of a string from another string. Ignore Case.
+==========================================================================================**/
+
+
+#include<stdio.h>
+#include<string.h>
+
+void remove_str(char str1[],char str2[])
+{
+	int i,j,k,found=1,index,itemp,len1,len2;
+	char *sptr1,*sptr2;
+	len1=strlen(str1);
+	len2=strlen(str2);
+	sptr1=str1;
+	sptr2=str2;
+
+	for(i=0; i<len1; i++)
+	{
+		if(*(sptr1+i) == *(sptr2)|| *(sptr1+i) == *(sptr2)-32 ||*(sptr1+i) == *(sptr2)+32)				
+		{
+			index=i;												
+			itemp=i;
+			itemp++;
+			for(j=1;j<len2;j++,itemp++)			
+			{
+
+				if(*(sptr2+j) != *(sptr1+itemp) && *(sptr2+j) != *(sptr1+itemp)-32 && *(sptr2+j) != *(sptr1+itemp)+32)					
+				{
+					found=0;
+					break;
+				}
+			}
+			if(found)
+			{
+				for(k=0;k<len1;k++)									
+				{
+					*(sptr1+index+k)=*(sptr1+index+len2+k);	
+				}
+				len1-=len2;											
+				*(str1+len1)='\0';
+				i--;
+			}
+			found=1;
+		}
+	}
+}
+
+
+int main()
+{
+	char str1[50],str2[50];
+	int index;
+	
+	printf("Enter first string: ");
+	gets(str1);
+	
+	printf("Enter second string: ");
+	gets(str2);
+	
+	remove_str(str1,str2);
+	
+	printf("After removing second string: \n");
+	puts(str1);														
+	
+	return 0;
+}
+
+
+/* ============================================================
+	
+	Output:
+	Enter first string: Ajinkya
+	Enter second string: AJi
+	After removing second string:
+	nkya
+
+ ============================================================ */
+
+/* ==========================================================================================**
+
+11_g. Copy one string to another string.
+
+==========================================================================================**/
+
+#include<stdio.h>
+
+void get_input(char str1[])
+{
+	printf("Enter String =");
+	gets(str1);
+}
+
+
+void display(char *ptr)
+{
+	while(*ptr != '\0')
+	{
+		printf("%c",*ptr);
+		ptr++;
+	}
+	printf("\n");
+}
+
+
+void copy(char str2[],char *ptr)
+{
+	char *ptr2;
+	ptr2 = str2;
+	while(*ptr != '\0'){
+		*ptr2 = *ptr;
+		printf("\n%c: %c",(*ptr),(*ptr2));
+		ptr2++;
+		ptr++;
+	}
+	*ptr2 = '\0';
+}
+
+int main()
+{
+	char str1[50],str2[50];
+	char *ptr;
+	
+	get_input(str1);
+	
+	ptr = str1;
+	
+	display(ptr);
+	
+	printf("Copied String: ");
+	copy(str2,ptr);
+
+	printf("\n\nString :");
+	display(str2);
+
+	return 0;
+}
+
+/* ==========================================================================================**
+output:
+	Enter String =Ajinkya
+	Ajinkya
+	Copied String:
+	A: A
+	j: j
+	i: i
+	n: n
+	k: k
+	y: y
+	a: a
+
+	String :Ajinkya
+==========================================================================================**/
+
+
+/* ============================================================================================
+
+11_h.Copy n characters of one string to another string.
+
+==========================================================================================**/ 
+
+#include<stdio.h>
+
+void input11_h(char str[])
+{
+	printf("Enter String :");
+	gets(str);
+}
+
+
+void disp11_h(char *ptr)
+{
+	printf("String = ");
+	while(*ptr != '\0')
+	{
+		printf("%c",*ptr);
+		ptr++;
+	}
+	printf("\n");
+}
+
+void copych (char *ptr,char *cptr,int n)
+{
+	int i = 0;
+	for(i = 0; i<n ; i++)
+	{
+		//printf("asd");
+		*cptr = *ptr;
+		cptr++;
+		ptr++;
+	}
+	*cptr = '\0';
+}
+
+int main()
+{
+	char str[50],cstr[50];
+	char *ptr,*cptr;
+	int n;//i = 0;
+
+	input11_h(str);
+
+	ptr = str;
+
+	disp11_h(ptr);
+
+	printf("Enter How Many Characters You want to Copy: ");
+	scanf("%d",&n);
+	
+	cptr = cstr;
+	printf("Cloned String: ");
+
+	copych(ptr,cptr,n);
+	disp11_h(cptr);
+
+	return 0;
+}
+
+/* ==========================================================================================**
+
+
+Enter String :aaajjiinnkkyyaa
+String = aaajjiinnkkyyaa
+Enter How Many Characters You want to Copy: 7
+Cloned String: String = aaajjii
+
+
+==========================================================================================**/
+
+
+/* ==========================================================================================**
+
+11_i. Find length of the string and toggle the characters of the string.
+
+==========================================================================================* */
+
+#include<stdio.h>
+
+void input11_i(char str[])
+{
+	printf("Enter String :");
+	gets(str);
+}
+void disp(char *ptr)
+{
+	printf("\nString = ");
+	while(*ptr != '\0')
+	{
+		printf("%c",*ptr);
+		ptr++;
+	}
+	printf("\n");
+}
+void toggle(char *ptr)
+{
+	while(*ptr != '\0')
+	{
+		if(*ptr >= 65 && *ptr <= 90)
+		{
+			*ptr = *ptr + 32;
+		}
+		else if(*ptr >= 97 && *ptr <= 122)
+		{
+			*ptr = *ptr - 32;
+		}
+		else
+		{
+			
+		}
+		ptr++;
+	}
+}
+
+int main()
+{
+	char str[50];
+	char *ptr;
+	
+	input11_i(str);
+	
+	ptr = str;
+	
+	disp(ptr);	
+	
+	toggle(ptr);
+	
+	disp(ptr);
+
+	return 0;
+}
+
+/* ==========================================================================================**
+	Enter String :ajink
+
+	String = ajink
+
+	String = AJINK
+==========================================================================================**/
+
+
+/*==========================================================================================**
+
+11_j.Convert string to all upper case.
+
+==========================================================================================**/
+
+#include<stdio.h>
+
+void input(char str[])
+{
+	printf("Enter String :");
+	gets(str);
+}
+
+void display11_j(char *ptr)
+{
+	printf("String = ");
+	while(*ptr != '\0')
+	{
+		printf("%c",*ptr);
+		ptr++;
+	}
+	printf("\n");
+}
+
+void toupper(char *ptr)
+{
+	while(*ptr != '\0')
+	{
+		if(*ptr >= 97 && *ptr <=122)
+		{
+			*ptr = *ptr - 32;
+			//*ptr++;
+		}
+		ptr++;
+		//printf("%c",*ptr2);
+	}
+}
+
+int main()
+{
+	char str[100];
+	char *ptr;
+	
+	input(str);
+	
+	ptr = str;
+	
+	display11_j(ptr);
+	
+	printf("\nToUpper: ");
+	
+	toupper(ptr);
+	
+	display11_j(ptr);
+
+	return 0;
+}
+
+/*==========================================================================================**
+
+Enter String :Ajinkya
+String = Ajinkya
+
+ToUpper: String = AJINKYA
+
+==========================================================================================**//*==========================================================================================**
+
+11_k.Convert string to all Lower case.
+
+==========================================================================================**/
+
+
+#include<stdio.h>
+#include<conio.h>
+void inputk(char str[])
+{
+	printf("Enter String: ");
+	gets(str);
+}
+
+void display11_k(char *ptr)
+{
+	printf("String = ");
+	while(*ptr != '\0')
+	{
+		printf("%c",*ptr);
+		ptr++;
+	}
+	printf("\n");
+}
+
+void tolower(char *ptr)
+{
+	while(*ptr != '\0')
+	{
+		if(*ptr >= 65 && *ptr <=90)
+			*ptr = *ptr + 32;
+		ptr++;
+	}
+}
+
+int main()
+{
+	char str[100];
+	char *ptr;
+
+	inputk(str);
+
+	ptr = str;
+
+	display11_k(ptr);
+
+	printf("\nAfter Converting ToLower Case\n ");
+
+	tolower(ptr);
+
+	display11_k(ptr);
+
+	return 0;
+}
+
+
+/*==========================================================================================**
+output:
+Enter String :Ajinkya
+String = Ajinkya
+
+After Converting ToLower Case:
+ajinkya
+
+==========================================================================================**/
+
+
+/*==========================================================================================**
+11_L.	Sort an array of string.	
+
+==========================================================================================**/
+
+
+#include<stdio.h>
+#include<string.h>
+
+void readnames(char names[][20],int limit)
+{
+	char (*cptr)[20];
+	int i;
+	cptr=names;
+	fflush(stdin);
+	printf("Enter %d names: \n",limit);
+	for(i=0;i<limit;i++)
+	{
+		gets(*(cptr+i));
+	}
+}
+
+void sort(char names[][20],int limit)
+{
+	char (*cptr)[20],min[20];
+	int i,index,j;
+
+	cptr=names;
+
+	for(i=0;i<limit-1;i++)
+	{
+		strcpy(min,*(cptr+i));
+		index=i;
+
+		for(j=i+1;j<limit;j++)
+		{
+			if(strcmp(min,*(cptr+j))>0)
+			{
+				strcpy(min,*(cptr+j));
+				index=j;
+			}
+			
+		}
+		strcpy(*(cptr+index),*(cptr+i));
+		strcpy(*(cptr+i),min);
+	}
+
+}
+void print(char names[][20],int limit)
+{
+	char (*cptr)[20];
+	int i;
+	cptr=names;
+	printf("Sorted names:\n");
+	for(i=0;i<limit;i++)
+	{
+		puts(*(cptr+i));
+	}
+}
+
+int main()
+{
+	char names[5][20];
+	int limit;
+
+	printf("How many names you have: ");
+	scanf("%d",&limit);
+	
+	readnames(names,limit);
+	
+	sort(names,limit);
+	
+	print(names,limit);
+	
+	return 0;
+}
+
+
+
+/* ==========================================================================================**
+
+Enter 3 names:
+ajinkya
+thindo
+jinki
+Sorted names:
+ajinkya
+jinki
+thindo
+
+==========================================================================================**/
+
+
+
+
+/* ==========================================================================================**
+11_m.	(m)Append one string to another string.	
+
+==========================================================================================* */
+
+
+#include<stdio.h>
+#include<string.h>
+
+void append(char str1[],char str2[])
+{
+	int len1,len2,i;
+	char *sptr1,*sptr2;
+
+	sptr1=str1;
+	sptr2=str2;
+	len1=strlen(sptr1);
+	len2=strlen(sptr2);
+	*(sptr1+len1)=' ';
+	for(i=0;i<len2;i++)
+	{
+		*(sptr1+len1+i+1)=*(sptr2+i);
+	}
+
+	*(sptr1+len1+i+1)='\0';
+
+}
+
+int main()
+{
+	char str1[30],str2[30];
+	
+	printf("Enter first string: ");
+	gets(str1);
+
+	printf("Enter second string: ");
+	gets(str2);
+	
+	append(str1,str2);
+	
+	printf("String after appending: ");
+	puts(str1);
+	
+
+	return 0;
+}
+
+
+
+/* ==========================================================================================**
+
+output:
+Enter first string: Rollwala
+Enter second string: Computer Center
+String after appending: Rollwala Computer Center
+
+
+==========================================================================================* */
+
+
+/* ==========================================================================================**
+11_n.	Append at most n characters of one string S2 to another string S1.	
+
+==========================================================================================**/ 
+
+
+#include<stdio.h>
+#include<string.h>
+
+void append_n(char str1[],char str2[],int n)
+{
+	int len1,len2,i;
+	char *sptr1,*sptr2;
+
+	sptr1=str1;
+	sptr2=str2;
+	len1=strlen(sptr1);
+	len2=strlen(sptr2);
+	*(sptr1+len1)=' ';
+	for(i=0;i<n;i++)
+	{
+		*(sptr1+len1+i+1)=*(sptr2+i);
+	}
+
+	*(sptr1+len1+i+1)='\0';
+
+}
+
+int main()
+{
+	int n;
+	char str1[30],str2[30];
+	
+	printf("Enter first string: ");
+	gets(str1);
+	
+	printf("Enter second string: ");
+	gets(str2);
+	
+	printf("Enetr how many characters you want to append: ");
+	scanf("%d",&n);
+	
+	append_n(str1,str2,n);
+
+	printf("After appending %d characters: ",n);
+	puts(str1);
+	
+	return 0;
+}
+
+
+/* ==========================================================================================**
+
+output:
+
+Enter first string: ajinkya
+Enter second string: rathod
+Enetr how many characters you want to append: 5
+After appending 5 characters: ajinkya ratho
+
+==========================================================================================* */
+
+
+
+/* ============================================================================================
+
+11_o. Reverse all the characters in the string.
+
+==========================================================================================* */
+
+
+#include<stdio.h>
+#include<string.h>
+
+void reverse_string(char *str)
+{
+	int len , i ;
+	char *start, *end, ch;
+
+	len=strlen(str);
+	//printf("count = %d",len);
+
+	start = str;
+	end = str;
+	for(i = 0 ; i < len-1 ; i++)
+	{ 
+		end++;
+	}
+	//printf("end = %s",*end);
+	for(i=0 ; i < len/2 ; i++)
+	{
+		ch = *start;
+		*start = *end;
+		*end = ch;
+		start++;
+		end--;
+	}
+	//printf("Reverse String = %s",*str);
+}
+
+int main()
+{
+	char str[100];
+	
+	printf("Enter String :");
+	
+	gets(str);	
+
+	printf("Entered: %s",str);
+	
+	reverse_string(str);
+	
+	printf("\nReversed: %s\n",str);
+
+	return 0;
+}
+
+
+/* ==========================================================================================**
+
+
+Enter String :ajinkya
+Entered: ajinkya
+Reversed: ayknija
+
+==========================================================================================**//* ==========================================================================================**
+11_p.	Compare two strings S1 and S2. The function should return -1, 0 or 1 if S1 < S2, S1 = S2 and S1 > S2 respectively.
+
+==========================================================================================**/
+
+
+#include<stdio.h>
+#include<string.h>
+
+int str_compare(char s1[],char s2[])
+{
+	char *sp1,*sp2;
+	int i=0;
+
+	sp1=s1;
+	sp2=s2;
+
+	while(*(sp1+i) != '\0' && *(sp2+i) != '\0')
+	{
+		if(*(sp1+i) < *(sp2+i))
+		{
+			return -1;
+		}
+		else if(*(sp1+i) > *(sp2+i))
+		{
+			return 1;
+		}
+		i++;
+	}
+
+	if(*(sp1+i) != '\0' && *(sp2+i) == '\0')
+	{
+		return 1;
+	}
+	else if(*(sp1+i) == '\0' && *(sp2+i) != '\0')
+	{
+		return -1;
+	}
+	else
+		return 0;
+
+}
+
+int main()
+{
+	char s1[30],s2[30];
+	int result;
+	
+	printf("Enter string1: ");
+	gets(s1);
+
+	printf("Enter string 2: ");
+	gets(s2);
+
+	result=str_compare(s1,s2);
+	
+	printf("result is %d",result);
+
+	return 0;
+}
+
+
+/*==========================================================================================**
+output1:
+
+Enter string1: Ajin
+Enter string 2: ajin
+result is -1
+
+==========================================================================================**
+output2:
+Enter string1: aj
+Enter string 2: aj
+result is 0
+
+==========================================================================================**/
+
+
+/* ==========================================================================================**
+11_q.	(q) Compare two strings S1 and S2. The function should return -1, 0 or 1 if S1 < S2, S1 = S2 and S1 > S2 respectively.
+	Ignore case.	
+
+==========================================================================================**/
+
+#include<stdio.h>
+#include<string.h>
+
+int str_icompare(char s1[],char s2[])
+{
+	char *sp1,*sp2;
+	int i=0;
+
+	sp1=s1;
+	sp2=s2;
+
+	while(*(sp1+i) != '\0' && *(sp2+i) != '\0')
+	{
+		if(*(sp1+i) < *(sp2+i))
+		{
+			if( *(sp1+i) < *(sp2+i)-32)
+			return -1;
+		}
+		else if(*(sp1+i) > *(sp2+i))
+		{
+			if( *(sp1+i) < *(sp2+i)+32)
+			return 1;
+		}
+		i++;
+	}
+
+	if(*(sp1+i) != '\0' && *(sp2+i) == '\0')
+	{
+		return 1;
+	}
+	else if(*(sp1+i) == '\0' && *(sp2+i) != '\0')
+	{
+		return -1;
+	}
+	else
+		return 0;
+
+}
+
+int main()
+{
+	char s1[30],s2[30];
+	int result;
+	
+	printf("Enter string1: ");
+	gets(s1);
+	
+	printf("Enter string 2: ");
+	gets(s2);
+
+	result=str_icompare(s1,s2);
+	
+	printf("result is %d",result);
+
+	return 0;
+}
+
+
+/*==========================================================================================**
+output1:
+
+Enter string1: AJIN
+Enter string 2: ajin
+result is 0
+
+==========================================================================================**/
+
+
+
+/*==========================================================================================**
+11_r.	Compare at most n characters of two strings S1 and S2. The function should return -1, 0 or 1 if	S1 < S2, S1 = S2 and
+	S1 > S2 respectively.	
+
+==========================================================================================***/
+
+
+#include<stdio.h>
+#include<string.h>
+
+int str_ncompare(char s1[],char s2[],int n)
+{
+	char *sp1,*sp2;
+	int i=0;
+
+	sp1=s1;
+	sp2=s2;
+
+	while((*(sp1+i) != '\0' && *(sp2+i) != '\0') && i<n)
+	{
+		if(*(sp1+i) < *(sp2+i))
+		{
+			return -1;
+		}
+		else if(*(sp1+i) > *(sp2+i))
+		{
+			return 1;
+		}
+		i++;
+	}
+
+	if(*(sp1+i) != '\0' && *(sp2+i) == '\0' && i<n)
+	{
+		return 1;
+	}
+	else if(*(sp1+i) == '\0' && *(sp2+i) != '\0' && i<n)
+	{
+		return -1;
+	}
+	else
+		return 0;
+
+}
+
+int main()
+{
+	char s1[30],s2[30];
+	int result,n;
+	
+	printf("Enter string1: ");
+	gets(s1);
+	
+	printf("Enter string 2: ");
+	gets(s2);
+	
+	printf("Enter how many characters you want to compare: ");
+	scanf("%d",&n);
+	
+	result=str_ncompare(s1,s2,n);
+	printf("result is %d",result);
+
+	return 0;
+}
+
+
+/*==========================================================================================**
+output:
+Enter string1: rollwala
+Enter string 2: rollwala computer
+Enter how many characters you want to compare: 8
+result is 0
+
+==========================================================================================**/
+
+
+/* ==========================================================================================**
+11_s.	Compare at most n characters of two strings S1 and S2. The function should return -1, 0 or 1 if	S1 < S2, S1 = S2 and
+	S1 > S2 respectively.Ignore case.	
+
+==========================================================================================* */
+
+
+#include<stdio.h>
+#include<string.h>
+
+int str_incompare(char s1[],char s2[],int n)
+{
+	char *sp1,*sp2;
+	int i=0;
+
+	sp1=s1;
+	sp2=s2;
+
+	while((*(sp1+i) != '\0' && *(sp2+i) != '\0') && i<n)
+	{
+		if(*(sp1+i) < *(sp2+i))
+		{
+			if( *(sp1+i) < *(sp2+i)-32)
+			return -1;
+		}
+		else if(*(sp1+i) > *(sp2+i))
+		{
+			if( *(sp1+i) < *(sp2+i)+32)
+			return 1;
+		}
+		i++;
+	}
+
+	if(*(sp1+i) != '\0' && *(sp2+i) == '\0' && i<n)
+	{
+		return 1;
+	}
+	else if(*(sp1+i) == '\0' && *(sp2+i) != '\0' && i<n)
+	{
+		return -1;
+	}
+	else
+		return 0;
+
+}
+
+void main()
+{
+	char s1[30],s2[30];
+	int result,n;
+	
+	printf("Enter string1: ");
+	gets(s1);
+	printf("Enter string 2: ");
+	gets(s2);
+	printf("Enter how many characters you want to compare: ");
+	scanf("%d",&n);
+	result=str_incompare(s1,s2,n);
+	printf("result is %d",result);
+
+	getch();
+}
+
+
+/* ==========================================================================================**
+output:
+Enter string1: Ajinkya
+Enter string 2: ajinkya12345
+Enter how many characters you want to compare: 6
+result is 0
+
+==========================================================================================**/
+
+
+

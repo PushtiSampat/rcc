@@ -1,3 +1,10 @@
+
+
+/* ==================================================================
+Sum of Matrix Using Pointers
+================================================================== */
+
+
 #include <stdio.h>
 
 void readData(int matrix[][5], int rows, int cols)
@@ -92,3 +99,34 @@ int main()
 	return 0;
 
 }
+
+/* ==================================================================
+Output:
+	Enter Rows and cols of matrix1
+	3
+	3
+
+	Enter row 1:
+	Enter Col 1: 10
+	Enter Col 2: 20
+	Enter Col 3: 30
+
+	Enter row 2:
+	Enter Col 1: 40
+	Enter Col 2: 50
+	Enter Col 3: 60
+
+	Enter row 3:
+	Enter Col 1: 80
+	Enter Col 2: 70
+	Enter Col 3: 90
+
+	Matrix Entered:
+	  10      20      30    | 60
+	  40      50      60    | 150
+	  80      70      90    | 240
+	 ---     ---     ---     ---
+	 130     140     180
+
+	Addition : 450
+================================================================== */

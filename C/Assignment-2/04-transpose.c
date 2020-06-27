@@ -1,4 +1,10 @@
+
+/* ==================================================================
+Transpose using pointer
+================================================================== */
+
 #include <stdio.h>
+
 
 void readData(int matrix[][5], int rows, int cols)
 {
@@ -72,3 +78,43 @@ int main()
 
 	printf("\n");
 }
+
+
+
+/* ==================================================================
+	Output:
+	Enter Rows and cols
+	3
+	3
+	Enter row 1:
+	Enter Col 1: 10
+	Value: 10
+	Enter Col 2: 20
+	Value: 20
+	Enter Col 3: 30
+	Value: 30
+	Enter row 2:
+	Enter Col 1: 40
+	Value: 40
+	Enter Col 2: 50
+	Value: 50
+	Enter Col 3: 60
+	Value: 60
+	Enter row 3:
+	Enter Col 1: 70
+	Value: 70
+	Enter Col 2: 80
+	Value: 80
+	Enter Col 3: 90
+	Value: 90
+
+	Matrix Entered:
+	10       20      30
+	40       50      60
+	70       80      90
+
+	Output:
+	10       40      70
+	20       50      80
+	30       60      90
+================================================================== */

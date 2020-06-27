@@ -1,3 +1,10 @@
+
+
+/* ==================================================================
+Matrix Multiplication using Pointers
+================================================================== */
+
+
 #include <stdio.h>
 
 void readData(int matrix[][5], int rows, int cols)
@@ -109,3 +116,59 @@ int main()
 	return 0;
 
 }
+
+
+
+/* ==================================================================
+Output:
+	Enter Rows and cols of matrix1
+	2
+	3
+	Enter Rows and cols of matrix1
+	3
+	2
+	Enter row 1:
+	Enter Col 1: 10
+	Value: 10
+	Enter Col 2: 20
+	Value: 20
+	Enter Col 3: 30
+	Value: 30
+	Enter row 2:
+	Enter Col 1: 40
+	Value: 40
+	Enter Col 2: 50
+	Value: 50
+	Enter Col 3: 60
+	Value: 60
+
+	Matrix Entered:
+	  10      20      30
+	  40      50      60
+
+	Enter row 1:
+	Enter Col 1: 70
+	Value: 70
+	Enter Col 2: 80
+	Value: 80
+	Enter row 2:
+	Enter Col 1: 90
+	Value: 90
+	Enter Col 2: 100
+	Value: 100
+	Enter row 3:
+	Enter Col 1: 110
+	Value: 110
+	Enter Col 2: 120
+	Value: 120
+
+	Matrix Entered:
+	  70      80
+	  90     100
+	 110     120
+
+
+	Multiplication :
+	5800    6400
+	13900   15400
+================================================================== */
