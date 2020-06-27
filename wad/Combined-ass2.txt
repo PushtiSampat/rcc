@@ -1,0 +1,523 @@
+
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+******************* ASSIGNMENT: 2 ********************
+******************* ASSIGNMENT: 2 ********************  
+******************* ASSIGNMENT: 2 ********************
+
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+
+PRACTICAL ASSIGNMENT - 2 :
+
+1. Write a PHP script which allows user to enter product code, product name, product price and discount percentage. The program must use a function to calculate discounted amount calculate net pay amount. 
+
+	INPUT :
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Practical-1</title>
+			</head>
+			<body>
+				<form action="" method="post">
+					<h2>Product Details</h2>
+					<label>Product code : </label>
+					<input type="text" name="p_code">
+					<br/>
+					<label>Product Name : </label>
+					<input type="text" name="p_name">
+					<br/>
+					<label>Product Price : </label>				
+					<input type="text" name="p_price">
+					<br/>
+					<label>Product Discount : (In %)</label>
+					<input type="text" name="p_discount">
+					<br/>
+					<input type="submit" name="submit" value="calculate">
+				</form>
+			</body>
+		</html>
+		<?php 
+
+			if (isset($_POST['submit'])) {
+				function calculate(){
+					$price = $_POST['p_price'];
+					$discount = $_POST['p_discount'];
+					
+					$calculate_price = ($price*$discount)/100;
+					echo "Product Discount amount is <b>$calculate_price</b>.";
+					echo "<br>";
+					$netpay = $price-$calculate_price;
+					echo "Net pay amount for Product <b>$netpay</b>.";
+				}
+				calculate();
+			}
+		?>
+ 
+	OUTPUT :
+	
+		Product Details
+		Product code :  101
+		Product Name :  Bag
+		Product Price :  670
+		Product Discount : (In %)  15
+		 
+		Product Discount amount is 100.5.
+		Net pay amount for Product 569.5.
+
+*******************************************************************************
+
+2. Write a PHP script file which make your pages have the same look. [Hint: use require] 
+
+	INPUT :
+	
+		<?php 
+			echo " <h2>This is Practical 2 but Same look as below practical - 1 </h2> ";
+			require 'p1.php';
+		?>
+
+	OUTPUT :
+	
+		This is Practical 2 but Same look as below practical - 1
+		Product Details
+		Product code :  101
+		Product Name :  Bag
+		Product Price :  670
+		Product Discount : (In %)  15
+		 
+		Product Discount amount is 100.5.
+		Net pay amount for Product 569.5.
+
+*******************************************************************************
+
+3. Write a PHP function which ask the user number of tickets to be booked. The function get the no. of booked tickets and create atable based on that which have exactly same rows as number entered by user. The value for rows are booked ticket numbers
+
+	INPUT :
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Practical-3</title>
+			</head>
+			<body>
+				<form action="" method="post">	 
+					<h2>Ticket Booking </h2>
+					<label>Enter number of tickets :</label>
+					<input type="text" name="number">
+					<br/>
+					<input type="submit" name="book" value="Book">	 
+				</form>
+			</body>
+		</html>
+
+		<?php 
+			if (isset($_POST['book'])) {
+				booking( $_POST['number']);
+			}
+			function booking($numberofticket){
+				echo " <table border=1>";	
+				for ($i=1; $i <=$numberofticket; $i++)  
+					echo "<tr><td>$i - Ticket<td><tr>";
+				echo "</table>";
+			}
+		?>
+ 
+	OUTPUT :
+		Ticket Booking
+		Enter number of tickets :	3
+
+		1 - Ticket	
+		2 - Ticket	
+		3 - Ticket	
+
+*******************************************************************************
+
+4. Write a function which takes 5 number of input as array from user. Then calculate total and average and display total and average of the 5 numbers.[Hint: use & to return multiple values] 
+
+	INPUT :
+
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Practical-4</title>
+			</head>
+			<body>
+				<form action="" method="post">
+					<h2>Practical - 4</h2>
+					<?php	addvalues(5); ?>
+					<input type="submit" name="submit" value="Display">
+				</form>
+			</body>
+		</html>
+		<?php 
+			function addvalues($n){
+				for($i=1;$i<=$n;$i++)
+					echo "<label>Enter Number $i : </label><input type='text' name='number[]'><br/>";
+			}
+			if (isset($_POST['submit'])) {
+				$number = $_POST['number'];
+				$total = 0;
+				foreach($number as $n)
+					$total =$total + $n;
+				echo "Total : $total"."<br>";
+				echo "Average : ".$total/count($number);
+			}
+		 ?>
+ 
+ 
+	OUTPUT :
+		
+		Practical - 4
+		Enter Number 1 : 4
+		Enter Number 2 : 8
+		Enter Number 3 : 4
+		Enter Number 4 : 2
+		Enter Number 5 : 2
+
+		Total : 20
+		Average : 4
+
+*******************************************************************************
+
+5. Write a program to calculate factorial value by using recursive function. The value must be entered by user.
+
+	INPUT :
+
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Practical-5</title>
+			</head>
+			<body>
+				<form action="" method="post">
+					<label>Enter Number : </label>
+					<input type="text" name="number"><br><br>
+					<input type="submit" name="submit" value="Calculate Factorial">
+				</form>
+			</body>
+		</html>
+		<?php
+			if (isset($_POST['submit'])) {
+				$number = $_POST['number'];
+				function factorial($number) { 
+					if ($number < 2)
+						return 1; 
+					}else 
+						return ($number * factorial($number-1)); 
+				}
+				echo "Answer : ".factorial($number);
+			}
+		?>
+
+	OUTPUT :
+		Enter Number :  6
+
+		Answer : 720
+		
+*******************************************************************************
+
+6. Create a class Vehicle having attributes VID, ModelNo and Mileage( per litere). Write operations to calculate cost per Km by asking price of fuel from user. Implement all the attributes and operations for the class. 
+
+	INPUT :
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Practical-6</title>
+			</head>
+			<body>
+				<h2>Fual cost calculator</h2>
+				<form action="" method="post">
+					<label>Enter price of fual : </label>
+					<input type="text" name="price"><br>
+					<input type="submit" name="submit" value="Calculate Total cost">
+				</form>
+			</body>
+		</html>
+		<?php
+			if(isset($_POST['submit'])){
+				class Vehical
+				{
+					private $vid,$modelno,$milage; 
+					public function __construct($vid,$modelno,$milage){
+						$this->vid = $vid;
+						$this->modelno = $modelno;
+						$this->milage = $milage;
+					}
+					public function getvid(){	return $this->vid;	}
+					public function setvid($value){	$this->vid = $value;	}
+					public function getmodelno(){	return $this->modelno;	}
+					public function setmodelno($value){	$this->modelno = $value;	}
+					public function getmilage(){	return $this->milage;	}
+					public function setmilage($value){	$this->milage = $value;	}
+					public function totalCost($cost){
+						return $cost/$this->milage;
+					}
+				}
+				$obj = new Vehical("101","PKC101",50);
+				echo "Cost of fual per KM is : ".$obj->totalCost($_POST['price']);
+			}
+		?>
+
+	OUTPUT :
+	
+		Fual cost calculator
+		Enter price of fual :  72
+
+		Cost of fual per KM is : 1.44
+		
+*******************************************************************************
+
+7. Create a class Car which is child class of the class Vehicle. Add the operation maintenance for car class. The maintenance class has a property to calculate cost to maintain a car in good condition for a month. Write a function which provides the total maintenance cost of a car for the year. 
+
+	INPUT :
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Practical-7</title>
+			</head>
+			<body>
+				<h2>Maintainance cost calculator</h2>
+				<form action="" method="post">
+					<label>Enter maintanance cost : </label>
+					<input type="text" name="maintain"><br>
+					<input type="submit" name="submit" value="Calculate Total cost">
+				</form>
+			</body>
+		</html>
+		<?php
+			if(isset($_POST['submit'])){
+				class Car extends Vehical
+				{
+					public function __construct($vid,$modelno,$milage){
+						parent::__construct($vid,$modelno,$milage);
+					}
+					public function MaintainanceCost($maintain){
+						return 12*$maintain;
+					}
+				}
+				$obj = new Car("101","PKC101",50);
+				echo "Cost of Maintainance is : ".$obj->MaintainanceCost($_POST['maintain']);
+			}
+		?>
+		
+	OUTPUT :
+		
+		Maintainance cost calculator
+		Enter Maintanance cost :  100
+
+		Cost of Maintainance is : 1200
+
+*******************************************************************************
+
+8. Using question 6,7 take input from user for three cars maintenance. Add these records into text file. Calculate most economical car and display car details. 
+
+	INPUT :
+	
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Practical-8</title>
+			</head>
+			<body>
+				<h2>Find Best Economical Car</h2>
+				<form action="" method="post">
+					<?php 
+						for($i=1;$i<=3;$i++)
+							echo "<label>Enter Car $i maintanance : </label><input type='text' name=car$i><br><br/>";
+						?>
+					<input type="submit" name="submit" value="Find">
+				</form>
+			</body>
+		</html>
+		<?php
+			if(isset($_POST['submit'])){
+				extract($_POST);
+				class Vehical
+				{
+					private $vid,$modelno,$milage; 
+					public function __construct($vid=0,$modelno='',$milage=0){
+						$this->vid = $vid;
+						$this->modelno = $modelno;
+						$this->milage = $milage;
+					}
+					public function getvid(){	return $this->vid;	}
+					public function setvid($value){	$this->vid = $value;	}
+					public function getmodelno(){	return $this->modelno;	}
+					public function setmodelno($value){	$this->modelno = $value;	}
+					public function getmilage(){	return $this->milage;	}
+					public function setmilage($value){	$this->milage = $value;	}
+					public function totalCost($cost){
+						return $cost/$this->milage;
+					}
+				}
+				class Car extends Vehical
+				{
+					public function __construct($vid=0,$modelno='',$milage=0){
+						parent::__construct($vid,$modelno,$milage);
+					}
+					public function MaintainanceCost($maintain){
+						return 12*$maintain;
+					}
+				}
+				$obj1 = new Car("101","PKC101",50,$car1);
+				$obj2 = new Car("102","PKC102",30,$car2);
+				$obj3 = new Car("103","PKC103",70,$car3);
+				$c1 = $obj1->MaintainanceCost($car1);
+				$c2 = $obj2->MaintainanceCost($car2);
+				$c3 = $obj3->MaintainanceCost($car3);
+				if($c1 <= $c2 && $c1 <= $c3){
+					echo $obj1->getmodelno()." is best car.";
+				}
+				else if($c2 <= $c1 && $c2 <= $c3){
+					echo $obj2->getmodelno()." is best car.";
+				}
+				else{
+					echo $obj3->getmodelno()." is best car.";					
+				}
+			}
+		?>
+		
+	OUTPUT :
+	
+		Find Best Economical Car
+		Enter Car 1 maintanance : 30
+		Enter Car 2 maintanance : 50
+		Enter Car 3 maintanance : 70
+
+		PKC101 is best car.
+*******************************************************************************
+
+9. Make Exception handling for Question No. 8. 
+
+	INPUT :
+	
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Practical-8</title>
+			</head>
+			<body>
+				<h2>Find Best Economical Car</h2>
+				<form action="" method="post">
+					<?php 
+						for($i=1;$i<=3;$i++)
+							echo "<label>Enter Car $i maintanance : </label><input type='text' name=car$i><br><br/>";
+						?>
+					<input type="submit" name="submit" value="Find">
+				</form>
+			</body>
+		</html>
+		<?php
+			if(isset($_POST['submit'])){
+				extract($_POST);
+				class Vehical
+				{
+					private $vid,$modelno,$milage; 
+					public function __construct($vid=0,$modelno='',$milage=0){
+						$this->vid = $vid;
+						$this->modelno = $modelno;
+						$this->milage = $milage;
+					}
+					public function getvid(){	return $this->vid;	}
+					public function setvid($value){	$this->vid = $value;	}
+					public function getmodelno(){	return $this->modelno;	}
+					public function setmodelno($value){	$this->modelno = $value;	}
+					public function getmilage(){	return $this->milage;	}
+					public function setmilage($value){	$this->milage = $value;	}
+					public function totalCost($cost){
+						return $cost/$this->milage;
+					}
+				}
+				class Car extends Vehical
+				{
+					public function __construct($vid=0,$modelno='',$milage=0){
+						parent::__construct($vid,$modelno,$milage);
+					}
+					public function MaintainanceCost($maintain){
+						return 12*$maintain;
+					}
+				}
+				try{
+					$obj1 = new Car("101","PKC101",50,$car1);
+					$obj2 = new Car("102","PKC102",30,$car2);
+					$obj3 = new Car("103","PKC103",70,$car3);
+					$c1 = $obj1->MaintainanceCost($car1);
+					$c2 = $obj2->MaintainanceCost($car2);
+					$c3 = $obj3->MaintainanceCost($car3);
+					if($c1 <= $c2 && $c1 <= $c3){
+						echo $obj1->getmodelno()." is best car.";
+					}
+					else if($c2 <= $c1 && $c2 <= $c3){
+						echo $obj2->getmodelno()." is best car.";
+					}
+					else{
+						echo $obj3->getmodelno()." is best car.";					
+					}
+				}
+				catch(Exception $e)
+				{
+				echo "Error: ".$e->getMessage();
+				}
+			}
+		?>
+		
+	OUTPUT :
+	
+		Find Best Economical Car
+		Enter Car 1 maintanance : 30
+		Enter Car 2 maintanance : 50
+		Enter Car 3 maintanance : 70
+
+		PKC101 is best car.
+		
+*******************************************************************************
+
+10. Write an PHP script which allows user to enter product Name, Quantity and Price. Based on the price and quantity calculate cost for each item and total cost. Make validation that the Quantity and Price must not be blanks and they are must be >=0. If any user enter violates the rule, make appropriate exception handling.
+
+	INPUT :
+	
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<title>Practical-10</title>
+			</head>
+			<body>
+				<form action="" method="post">
+					<label>Product Name : </label>
+					<input type="text" name="p_name"> 
+					<br/>
+					<label>Quantity :  </label>
+					<input type="text" name="p_quantity" required>
+					<br/>
+					<label>Price :  </label>
+					<input type="text" name="p_price" required>
+					<br/>
+					<input type="submit" name="submit" value="Calculate cost">
+				</form>
+			</body>
+		</html>
+		<?php
+			if (isset($_POST['submit'])) {
+				extract($_POST);
+				if($p_quantity > 0 && $p_price > 0)
+				{
+					$total = $p_quantity*$p_price;
+					echo "cost for product is <b> $p_price </b><br>";
+					echo "total cost for product is <b> $total </b>";	
+				}
+				else if($p_quantity == 0)
+					echo "Enter valid quantity!!!!!";	
+				else if($p_price == 0)
+					echo "Enter valid price!!!!!";
+				}		
+			}
+		?>
+
+*******************************************************************************

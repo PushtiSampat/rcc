@@ -1,3 +1,7 @@
+
+<!-- ====================================================================== -->
+<!-- 3-basic-query.php -->
+
 <?php
 require_once('config.php');
 
@@ -344,3 +348,6 @@ if($result) {
 	echo "<br>FAILURE -> " . $query;
 } echo "<br>";
 ?>
+
+
+

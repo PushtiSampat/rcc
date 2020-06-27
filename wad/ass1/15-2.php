@@ -1,3 +1,7 @@
+<!-- ========================================================================== -->
+<!-- Q. 15 (Part2)-->
+
+
 <meta name="viewport" content="width=device-width, initail-scale=1.0, shrink-to-fit=no">
 <link rel="stylesheet" type="text/css" href="css.css">
  
@@ -19,3 +23,7 @@ echo "<pre>strnatcasecmp<br><br>"; var_dump($arr3); echo "</pre>";
 echo "</div>";
 
 ?>
+
+
+<!-- ========================================================================== -->
+

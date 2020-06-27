@@ -1,0 +1,1101 @@
+
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+******************* ASSIGNMENT: 1 ********************
+******************* ASSIGNMENT: 1 ********************  
+******************* ASSIGNMENT: 1 ********************
+
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+<!-- ========================================================================== -->
+<!-- Q. 1 -->
+
+
+
+<link rel="stylesheet" type="text/css" href="css.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+<center>
+	<form method="POST" name="form1">
+		<table border="1" style="border: solid 3px #808080;">
+			<tr>
+				<td>Enter Amount </td>
+				<td><input type="number" name="p"></td>
+			</tr>
+
+			<tr>
+				<td>Enter Rate of Interest </td>
+				<td><input type="number" name="r"></td>
+			</tr>
+
+			<tr>
+				<td>Enter Number of years </td>
+				<td><input type="number" name="n"></td>
+			</tr>
+
+			<tr>
+				<td> <button class="rst"> Reset </button> </td>
+				<td> <button class="sbt" name="sbt"> Submit </button> </td>
+			</tr>
+		</table>
+	</form>
+</center>
+<?php
+if(isset($_POST['sbt'])){
+	echo "<center>";	
+	$ans = ($_POST['p'] * $_POST['r'] * $_POST['n']) / 100;
+	echo "$ans";
+	echo "</center>";
+}
+
+?>
+
+
+
+<!-- ========================================================================== -->
+
+
+
+<!-- ========================================================================== -->
+<!-- Q. 10 -->
+
+
+
+<link rel="stylesheet" type="text/css" href="css.css">
+<?php
+
+$milk = array (
+	array (
+		"name" => "Shakti",
+		"price" => 25
+	),
+	array (
+		"name" => "Amul",
+		"price" => 30
+	),
+	array (
+		"name" => "Branded",
+		"price" => 28
+	)
+);
+
+$uasort = $usort = $milk;
+
+echo "<div style = 'display: flex;'>";
+
+// =================Displaying normal 2D array======================
+echo "<div>";
+
+echo "Normal Array<br><br>";
+array_walk_recursive($milk, function ($item, $key) {
+    echo "$key : $item<br>";
+});
+
+echo "</div>";
+
+
+// =================== Sorting accorrding to price===========
+
+usort($usort, function($a, $b) {
+    return $a['price'] <=> $b['price']; // for descending, return $b['price'] <=> $a['price'];
+});
+
+echo "<div>";
+
+//use uasort to preserve keys, use "print_r($uasort);" to check
+uasort($uasort, function($a, $b) {
+    return $a['price'] <=> $b['price'];
+});
+
+echo "Sort by price<br><br>";
+array_walk_recursive($usort, function ($item, $key) {
+	static $i = 1;
+    echo " &nbsp; $key : $item | ";
+    if(!($i++ % 2)) { //beacuse there are only 2 elements
+    	echo "<br>";
+    }
+});
+
+echo "</div>";
+
+
+
+// ===========Sorting according to milk brand===========
+
+echo "Sort by name<br><br>";
+$milk2 = $milk;
+
+usort($milk2, function($a, $b) {
+	return $a['name'] <=> $b['name'];
+});	
+
+
+array_walk_recursive($milk2, function($item, $key) {
+	static $i = 1;
+    echo " &nbsp; $key : $item | ";
+    if(!($i++ % 2)) { echo "<br>"; }
+});
+
+
+echo "</div>";
+
+
+?>
+
+
+<!-- ========================================================================== -->
+
+<!-- ========================================================================== -->
+<!-- Q. 11 -->
+
+
+<link rel="stylesheet" type="text/css" href="css.css">
+<form name="form1" method="post">
+<center>
+  <table border = 1>
+    <tr>
+      <td>First city</td>
+      <td>Second city</td>
+    </tr>
+
+    <tr>
+      <td>
+        <select name = "cityA">
+          <option value = 0>Kachchh</option>
+          <option value = 1>Rajkot</option>
+          <option value = 2>Ahmedabad</option>
+          <option value = 3>Surat</option>
+          <option value = 4>Mumbai</option>
+        </select>
+      </td>
+
+      <td>
+        <select name = "cityB">
+          <option value = 0>Kachchh</option>
+          <option value = 1>Rajkot</option>
+          <option value = 2>Ahmedabada</option>
+          <option value = 3>Surat</option>
+          <option value = 4>Mumbai</option>
+        </select>
+      </td>
+    </tr>
+
+    <tr class="text-center">
+      <td colspan = 2>
+        <input type = "submit" value = "Calculate Distance" class=" sbt" style="padding: 10px;" name="sbt">
+      </td>
+    </tr>
+  </table>
+</center>
+</form>
+<?php
+
+if(isset($_POST['sbt'])) {
+  $cityA = $_POST['cityA'];
+  $cityB = $_POST['cityB'];
+  echo "$cityA $cityB";
+  $city = array (
+    "Kachchh",
+    "Rajkot",
+    "Ahmedabad",
+    "Surat",
+    "Mumbai",
+  );
+
+  $distance = array (
+    array (000, 280, 395, 655, 999),
+    array (280, 000, 115, 415, 800),
+    array (395, 115, 000, 302, 650),
+    array (655, 415, 302, 000, 200),
+    array (999, 800, 650, 200, 000)
+  );
+
+  $result = $distance[$cityA][$cityB];
+  print "<h3>The distance between ";
+  print "$city[$cityA] and $city[$cityB]";
+  print " is $result miles.</h3>";
+}
+?>
+
+
+<!-- ========================================================================== -->
+
+
+<!-- ========================================================================== -->
+<!-- Q. 12 -->
+
+
+<link rel="stylesheet" type="text/css" href="css.css">
+<?php
+$type = array('Clb', 'Hrt', 'Diam', 'Spd');
+$rank = array('1', '2','3', '4', '5', '6', '7', '8', '9', 'J', 'Q', 'K', 'A');
+
+echo "<div style = 'display: inline-flex;'>";
+
+echo "Ascending: <br>";
+$i = '';
+foreach ($type as $k1) {
+	echo "<div>";
+	foreach ($rank as $k2) {
+		if($k1 == 'Clb' || $k1 == 'Spd') {
+			echo "<b>" .$i . "</b>" . $k1 . "&nbsp;(" . $k2 . ")<br>";
+		} else {
+			echo "<font color='red'>";
+			echo "<b>". $i . "</b>" . $k1 . "&nbsp;(" . $k2 . ")<br>";
+			echo "</font>";
+		}
+	}
+	echo "</div>";
+}
+
+echo "<span style = 'margin-left: 45px;'></span>";
+
+echo "Descending: <br>";
+foreach (array_reverse($type) as $k1) {
+	echo "<div>";
+	foreach (array_reverse($rank) as $k2) {
+		if($k1 == 'Clubs' || $k1 == 'Spades') {
+			echo $k1 . "&nbsp;(" . $k2 . ")<br>";
+		} else {
+			echo "<font color='red'>";
+			echo $k1 . "&nbsp;(" . $k2 . ")<br>";
+			echo "</font>";
+		}
+	}
+	echo "</div>";
+}
+
+echo "<span style = 'margin-left: 45px;'></span>";
+
+echo "Shuffled: <br>";
+
+$numbers = range(1, 52);
+$shuffle = shuffle($numbers);
+
+$i = 0;
+echo '<table border="1" style="border: solid 3px #808080;">';
+echo "<tr>";
+foreach ($numbers as $key) {
+	$rem = $key % 4; 
+	$div = $key % 13;
+	echo "<td>";
+	if($rem == 0 || $rem == 3) {
+		echo $rank[$div] . " of " . $type[$rem] . " ";
+	} else {
+		echo "<font color= 'red'>";
+		echo $rank[$div] . " of " . $type[$rem] . " ";
+		echo "</font>";
+	}
+	echo "</td>";
+	$i++;
+	if($i % 4 == 0) {
+		echo "</tr>";
+		echo "<tr>";
+	}
+}
+
+echo "</div>";
+?>
+
+<!-- ========================================================================== -->
+
+
+<!-- ========================================================================== -->
+<!-- Q. 13 -->
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="css.css">
+<?php
+
+$i = 0;
+
+if(file_exists("files/studinfo.txt")) {
+	$f1Handle = @fopen("files/studinfo.txt", "rb");
+	
+	$fn = fopen("files/studinfo.txt","r");
+	while(! feof($fn))  {
+		$array[$i++] = fgets($fn);
+	}
+	fclose($fn);
+	echo "<br>
+	// By this way, last inserted will be first diplayed<br>
+	// use for loop for reversed
+	";
+	echo '<table border="1" style="border: solid 3px #808080;">';
+	while($i--) {
+		echo "<tr>";
+		echo "<td>";
+		echo $array[$i];
+		echo "</td>";
+		echo "</tr>";
+	}
+	echo "</table>";
+
+	fclose($f1Handle);
+
+} else {
+	echo "No such File Exists";
+}
+?>
+
+<!-- ========================================================================== -->
+
+<!-- ========================================================================== -->
+<!-- Q. 15 (Part2)-->
+
+
+<meta name="viewport" content="width=device-width, initail-scale=1.0, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="css.css">
+ 
+<br>
+<?php
+
+$arr1 = $arr2 = $arr3 = array("Pic1","pic2","pic10","pic01","pic100","pic20","pic30","pic200");
+
+usort($arr1, "strcmp");
+usort($arr2, "strnatcmp");
+usort($arr3, "strnatcasecmp");
+
+echo "<div style='display: inline-flex;'>";
+
+echo "<pre>strcmp<br><br>"; var_dump($arr1); echo "</pre>";
+echo "<pre>strnatcmp<br><br>"; var_dump($arr2); echo "</pre>";
+echo "<pre>strnatcasecmp<br><br>"; var_dump($arr3); echo "</pre>";
+
+echo "</div>";
+
+?>
+
+
+<!-- ========================================================================== -->
+
+<!-- ========================================================================== -->
+<!-- Q. 15 (Part1)-->
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="css.css">
+<?php
+
+$str = "*** Lorem Ipsum ***";
+echo "<center>";
+echo "<h2>$str</h2>";
+echo '<table border="1" style="border: solid 5px #f1e9e9; border-radius: 1rem;">';
+
+echo "<tr><td>";
+echo "trim ";
+echo "</td><td>";
+echo trim($str,"***"); 
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "rtrim ";
+echo "</td><td>";
+echo rtrim($str,"***"); 
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "ltrim ";
+echo "</td><td>";
+echo ltrim($str,"***"); 
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "STR_PAD_LEFT ";
+echo "</td><td>";
+echo str_pad($str, 25, "_", STR_PAD_LEFT); 
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "STR_PAD_BOTH ";
+echo "</td><td>";
+echo str_pad($str, 25, "_", STR_PAD_BOTH); 
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "STR_PAD";
+echo "</td><td>";
+echo str_pad($str, 25, "_"); 
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "lcfirst(Lower case)";
+echo "</td><td>"; 
+echo lcfirst("Hello world!");
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "ucfirst(Upper case)";
+echo "</td><td>"; 
+echo ucfirst("hello world!");
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "ucwords";
+echo "</td><td>"; 
+echo ucwords("hello world");
+echo "</td></tr>";
+
+
+echo "<tr><td>";
+echo "Strtolower";
+echo "</td><td>"; 
+echo Strtolower($str);
+echo "</td></tr>";
+
+
+echo "<tr><td>";
+echo "strtoupper";
+echo "</td><td>"; 
+echo strtoupper($str);
+echo "</td></tr>";
+
+
+echo "<tr><td>";
+echo "strrev";
+echo "</td><td>"; 
+echo strrev($str);
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "str_shuffle (ymmv)";
+echo "</td><td>"; 
+echo str_shuffle($str);
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "str_repeat";
+echo "</td><td>"; 
+echo str_repeat("ADJP ", 5);
+echo "</td></tr>";
+
+$str2 = "Lorem Ipsum Dolor Set Amet";
+echo "<tr><td>";
+echo "explode";
+echo "</td><td>"; 
+print_r(explode(' ', $str2, -1));
+echo "</td></tr>";
+
+$arr = array('Lorem','Ipsum!','Set','Amet!');
+echo "<tr><td>";
+echo "implode";
+echo "</td><td>"; 
+echo implode("<b>+</b>", $arr);
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "strcmp";
+echo "</td><td>"; 
+echo strcmp("Ajinkya","ajinkya");
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "strcasecmp";
+echo "</td><td>"; 
+echo strcasecmp("Ajinkya","ajinkya");
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "strlen";
+echo "</td><td>"; 
+echo strlen("Ajinkya");
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "strstr";
+echo "</td><td>"; 
+echo strstr("rajinkya26@gmail.com", "@");
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "stristr";
+echo "</td><td>"; 
+echo stristr("rajinkya26@gmail.com", "@G");
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "strrstr(true)";
+echo "</td><td>"; 
+echo strchr("Hello world world!","world",true);
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "strchr";
+echo "</td><td>"; 
+echo strchr("Hello world world!","world");
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "strrchr";
+echo "</td><td>"; 
+echo strrchr("Hello world world!","world");
+echo "</td></tr>";
+
+
+echo "<tr><td>";
+echo "strpos";
+echo "</td><td>"; 
+echo strpos("Ajinkya php, php","php");
+echo "</td></tr>";
+
+echo "<tr><td>";
+echo "strrpos";
+echo "</td><td>"; 
+echo strrpos("Ajinkya php, php","php") . "<br>";
+echo "</td></tr>";
+
+
+echo "<tr><td>";
+echo "substr_replace";
+echo "</td><td>"; 
+echo substr_replace("Bobby", 'bob', 0) . "<br>";
+echo "</td></tr>";
+
+
+$letters = array('a', 'p');
+$fruit   = array('apple', 'pear');
+$text    = 'a p';
+$output  = str_replace($letters, $fruit, $text);
+
+echo "<tr><td>";
+echo "str_replace";
+echo "</td><td>"; 
+echo $output . "<br>";
+echo "</td></tr>";
+
+echo "</table>";
+echo "</center>";
+
+// echo "<b> </b>" . . "<br>";
+// echo "<b> </b>" . . "<br>";
+?>
+
+
+
+<!-- ========================================================================== -->
+
+<!-- ========================================================================== -->
+<!-- Q. 16 -->
+
+<?php
+// echo preg_match('/[a-z]', "1");
+
+echo preg_match ("/^[a-z0-9]{1, }$/",'9a') . "<br>";   
+
+echo preg_match ("/^[a-z]/",'abc') . "<br>";   
+
+
+?>
+
+
+<!-- ========================================================================== -->
+<!-- ========================================================================== -->
+<!-- Q. 2 -->
+
+
+
+<link rel="stylesheet" type="text/css" href="css.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+<center>
+	<form name="form1" action="<?php $_PHP_SELF ?>">
+		<table border="1" style="border: solid 3px #808080;">
+			<tr>
+				<td>First Name </td>
+				<td><input type="text" name="fname" autocomplete="off"></td>
+			</tr>
+
+			<tr>
+				<td>Last Name </td>
+				<td><input type="text" name="lname" autocomplete="off"></td>
+			</tr>
+
+			<tr>
+				<td colspan=2 style="text-align: center;"> <button class="sbt" name="sbt"> Submit </button> </td>
+			</tr>
+		</table>
+	</form>
+</center>
+
+<?php
+// https://stackoverflow.com/questions/1372147/check-whether-a-request-is-get-or-post
+echo "<br>Checking if get or post";
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+	echo "<br>Method is Post";
+	if($_POST['fname']) {
+		echo "<br> Your First name is" . $_POST['fname'];
+	}
+	if($_POST['lname']) {
+		echo "<br> Your Last name is" . $_POST['lname'];
+	}
+}
+
+
+else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+	echo "<br>Method is Get";
+	if($_GET['fname']) {
+		echo "<br> Your First name is: " . $_GET['fname'];
+	}
+	if($_GET['lname']) {
+		echo "<br> Your Last name is: " . $_GET['lname'];
+	}	
+}
+
+// Request
+if($_REQUEST['fname']) {
+	echo "<br> Your First name is: " . $_REQUEST['fname'];
+}
+if($_REQUEST['fname']) {
+	echo "<br> Your First name is: " . $_REQUEST['lname'];
+}
+
+
+?>
+
+
+<!-- ========================================================================== -->
+
+
+
+<!-- ========================================================================== -->
+<!-- Q. 3 -->
+
+
+
+<link rel="stylesheet" type="text/css" href="css.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+<center>
+	<form name="form1" method="GET" action="<?php $_PHP_SELF ?>">
+		<table border="1" style="border: solid 3px #808080;">
+			<tr>
+				<td>Start </td>
+				<td><input type="text" name="minRad" autocomplete="off"></td>
+			</tr>
+
+			<tr>
+				<td>End </td>
+				<td><input type="text" name="maxRad" autocomplete="off"></td>
+			</tr>
+
+			<tr>
+				<td colspan=2 style="text-align: center;"> <button class="sbt" name="sbt"> Submit </button> </td>
+			</tr>
+		</table>
+	</form>
+</center>
+
+<?php
+// $_GET['minRad'] = 1;
+// $_GET['maxRad'] = 1;
+
+
+if (isset($_GET['sbt'])) {
+	$start = $_GET['minRad'];
+	$end = $_GET['maxRad'];	
+	if($start < 1) {
+		echo "<br>Minimum Value must be 1 or greater";
+		die();
+	}	
+	else if($start > $end){
+		echo "<br>Max value cannot be greater than min value";
+		die();
+	}
+
+	for ($i = $start; $i <= $end ; $i++) { 
+		echo "<br> The radius of " .$i. " is " . (3.14 * $i * $i);
+	}
+}
+
+?>
+
+
+<!-- ========================================================================== -->
+
+
+
+
+<!-- ========================================================================== -->
+<!-- Q. 4 -->
+
+
+
+<link rel="stylesheet" type="text/css" href="css.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+<center>
+	<form method="POST" name="form1">
+		<table border="1" style="border: solid 3px #808080;">
+			<tr>
+				<td>Student ID </td>
+				<td><input type="number" name="sid" required></td>
+			</tr>
+
+			<tr>
+				<td>Name </td>
+				<td><input type="text" name="sname" required></td>
+			</tr>
+
+			<tr>
+				<td> Subject 1 </td>
+				<td onmouseup="updateResult();"><input type="number" name="m1" min="0" max="100" value="0" onkeyup="updateResult();" required></td>
+			</tr>
+
+			<tr>
+				<td> Subject 2 </td>
+				<td onmouseup="updateResult();"><input type="number" name="m2" min="0" max="100" value="0" onkeyup="updateResult();" required></td>
+			</tr>
+
+			<tr>
+				<td> Subject 3 </td>
+				<td onmouseup="updateResult();"><input type="number" name="m3" min="0" max="100" value="0" onkeyup="updateResult();" required></td>
+			</tr>
+
+			<tr>
+				<td> <button class="rst"> Reset </button> </td>
+				<td> <button class="sbt" name="sbt"> Submit </button></td>
+			</tr>
+			<tr>
+				<td> <p>Total</p> </td>
+				<td> <p id="total">0</p> </td>
+			</tr>
+
+			<tr>
+				<td> <p>Percentage</p> </td>
+				<td> <p id="per">0</p> </td>
+			</tr>
+		</table>
+	</form>
+</center>
+<script type="text/javascript">
+	function updateResult() {
+		var m1 = parseFloat(document.form1.m1.value);
+		var m2 = parseFloat(document.form1.m2.value);
+		var m3 = parseFloat(document.form1.m3.value);
+		var total = m1 + m2 + m3;
+		if(isNaN(total)) {
+			document.getElementById('total').innerHTML = "Enter marks of all Subjects";
+			document.getElementById('per').innerHTML = "Enter marks of  all Subjects";
+		}
+		else {
+			document.getElementById('total').innerHTML = total;
+			document.getElementById('per').innerHTML = total / 3;
+		}
+	}
+</script>
+<?php
+if(isset($_POST['sbt'])){
+	if($_POST['sid'] == '' || is_nan($_POST['sid'])) {
+		echo "Form not submitted. ID not valid";
+	}
+	else if ($_POST['sname'] == '') {
+		echo "Form not submitted. Name not valid";
+	}
+
+	else {
+		$m1 = $_POST['m1'];
+		$m2 = $_POST['m2'];
+		$m3 = $_POST['m3'];
+		if($m1 < 0 || $m1 > 100) {
+			echo "<br>Form not submitted. Marks of subject 1 is invalid";
+		} else if($m2 < 0 || $m2 > 100) {
+			echo "<br>Form not submitted. Marks of subject 2 is invalid";
+		} else if($m3 < 0 || $m3 > 100) {
+			echo "<br>Form not submitted. Marks of subject 3 is invalid";
+		} else {
+			echo "<br>Form Submitted Successfully.";
+			$tot = $m1 + $m2 + $m3;
+			$per = $tot / 3;
+			echo "<br>Tot: " . number_format((float)$tot, 2, '.', ',');
+			echo "<br>Per: " . number_format((float)$per, 2, '_', '');
+			// Parameters:
+
+			// number
+			// The number being formatted.
+
+			// decimals
+			// Sets the number of decimal points.
+
+			// dec_point
+			// Sets the separator for the decimal point.
+
+			// thousands_sep
+			// Sets the thousands separator.
+
+			switch(1) {
+				case ($per > 70): echo "<br>Grade A"; break;
+				case ($per > 65): echo "<br>Grade B"; break;
+				case ($per > 60): echo "<br>Grade C"; break;
+				case ($per > 55): echo "<br>Grade D"; break;
+				case ($per > 50): echo "<br>Grade E"; break;
+				default: echo "<br>Grade F"; break;
+			}
+		}
+	}
+}
+?>
+
+
+
+<!-- ========================================================================== -->
+
+
+
+<!-- ========================================================================== -->
+<!-- Q. 5 -->
+
+
+
+<!-- https://www.worldbestlearningcenter.com/index_files/php-file-input-output.htm -->
+
+<link rel="stylesheet" type="text/css" href="css.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+<center>
+	<form method="POST" name="form1">
+		<table border="1" style="border: solid 3px #808080;">
+			<tr>
+				<td>Name </td>
+				<td><input type="text" name="sname" required autocomplete="off"></td>
+			</tr>
+			<tr>
+				<td colspan="2" class="text-center"> <button class="sbt" name="sbt"> Submit </button></td>
+			</tr>
+		</table>
+	</form>
+</center>
+<?php
+if(isset($_POST['sbt'])) {
+	if ($_POST['sname'] == '') { echo "Form not submitted. Name not valid"; } 
+	else {
+		$f1 = @fopen('files/studinfo.txt', 'a+b');
+		$sname = "\r\n" . $_POST['sname'];
+		$fwrite = fwrite($f1, $sname);
+
+		// fwrite() returns the number of bytes written, or FALSE on error.
+		if($fwrite === false) {
+			echo "Form not submitted."; 
+		} else {
+			echo "Form Submitted Successfully. " . $fwrite . " bytes written.";
+		}
+		fclose($f1); 
+	} 
+}
+?>
+
+
+
+<!-- ========================================================================== -->
+
+
+<!-- ========================================================================== -->
+<!-- Q. 6 -->
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="css.css">
+<?php
+if(file_exists("files/studinfo.txt")) {
+	$f1Handle = @fopen("files/studinfo.txt", "rb");
+	echo fread($f1Handle, filesize('files/studinfo.txt'));
+	
+	// Line By Line Starts
+	$fn = fopen("files/studinfo.txt","r");
+	while(! feof($fn))  {
+		$result = fgets($fn);
+		echo "<br>" . $result;
+	}
+	fclose($fn);
+	// Line By Line Ends
+
+	fclose($f1Handle);
+
+} else {
+	echo "No such File Exists";
+}
+?>
+
+
+<!-- ========================================================================== -->
+
+
+
+<!-- ========================================================================== -->
+<!-- Q. 7 -->
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="css.css">
+<pre style="color: red">
+	JUST TO QUOTE AND POINT THIS OUT:
+
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	3. if you're using fseek() to write data to a file, remember to open the file in "r+"
+	mode, example:
+
+	$fp=fopen($filename,"r+");
+
+	DON'T open the file in mode "a" (for append), because it puts
+	the file pointer at the end of the file and doesn't let you
+	fseek earlier positions in the file (it didn't for me!). Also,
+	don't open the file in mode "w" -- although this puts you at
+	the beginning of the file -- because it wipes out all data in
+	the file.
+
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+	Took me half a day to figure :/
+</pre>
+<?php
+
+	$file = 'files/7.txt';
+	
+	$fReadHandle = fopen("files/7.txt", 'r+');
+	
+	$currentPosition = fgets($fReadHandle, 4); // Reading from Start
+	echo "<br> Reading from Start <br>" . $currentPosition;
+	
+	$currentPosition = fgets($fReadHandle, 5); // Reading from the last read
+	echo "<br> Reading from the last read <br>" . $currentPosition;
+
+	fseek($fReadHandle, 0); //fseek
+	
+	$currentPosition = fgets($fReadHandle, 4);
+	echo "<br> Again Reading from Start <br>" . $currentPosition; //Again Reading from 
+	
+	$ftell = ftell($fReadHandle); //fseek
+	echo '<br> $ftell' . " $ftell ";
+
+	// Use single quotes around variables to prevent shell expansion
+	echo "<br>Use single quotes around variables to prevent shell expansion";
+	echo '<br>' . '\'ftell\'' . ' writes the word -> $ftell';
+	echo "<br>" . "\"ftell\"" . ' writes value i.e -> ' . "$ftell";
+
+?>
+
+
+
+<!-- ========================================================================== -->
+
+
+
+<!-- ========================================================================== -->
+<!-- Q. 8 -->
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css" href="css.css">
+
+
+<h1>Hobbies</h1>
+
+<form name="form1" method="POST">
+  <input type="checkbox" id="h1" name="hobby[]" value="Dance"> Dance <br>
+  <input type="checkbox" id="h2" name="hobby[]" value="Sing"> Singing <br>
+  <input type="checkbox" id="h3" name="hobby[]" value="Study"> Study <br><br>
+<input type="submit" class="sbt" value="Submit" name="sbt">
+</form>
+
+<?php
+if(isset($_POST['sbt'])){
+
+	if(!empty($_POST['hobby'])){
+		foreach($_POST['hobby'] as $selected){
+			echo $selected."</br>";
+		}
+	}
+}
+?>
+
+
+
+<!-- ========================================================================== -->
+
+
+
+
+<!-- ========================================================================== -->
+<!-- Q. 9 -->
+
+
+
+<link rel="stylesheet" type="text/css" href="css.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+<?php
+
+$arr = array("1. Chole Bhature","2. Chana Masala","3. Dal Makhani","4. Aloo Paratha","5. Kadai Paneer");
+
+$i = 2;
+
+foreach ($arr as $value) {
+	if($i % 2) {
+		echo "<br>" . $value;
+	}
+	$i++;
+} 
+?>
+
+
+<!-- ========================================================================== -->
+
+
+
+
+
+/*==========================================================================*/
+
+CSS FILE
+
+/*==========================================================================*/
+
+/*css*/
+* {
+	font-family: 'Verdana';
+	box-sizing: border-box;
+}
+input[type = text], input[type = number], button, select {
+	font-size: 18pt;
+}
+tr{
+	border-right: none;
+	border-left: none;
+	border-bottom: none;
+	border-top: none;
+}
+td {
+	border-left: none;
+	border-top: none;
+	padding: 10px;
+}
+td:hover{
+	background-color: #ddd;
+	cursor: pointer;
+}
+.rst {
+	background-color: red;
+	color: white;
+}
+.sbt {
+	background-color: green;
+	color: white;
+	font-size: 15pt;
+}
+.text-center {
+	text-align: center;
+}
+
+
+
+/*==========================================================================*/
+
+
+
+/*==========================================================================*/

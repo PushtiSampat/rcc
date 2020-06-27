@@ -1,8 +1,8 @@
-<!-- http://master-gtu.blogspot.com/2012/03/ivan-bayross-programs-sql.html -->
 
-<!-- http://programforamitystudent.blogspot.com/2009/11/client-master.html -->
 
-<!-- http://programforamitystudent.blogspot.com/2009/11/salesman-master.html -->
+<!-- ====================================================================== -->
+<!-- 1-create-query.php -->
+
 
 <?php
 
@@ -325,6 +325,7 @@ foreach ($arr as $key) {
 }
 
 
-
-
 ?>
+
+
+
