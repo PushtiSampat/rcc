@@ -1,0 +1,2493 @@
+
+/*
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+
+******************* ASSIGNMENT: 4 ********************
+******************* ASSIGNMENT: 4 ********************  
+******************* ASSIGNMENT: 4 ********************
+
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+******************************************************
+*/
+
+
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      1-alternate.c
+ * Copyright: 18-May-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program to read a line from input file 
+ *			and print alternate characters in the output file. 
+ *			Display appropriate message for file i/o errors.  
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+
+int main()
+{
+    int a = 1;
+
+    char mystring[50];
+    char *cptr; 
+
+    FILE *f1 = fopen("alternate.txt", "w"); 
+
+    if(f1) {
+        printf ("Enter a string to copy alternate texts on file: ");
+        scanf  ("%s",mystring);
+
+        cptr = mystring;
+        while(*cptr != '\0') {
+            if(a) {
+                fprintf(f1, "%c", *cptr);
+                printf("%c", *cptr);
+                a = 0;
+            } else {
+                a = 1;
+            }
+            cptr++;
+        }
+        
+        printf(" (write succesfull)");
+        fclose (f1);
+    }
+
+    else {
+        printf("Unable to open file");
+    }
+
+    printf("\n");
+}
+
+
+/* =================================================================
+ * Output :
+ 
+	 Enter a string to copy alternate texts on file: Test12345 
+	 Ts135 (write succesfull)
+	 
+  ================================================================= */
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      2-copy-line-by-line.c
+ * Copyright: 18-May-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program to copy the contents 
+ *			of one file to another and also 
+ *			print the no. of lines in the first file.
+ * 
+ * ========================================================== */
+ 
+
+ /* * * * * * * * * * * * * N O T E * * * * * * * * * * * * * * * *
+ *
+ * 1. Make sure file name "readlinebyline.txt" exists			      
+ * 2. If "copy-readlinebyline.txt" exists, data will be overwritten 
+ *
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ 
+ 
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int no_of_lines = 0;
+    char line[1000];
+    FILE *f1 = fopen("readlinebyline.txt", "r");
+    FILE *f2 = fopen("copy-readlinebyline.txt", "w");
+    if(f1 && f2) {
+		if (fgetc(f1) == EOF) {
+			printf ("No data found\n");
+		    exit(0);
+        } 
+
+        while(fgets(line, sizeof line, f1)) {
+            no_of_lines++;
+            // fputs (line, stdout);
+            fputs (line, f2);
+        }
+         
+        printf("\n%d lines yanked and pasted", no_of_lines);
+
+        fclose(f1);
+        fclose(f2);
+
+    }
+
+    else {
+        ferror(f1);
+        ferror(f2);
+    }
+    puts ("\n");
+}
+
+/* =================================================================
+ * Output :
+ 
+    5 lines yanked and pasted
+
+ ================================================================= */
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      3-find-word.c
+ * Copyright: 18-May-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program to search a particular word 
+ *			in an existing file and display the 
+ *			no. of occurrences and the position 
+ *			of first occurrence of that word. 
+ *			If the word is not found 
+ *			display the appropriate message  
+ * 
+ * ========================================================== */
+
+  /* * * * * * * * * * * * * N O T E * * * * * * * * * * * * * * * *
+ *
+ * 1. Make sure file name "readlinebyline.txt" exists                 
+ *
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main()
+
+{
+    int i = 0, length = 0, count = 0, finding = 0, first_occurance = 0;
+    char search_this_word[50], search;
+    char c;
+    FILE *f = fopen ("readlinebyline.txt", "r"); 
+
+    printf("Enter the word you want to search: ");
+    scanf("%s", search_this_word);
+
+    length = strlen (search_this_word);
+
+    if (f) {
+        if(!length) {
+            exit(0);
+        }
+
+        search = search_this_word[0];
+
+        while((c = fgetc(f)) != EOF){
+            if (count == 0) {
+                first_occurance++;
+            }
+
+            if (search == c) {
+                finding = 1;
+
+                if(length == i + 1) {
+
+                    i = finding = 0;
+                    count++;
+                    search = search_this_word[i];
+                }
+
+                else {
+                    search = search_this_word[++i];
+                }
+
+            }
+            else {
+                finding = 0;
+            }
+        }
+
+        if (count > 0) {
+            printf ("\"%s\" found 1st time at %d position \n", search_this_word, first_occurance - length + 1);
+            printf ("\"%s\" found %d times\n", search_this_word, count);
+        }
+        else {
+            printf ("\"%s\" not found\n", search_this_word);
+        }
+    }
+    else {
+        puts ("Cannot open file to read");
+    } 
+    printf ("\n");
+    return 0;
+}
+
+/* =================================================================
+ * Data in file :
+
+    Lorem Ipsum dolor set amet.
+    Lorem Ipsum.
+    dolor set amet.
+    Ipsumset amet.
+
+ * Output :
+
+
+    Enter the word you want to search: set
+    "set" found 1st time at 19 position 
+    "set" found 3 times
+
+ ================================================================= */
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      4-sort-merge.c
+ * Copyright: 18-May-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: The files DATA1 and DATA2 
+ *			contain sorted list of integers. 
+ 			Write a program to produce a third file DATA
+ 			which holds a single sorted merged list
+ 			 of these two lists.  
+ * 
+ * ========================================================== */
+
+
+ /* * * * * * * * * * * * * N O T E * * * * * * * * * * * * * * * *
+ *
+ * 1. If       "file1.txt" exists, data will be overwritten 
+ * 2. If       "file2.txt" exists, data will be overwritten 
+ * 3. If "sorted-data.txt" exists, data will be overwritten 
+ *
+ /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define DIGIT 3
+
+int * readandsort()
+{
+    int i = 0, j, index;
+    static int myarray[10];
+    int swap;
+    char line[1000];
+
+    FILE *f1 = fopen ("file1.txt", "r"); 
+    FILE *f2 = fopen ("file2.txt", "r"); 
+
+    if (f1 && f2) {
+
+        while (fgets(line, sizeof line, f1)) {
+            myarray[i++] = atoi(line);
+        }
+
+        while (fgets(line, sizeof line, f2)) {
+            myarray[i++] = atoi(line);
+        }
+        
+        for (i = 0; i < DIGIT * 2 - 1; i++) {
+
+            index = i;
+
+            for (j = i + 1; j < DIGIT * 2; j++) {
+
+                if (myarray[j] < myarray[index]) {
+                    index = j;
+                }
+
+            }
+
+            swap = myarray[i];
+            myarray[i] = myarray[index];
+            myarray[index] = swap;
+        }
+
+    }
+
+    else {
+        printf("Unable to open files");
+        exit (1);
+    }
+
+    return myarray;
+}
+
+
+void writeSortedData(int *p)
+{
+    int i;
+    FILE *f = fopen ("sorted-data.txt", "w");
+    
+    for (i = 0; i < DIGIT * 2; i++) {
+        fprintf(f, "%d ", *(p + i));
+    }
+
+    printf ("Write success to \"sorted-data.txt\"");
+}
+
+
+int main()
+{
+    int num = DIGIT, data, *p;
+    FILE *f1 = fopen ("file1.txt", "w"); 
+    FILE *f2 = fopen ("file2.txt", "w"); 
+
+
+    if(f1 && f2) {
+        printf("Enter %d numbers in FILE1\n", DIGIT);
+        while(num--) {
+            scanf   ("%d",&data);
+            fprintf (f1, "%d\n", data);
+        }
+
+        num = DIGIT;
+
+        printf("Enter %d numbers in FILE2\n", DIGIT);
+        while(num--) {
+            scanf   ("%d",&data);
+            fprintf (f2, "%d\n", data);
+        }
+
+        fclose (f1);
+        fclose (f2);        
+
+        p = readandsort();
+        writeSortedData(p);
+    } 
+
+    else {
+        puts ("Unable to open files");
+        exit(1);
+    }
+
+    printf("\n");
+
+    return 0;
+}
+
+
+/* =================================================================
+
+ * Output :
+     Enter 3 numbers in FILE1
+    12 22 11
+    Enter 3 numbers in FILE2
+    1 212 121
+    Write success to "sorted-data.txt"
+
+ ================================================================= */
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      5-repeated-characters.c
+ * Copyright: 18-May-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program to read line by line from a file
+ *			and print all the repeated characters
+ *			on the screen along with their frequency  
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+#include <string.h>
+
+void findOccurences(char *mystring, char data[][1])
+{
+    FILE *f1 = fopen("readlinebyline.txt", "r");
+    char line[1000], *cptr;
+    int i, break_me, count = 0, numbers[50] = {0};
+
+    while(fgets(line, sizeof line,f1)) {
+        cptr = line;
+        fputs (line, stdout);
+        while (*cptr != '\0') {
+            break_me = 0;
+
+            if(*cptr == '\n') {
+                *cptr = '^';
+            } else if(*cptr == ' ') {
+                *cptr = '_';
+            }  
+            for (i = 0; i < count; i++) {
+                if(data[i][0] == (*cptr)) {
+                    numbers[i]++;
+                    break_me = 1;
+                    break;
+                }
+            }
+
+            if (!break_me) {
+                data[count][0] = (*cptr);
+                count++;
+                numbers[i]++;
+            }
+
+            cptr++;
+
+        }
+    }
+    printf ("\n\n ^ is for new line\n _ stand for spaces");
+    printf ("\n\n");
+    for (i = 0; i < count; i++) {
+        printf ("%2c : %2d\t\t", data[i][0], numbers[i]);
+        if((i + 1) % 4 == 0) {
+
+            printf ("\n");
+            printf ("=============================================================\n");
+        }
+    }
+}
+
+int main()
+{
+    char mystring[50], data[50][1];
+
+    findOccurences(mystring, data);
+
+    printf("\n");
+    return 0;
+}
+
+
+/* =================================================================
+ * In "readlinebyline.txt"
+    Lorem Ipsum dolor set amet.
+    Lorem Ipsum.
+    dolor set amet.
+    Ipsumset amet.
+
+ * Output :
+
+    Lorem Ipsum dolor set amet.
+    Lorem Ipsum.
+    dolor set amet.
+    Ipsumset amet.
+
+     ^ is for new line
+     _ stand for spaces
+
+     L :  2      o :  6      r :  4      e :  8     
+    =============================================================
+     m :  8      _ :  8      I :  3      p :  3     
+    =============================================================
+     s :  6      u :  3      d :  2      l :  2     
+    =============================================================
+     t :  6      a :  3      . :  4      ^ :  3     
+    =============================================================
+
+
+ ================================================================= */
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      6-count-characters-whitespaces.c
+ * Copyright: 18-May-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a function to read a file and 
+ *           count the no. of 
+ *           characters, 
+ *           spaces, 
+ *           tabs, 
+ *           newlines and 
+ *           no. of words in a given text file.  
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+#include <string.h>
+
+void findOccurences(char *mystring, char data[][1])
+{
+    FILE *f1 = fopen("readlinebyline.txt", "r");
+    char line[1000], *cptr;
+    int new_lines = -1, tabs = 0, spaces = 0, words = 0, characters = 0, others = 0;
+
+    while(fgets(line, sizeof line,f1)) {
+        cptr = line;
+
+        while (*cptr != '\0') {
+
+            if(*cptr == '\n') {
+                new_lines++;
+                cptr++;
+                if(*cptr != EOF) {
+                    words++;
+                }
+                cptr--;
+            }  
+            else if(*cptr == '\t') {
+                tabs++;                
+            }  
+            else if(*cptr == ' ') {
+                spaces++;                
+                words++;
+            }  
+            else if((*cptr > 64 && *cptr < 91) || (*cptr > 96 && *cptr < 124)) {
+                characters++; 
+            }  
+            else {
+                others++;              
+            }  
+            cptr++;
+
+        }
+    }
+    printf ("new_lines = %d\ntabs = %d\nspaces = %d\n"
+           "words = %d\ncharacters = %d\nothers = %d\n",
+           new_lines, tabs, spaces, words, characters, others);
+}
+
+int main()
+{
+    char mystring[50], data[50][1];
+
+    findOccurences(mystring, data);
+
+    printf("\n");
+    return 0;
+}
+
+/* =================================================================
+ * Data in txt file
+
+    Lorem Ipsum dolor set amet.
+Lorem Ipsum.
+dolor set amet.
+Ipsumset    amet.
+
+ * Output :
+
+new_lines = 2
+tabs = 2
+spaces = 8
+words = 11
+characters = 56
+others = 4
+
+ ================================================================= */
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      1-remove-occurances.c
+ * Copyright: 18-May-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a function to accept a string 
+ *          from the keyboard and 
+ *          remove all occurrences of that string 
+ *          from a given file  
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void copyFile()
+{
+    int delFile;
+    char line[1000];
+    FILE *f1 = fopen("tempFile.txt", "r");
+    FILE *f2 = fopen("readlinebyline.txt", "w");
+    if(f1 && f2) {
+
+        while(fgets(line, sizeof line, f1)) {
+            fputs (line, f2);
+        }
+
+        fclose(f1);
+        fclose(f2);
+
+        delFile = remove("tempFile.txt");
+
+        if(delFile) {
+            printf ("File not deleted");  
+        }
+    }
+
+    else {
+        printf ("Error: ");
+        ferror(f1);
+        ferror(f2);
+    }
+}
+int main()
+
+{
+    int i = 0, j, length = 0, count = 0, finding = 0;
+    char search_this_word[50], search;
+    char c;
+    FILE *f = fopen ("readlinebyline.txt", "r+"); 
+    FILE *f1 = fopen ("tempFile.txt", "w");
+
+    printf("Enter the word you want to search: ");
+    scanf("%s", search_this_word);
+
+    length = strlen (search_this_word);
+
+    if (f) {
+        if(!length) {
+            exit(0);
+        }
+
+        search = search_this_word[0];
+
+        while((c = fgetc(f)) != EOF){
+                fprintf (f1, "%c", c);
+            if (search == c) {
+                finding = 1;
+                if(length == i + 1) {
+                    i = finding = 0;
+                    count++;
+
+                    fseek (f1, -length, SEEK_CUR);
+                    for (j = 0; j < length; j++) {
+                        //fprintf (f1, "*");
+                    }
+
+                    search = search_this_word[i];
+                }
+
+                else {
+                    search = search_this_word[++i];
+                }
+
+            }
+            else {
+                finding = 0;
+            }
+        }
+        printf ("\"%s\" found %d times", search_this_word, count);
+        if (count) {
+            printf (" and deleted every time from the file");
+        }
+        fclose(f);
+        fclose(f1);
+        copyFile();
+
+    }
+    else {
+        puts ("Cannot open file to read");
+    } 
+    printf ("\n");
+    return 0;
+}
+
+
+
+/* =================================================================
+ * In "txt" file
+    Lorem Ipsum dolor set amet.
+    Lorem Ipsum.
+    dolor set amet.
+    Ipsumset amet.
+
+ * Output :
+    Enter the word you want to search: set
+    "set" found 3 times and deleted every time from the file
+ ================================================================= */
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      8-remove-blank-lines.c
+ * Copyright: 18-May-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program to remove all the blank lines 
+ *          from a given file.  
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void copyFile()
+{
+    int delFile;
+    char line[1000];
+    FILE *f1 = fopen("tempFile.txt", "r");
+    FILE *f2 = fopen("readlinebyline.txt", "w");
+    if(f1 && f2) {
+
+        while(fgets(line, sizeof line, f1)) {
+            fputs (line, f2);
+        }
+
+        fclose(f1);
+        fclose(f2);
+
+        delFile = remove("tempFile.txt");
+
+        if(delFile) {
+            printf ("File not deleted");  
+        }
+    }
+
+    else {
+        ferror(f1);
+        ferror(f2);
+    }
+}
+
+int main()
+{
+    char prev = '\n', c;
+    int count_lines = 0;
+    FILE *f = fopen ("readlinebyline.txt", "r+"); 
+    FILE *f1 = fopen ("tempFile.txt", "w");
+
+    if (f) {
+        while((c = fgetc(f)) != EOF){
+            if(c == '\n' && prev == '\n') {
+                count_lines = 1;
+            }    
+            else {
+                fprintf (f1, "%c", c);
+            }
+            prev = c;
+        }
+        fclose(f);
+        fclose(f1);
+        copyFile();
+        
+        printf ("Unwanted lines deleted");
+
+    }
+    else {
+        puts ("Cannot open file to read");
+    } 
+    printf ("\n");
+    return 0;
+}
+
+
+/* =================================================================
+ in txt file (numbers repersent <line number>)
+ * 1. 
+ * 2. 
+ * 3. Lorem Ipsum dolor  amet.
+ * 4. 
+ * 5.
+ * 6. Lorem Ipsum.
+ * 7. 
+ * 8. dolor  amet.
+ * 9. 
+
+ * Output :
+
+ * Unwanted lines deleted
+
+ ================================================================= */
+ /* ===========================================================
+ 
+ * Roll No: 30
+ * 
+ * File:      9-remove-comments	.c
+ * Copyright: 18-May-2020 by Ajinkya Rathod(ajinzrathod)
+ * 
+ * Content: Write a program a program to remove all the comments
+ *          from a C file. 
+ * 
+ * ========================================================== */
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void copyFile()
+{
+    int delFile;
+    char line[1000];
+    FILE *f1 = fopen("tempFile.txt", "r");
+    FILE *f2 = fopen("readlinebyline.txt", "w");
+    if(f1 && f2) {
+
+        while(fgets(line, sizeof line, f1)) {
+            fputs (line, f2);
+        }
+
+        fclose(f1);
+        fclose(f2);
+
+        delFile = remove("tempFile.txt");
+
+        if(delFile) {
+            printf ("File not deleted");  
+        }
+    }
+
+    else {
+        ferror(f1);
+        ferror(f2);
+    }
+}
+
+int main()
+{
+    char prev = 'A', c;
+    int stop = 0, first_occurence = 0, second_occurance = 0, long_comments = 0;
+    FILE *f = fopen ("readlinebyline.txt", "r+"); 
+    FILE *f1 = fopen ("tempFile.txt", "w");
+
+    if (f) {
+        while((c = fgetc(f)) != EOF){
+            if(long_comments == 1) {
+                if (c == '/' && prev == '*') {
+                    long_comments = 0;
+                }
+            }
+            if (first_occurence == 1) {
+                if (c == '*') {
+                    long_comments = 1;
+                }
+                else if(c != '/') {
+                    stop = 0;
+                }else {
+                    second_occurance = 1;
+                }
+                first_occurence = 0;
+            }
+            if(stop == 1) {
+                if (c == '\n') {
+                    stop = 0;
+                    second_occurance = 0;
+                }
+            }
+
+            else if(c == '/') {
+                first_occurence = 1;
+                stop = 1;
+            }    
+
+            if(stop == 0 && second_occurance == 0 && long_comments == 0) {
+                if (prev == '/' && c != '\n'){
+                    fprintf (f1, "/");
+                }
+                fprintf (f1, "%c", c);
+            }
+            prev = c;
+        }
+        fclose(f);
+        fclose(f1);
+        copyFile();
+
+        printf("Comments Removed");
+
+    }
+    else {
+        puts ("Cannot open file to read");
+    } 
+    printf ("\n");
+    return 0;
+}
+
+
+/* =================================================================
+C File:
+#include<stdio.h>
+
+/* This program adds divides by 2 */
+
+/* // ** /* /* /* /* /* / * /* */
+/////
+///
+
+
+int main ()
+{
+    int a = 10;
+
+    // dividing a by 2
+    a /= 2;
+
+    return 0;
+}
+
+Output :
+
+Comments Removed
+
+
+
+/*
+"New C File"
+
+#include<stdio.h>
+
+
+
+
+
+int main ()
+{
+    int a = 10;
+    
+    a /= 2;
+    return 0;
+}
+*/
+ // ================================================================= */
+
+
+
+/* ================================================================
+ Q.10
+ Write a program that will generate a data file containing the 
+ list of  customers and their corresponding telephone numbers.
+ Use a structure  variable to store the name and 
+ telephone number of each customer. 
+ Create  a data file using a sample list. 
+ ================================================================ */
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct customers
+{
+	char name[60],telephone[10];
+};
+
+void getdata(char *fname, struct customers cu[],int n)
+{
+	int i;
+	FILE *fp;
+	fp=fopen(fname,"w");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+	for(i=0;i<n;i++)
+	{
+		fflush(stdin);
+		printf("\n Enter Name of Customer:");
+		gets(cu[i].name);
+		fflush(stdin);
+		printf(" Enter Telephone No:");
+		scanf("%[^\n]",&cu[i].telephone);
+	
+		fprintf(fp,"%s \t %s \n",cu[i].name,cu[i].telephone);
+	}
+		fclose(fp);
+}
+
+void displayR(char *fname,struct customers cu[],int n)
+{
+	int i;
+	FILE *fp;
+	fp=fopen(fname,"r");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+
+	for(int i=0;i<n;i++)
+	{
+		fscanf(fp,"%s",&cu[i].name);
+		fscanf(fp,"%s",&cu[i].telephone);
+	
+		printf("\n %s \t %s",cu[i].name,cu[i].telephone);
+	}
+		fclose(fp);
+}
+
+
+int main()
+{
+	int n;
+	char file_name[80];
+
+	struct customers cu[10];
+
+	printf("\n Enter File name: ");
+	scanf("%s",&file_name);
+
+	printf("\n enter number of records: ");
+	scanf("%d",&n);
+
+	getdata(file_name,cu,n);
+
+	printf("\n ====== Display Records ======");
+
+	displayR(file_name,cu,n);
+
+	return 0;
+
+}
+
+/* ==========================================================
+Output:
+
+
+	 Enter File name: records.txt
+
+	 enter number of records: 2
+
+	 Enter Name of Customer:Ajinkya
+	 Enter Telephone No:96387
+
+	 Enter Name of Customer:Steffi
+	 Enter Telephone No:78954
+
+	 ====== Display Records ======
+	 Ajinkya         96387
+	 Steffi          78954
+	 
+ ========================================================== */
+
+
+// =================================================================
+
+
+
+// =================================================================
+// Q12
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct Employee
+{
+	int empno;
+	char name[20],address[50],phone[20];
+	double salary;
+};
+
+
+void getdata(char *fname,struct Employee e1[],int n)
+{
+	int i;
+	FILE *fp;
+	fp=fopen(fname,"a");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+	for(i=0;i<n;i++)
+	{
+		fflush(stdin);
+		printf("\n Enter Employee ID: ");
+		scanf("%d", &e1[i].empno);
+		printf(" Enter Employee name: ");
+		scanf("%s",&e1[i].name);
+		fflush(stdin);
+		printf(" Enter Employee address: ");
+		scanf("%s",&e1[i].address);
+		printf(" Enter phone number:");
+		fflush(stdin);
+		scanf("%s",&e1[i].phone);
+		printf(" Enter Salary:");
+		fflush(stdin);
+		scanf("%lf",&e1[i].salary);
+		
+		fwrite(&e1[i], sizeof(e1[i]), 1, fp);
+
+	//	fprintf(fp,"\n %d \t %s \t %f",e1[i].empno,e1[i].name,e1[i].salary);
+	}
+		fclose(fp);
+}
+
+void display_namewise(char *fname,struct Employee e1[],int n)
+{
+	int i,cnt=0;
+	char name[20];
+
+	FILE *fp;
+	
+	fp=fopen(fname,"r");
+	fseek(fp,0L,0);
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	printf("Enter Name:");
+	scanf("%s",name);
+	
+	for(int i=0;i<n;i++)
+	{
+
+		fread(&e1[i],sizeof(e1[i]),1,fp);
+		if(strcmp(name,e1[i].name)==0)
+		{
+			cnt++;
+			printf("\n %d \t %s \t %s \t %s \t %lf",e1[i].empno,e1[i].name,e1[i].address,e1[i].phone,e1[i].salary);	
+		}
+		
+	}
+	if(cnt==0)
+		printf("\n Recored Doesent exist");
+	fclose(fp);
+}
+
+void display(char *fname,struct Employee e1[],int n)
+{
+	int i;
+	FILE *fp;
+	
+	fp=fopen(fname,"r");
+	fseek(fp,0L,0);
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		fread(&e1[i],sizeof(e1[i]),1,fp);
+		printf("\n %d \t %s \t %s \t %s \t %lf",e1[i].empno,e1[i].name,e1[i].address,e1[i].phone,e1[i].salary);
+	}
+		fclose(fp);
+}
+
+void modify(char *fname,struct Employee e1[],int n)
+{
+	int i,empid,cnt=0;
+	double sal;
+	char name[20];
+	FILE *fp,*fptr;
+	
+	fp=fopen(fname,"r");
+	
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	fptr=fopen("temp.txt","w");
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	printf("\n Enter Employee Id:");
+	scanf("%d",&empid);
+
+	for(int i=0;i<n;i++)
+	{
+		fread(&e1[i],sizeof(e1[i]),1,fp);
+	
+		if(e1[i].empno==empid)
+		{
+			cnt++;
+			fflush(stdin);
+			printf("\nEnter Employee ID: ");
+			scanf("%d", &e1[i].empno);
+			printf(" Enter Employee name: ");
+			scanf("%s",&e1[i].name);
+			fflush(stdin);
+			printf(" Enter Employee address: ");
+			scanf("%s",&e1[i].address);
+			printf(" Enter phone number:");
+			fflush(stdin);
+			scanf("%s",&e1[i].phone);
+			printf(" Enter Salary:");
+			fflush(stdin);
+			scanf("%lf",&e1[i].salary);
+			
+			fwrite(&e1[i], sizeof(e1[i]), 1, fptr);
+		}
+		else
+		{
+			fwrite(&e1[i], sizeof(e1[i]), 1, fptr);
+		}
+	}
+	if(cnt>0)
+		printf("\n Employee Edited Successfully.");
+	else
+		printf("\n Employee Not Exist...!!");
+
+	
+	fclose(fp);
+	fclose(fptr);
+
+	fp=fopen(fname,"w");
+
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	fptr=fopen("temp.txt","r");
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	for(int i=0;i<n;i++)
+	{
+		fread(&e1[i],sizeof(e1[i]),1,fptr);
+		fwrite(&e1[i], sizeof(e1[i]), 1, fp);
+	}
+	
+		fclose(fp);
+		fclose(fptr);
+		
+}
+
+int removeR(char *fname,struct Employee e1[],int n)
+{
+	int i,empid,cnt=0;
+	double sal;
+	char name[20];
+	FILE *fp,*fptr;
+	
+	fp=fopen(fname,"r");
+	
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	fptr=fopen("temp.txt","w");
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	printf("\n Enter Employee Id:");
+	scanf("%d",&empid);
+
+	for(int i=0;i<n;i++)
+	{
+		fread(&e1[i],sizeof(e1[i]),1,fp);
+	
+		if(e1[i].empno==empid)
+		{
+			cnt++;
+		}
+		else
+		{
+			fwrite(&e1[i], sizeof(e1[i]), 1, fptr);
+		}
+	}
+	if(cnt>0)
+		printf("\n Employee Deleted Successfully.");
+	else
+		printf("\n Employee Not Exist...!!");
+
+	
+	fclose(fp);
+	fclose(fptr);
+
+	fp=fopen(fname,"w");
+
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	fptr=fopen("temp.txt","r");
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	for(int i=0;i<n;i++)
+	{
+		fread(&e1[i],sizeof(e1[i]),1,fptr);
+		fwrite(&e1[i], sizeof(e1[i]), 1, fp);
+	}
+	
+		fclose(fp);
+		fclose(fptr);
+		if(cnt>0)
+			return 1;
+		else
+			return 0;
+		
+}
+
+int main()
+{
+	int n,ch,res;
+	char file_name[80],choice='n',name[20],tele[10];
+	int cnt=0;
+	struct Employee e1[10];
+
+	printf("\n Enter File name:");
+	scanf("%s",&file_name);
+	do
+	{
+		printf("\n\n 1.Add a new record.");
+		printf("\n 2.Delete a record. ");
+		printf("\n 3.Modify an existing record.");
+		printf("\n 4.Retrieve and display an entire record for a given name.");
+		printf("\n 5.Generate a complete list of all names, addresses and telephone numbers.\n");
+
+		printf("\n Enter Your choice:");
+		scanf("%d",&ch);
+		
+		switch(ch)
+		{
+			case 1:printf("\n Enter number of records to Add:");
+					scanf("%d",&n);
+					cnt=cnt+n;
+					getdata(file_name,e1,n);
+					break;
+			case 2:
+					res=removeR(file_name,e1,cnt);
+					// int remove(char *fname,struct Employee e1[],int n)
+
+					if(res)
+						cnt=cnt-1;
+					break;
+			case 3:
+					modify(file_name,e1,cnt);
+					break;
+			case 4:
+					display_namewise(file_name,e1,cnt);
+					break;
+			case 5:
+					printf("\n Display Records");
+					display(file_name,e1,cnt);
+					break;
+		}
+		printf("\n Do You want to continue:");
+		scanf("%s",&choice);
+		
+
+	}while(choice=='y');
+	
+	return 0;
+}
+
+
+
+// =================================================================
+
+
+
+
+// =================================================================
+// Q13
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct Country
+{
+	int id;
+	char name[60];
+	struct capital
+	{
+		char cp_name[60];
+	};
+	struct capital cp;
+};
+
+void Insert(char *fname,struct Country c1[],int n)
+{
+	int i;
+	FILE *fp;
+	fp=fopen(fname,"a");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+	for(i=0;i<n;i++)
+	{
+		printf("\n Enter Country id:");
+		scanf("%d",&c1[i].id);
+
+		fflush(stdin);
+		printf(" Enter Country Name:");
+		scanf("%s",&c1[i].name);
+		
+		fflush(stdin);
+		printf(" Enter Capital Name:");
+		scanf("%s",&c1[i].cp.cp_name);
+
+		printf("\n %d \t %s \t %s ",c1[i].id,c1[i].name,c1[i].cp.cp_name);
+		fwrite(&c1[i], sizeof(c1[i]), 1, fp);
+	}
+}
+
+void display(char *fname,struct Country c1[],int n)
+{
+	int i;
+	FILE *fp;
+	
+	fp=fopen(fname,"r");
+	fseek(fp,0L,0);
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		fread(&c1[i],sizeof(c1[i]),1,fp);
+		printf("\n %d \t %s \t %s \t ",c1[i].id,c1[i].name,c1[i].cp.cp_name);
+	}
+		fclose(fp);
+}
+
+void main()
+{
+	int n,ch,res;
+	char file_name[80],choice='n',name[20],tele[10];
+	static int cnt=0;
+	struct Country c1[10];
+
+	
+	printf("\n Enter File name:");
+	scanf("%s",&file_name);
+	printf("\n --------------------");
+	printf("\n 1.Add a new Record.");
+	printf("\n 2.Display a Record. ");
+	printf("\n --------------------");
+	do
+	{
+		printf("\n Enter Your choice:");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:printf("\n Enter number of records for Add:");
+					scanf("%d",&n);
+					cnt=cnt+n;
+					Insert(file_name,c1,n);
+					break;
+			case 2:
+					printf("\n----------------");
+					printf("\n Display Records");
+					printf("\n-----------------");
+					display(file_name,c1,cnt);
+					break;
+		}
+		printf("\n Do You want to continue:");
+		scanf("%s",&choice);
+
+	}while(choice=='y');
+	
+	getch();
+}
+
+
+// ============
+// OUTPUT
+// ============
+
+//  Enter File name:country.txt
+
+//  --------------------
+//  1.Add a new Record.
+//  2.Display a Record.
+//  --------------------
+//  Enter Your choice:1
+
+//  Enter number of records for Add:3
+
+//  Enter Country id:1
+//  Enter Country Name:India
+//  Enter Capital Name:Delhi
+
+//  Enter Country id:2
+//  Enter Country Name:Spain
+//  Enter Capital Name:Madrid
+
+//  Enter Country id:3
+//  Enter Country Name:Canada
+//  Enter Capital Name:Ottawa
+
+//  Do You want to continue:y
+
+//  Enter Your choice:2
+
+// ----------------
+//  Display Records
+// -----------------
+//  1     India   Delhi
+//  2     Spain   Madrid
+//  3     Canada Ottawa
+
+//  Do You want to continue:n
+
+
+// =================================================================
+
+// =================================================================
+// Q14
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct Country
+{
+	int id;
+	char name[60];
+	struct capital
+	{
+		char cp_name[60];
+	};
+	struct capital cp;
+};
+
+
+void display(char *fname,Country c1[],int n)
+{
+	int i=0;
+	FILE *fp;
+	
+	fp=fopen(fname,"r");
+	
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	fseek(fp, 0, SEEK_SET);
+
+	while(fread(&c1[i],sizeof(c1[i]),1,fp))
+	{
+		printf("\n %d \t %s \t %s \t ",c1[i].id,c1[i].name,c1[i].cp.cp_name);
+		i++;
+	}
+		fclose(fp);
+}
+
+void find_country(char *fname,Country c1[],int n)
+{
+	int i,cnt=0;
+	char capi[60];
+	FILE *fp;
+	
+	fp=fopen(fname,"r");
+	fseek(fp,0L,0);
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	printf("\n Enter Capital:");
+	scanf("%s",capi);
+	
+	i=0;
+	while(fread(&c1[i],sizeof(c1[i]),1,fp))
+	{
+		if(strcmp(capi,c1[i].cp.cp_name)==0)
+		{	
+			cnt++;
+			printf("\n %d \t %s \t %s \t ",c1[i].id,c1[i].name,c1[i].cp.cp_name);
+		}
+		i++;
+	}
+	if(cnt==0)
+		printf("\n Record Doesnot Exist...!");
+
+		fclose(fp);
+}
+void find_capital(char *fname,Country c1[],int n)
+{
+	int i,cnt=0;
+	char cou[60];
+	FILE *fp;
+	
+	fp=fopen(fname,"r");
+	fseek(fp,0L,0);
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	printf("\n Enter Country:");
+	scanf("%s",cou);
+	
+	i=0;
+	while(fread(&c1[i],sizeof(c1[i]),1,fp))
+	{
+		if(strcmp(cou,c1[i].name)==0)
+		{	
+			cnt++;
+			printf("\n %d \t %s \t %s \t ",c1[i].id,c1[i].name,c1[i].cp.cp_name);
+		}
+		i++;
+	}
+	if(cnt==0)
+		printf("\n Record Doesnot Exist...!");
+
+		fclose(fp);
+}
+void main()
+{
+	int n,ch,res;
+	char file_name[80],choice='n',name[20],tele[10];
+	static int cnt=0;
+	struct Country c1[10];
+
+	printf("\n Enter File name:");
+	scanf("%s",&file_name);
+	printf("\n --------------------");
+	printf("\n 1.Display a Record.");
+	printf("\n 2.Determine the capital of a specified ountry.");
+	printf("\n 3.Determine the country whose capital is specified.");
+	printf("\n --------------------");
+	do
+	{
+		printf("\n Enter Your choice:");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:printf("\n----------------");
+					printf("\n Display Records");
+					printf("\n-----------------");
+					display(file_name,c1,cnt);
+					break;
+			case 2:
+					find_capital(file_name,c1,cnt);
+					break;
+			case 3:
+					find_country(file_name,c1,cnt);
+					break;
+		}
+		printf("\n Do You want to continue:");
+		scanf("%s",&choice);
+
+	}while(choice=='y');
+	
+	getch();
+}
+/* =========================================================
+
+OUTPUT:
+
+ Enter File name:country.txt
+
+ --------------------
+ 1.Display a Record.
+ 2.Determine the capital of a specified ountry.
+ 3.Determine the country whose capital is specified.
+ --------------------
+ Enter Your choice:1
+
+----------------
+ Display Records
+-----------------
+ 111     India    Delhi
+ 222     NewZealand Wellington   
+ 333     Egypt Cairo
+ 444     Iran Baghdad
+ Do You want to continue:y
+
+ Enter Your choice:2
+
+ Enter Country:NewZealand
+
+ 222     NewZealand   Wellington
+ Do You want to continue:n
+
+ ========================================================= */
+
+
+// =================================================================
+// Q15
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<string.h>
+
+void Insert(char *fname,int n)
+{
+	char str[100];
+	int i;
+	FILE *fp;
+	fp=fopen(fname,"w");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+
+	for(i=0;i<=n;i++)
+	{
+		fgets(str,sizeof(str),stdin);
+		fputs(str,fp);
+	}
+	fclose(fp);
+}
+
+void get_line(char *fname,int n,int lno)
+{
+	char str[100];
+	int i,cnt=0;
+	FILE *fp;
+	fp=fopen(fname,"r");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+
+	for(i=0;i<=n;i++)
+	{
+		fgets(str,sizeof(str),fp);
+		if(i==lno)
+		{
+			fputs(str,stdout);
+			cnt++;
+		}
+	}
+	fclose(fp);
+	//printf("\n cnt is:%d",cnt);
+}
+
+
+void Insert_line_at_k(char *fname,int n,int k)
+{
+	char str[100],str2[100],ch;
+	int i,cnt=0,n2;
+	FILE *fp,*fptr;
+	fp=fopen(fname,"r");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	fptr=fopen("temp.txt","w");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+
+	for(i=0;i<=n;i++)
+	{
+		fgets(str,sizeof(str),fp);
+		fputs(str,fptr);
+		if(i==k)
+		{
+			printf("\n Enter Number of line:");
+			scanf("%d",&n2);
+
+			for(int j=0;j<=n2;j++)
+			{
+				fgets(str2,sizeof(str2),stdin);
+				if(j!=0)
+				{
+					fputs(str2,fptr);
+				}
+			}
+		
+			cnt++;
+		}
+		
+	}
+	fclose(fp);
+	fclose(fptr);
+
+
+	fp=fopen(fname,"w");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+
+	fptr=fopen("temp.txt","r");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	while((ch=getc(fptr))!=EOF)
+	{
+		fprintf(fp,"%c",ch);
+	}
+	fclose(fp);
+	fclose(fptr);
+
+}
+
+
+void Delete_line_at_k(char *fname,int n,int k)
+{
+	char str[100],str2[100],ch;
+	int i,cnt=0,n2;
+	FILE *fp,*fptr;
+	fp=fopen(fname,"r");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	fptr=fopen("temp.txt","w");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+
+	for(i=0;i<=n;i++)
+	{
+		fgets(str,sizeof(str),fp);
+		fputs(str,stdout);
+		fputs(str,fptr);
+		if(i==k)
+		{
+			printf("\n Enter Number of line:");
+			scanf("%d",&n2);
+
+			for(int j=0;j<n2;j++)
+			{
+				fgets(str,sizeof(str),fp);
+				i++;
+			}
+		
+		}
+		
+	}
+	fclose(fp);
+	fclose(fptr);
+
+
+	fp=fopen(fname,"w");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+
+	fptr=fopen("temp.txt","r");
+	if(fp==NULL)
+	{
+		printf("\n Error in opening an file...");
+		exit(0);
+	}
+	
+	while((ch=getc(fptr))!=EOF)
+	{
+		fprintf(fp,"%c",ch);
+	}
+	fclose(fp);
+	fclose(fptr);
+
+}
+
+
+void display(char *fname,int n)
+{
+	int i;
+	FILE *fp;
+	char ch;
+
+	fp=fopen(fname,"r");
+	fseek(fp,0L,0);
+	if(fp==NULL)
+	{
+		printf	("\n Error in opening an file...");
+		exit(0);
+	}
+	ch = fgetc(fp);
+	while(ch != EOF)
+	{
+			printf("%c", ch);
+			ch = fgetc(fp);
+	}
+	fclose(fp);
+}
+
+void main()
+{
+	int n,res,lno;
+	char file_name[80],choice='n',name[20],tele[10],ch[10],ch2;
+	static int cnt=0;
+
+	printf("\n Enter File name:");
+	scanf("%s",&file_name);
+	printf("\n --------------------");
+	printf("\n 1.$E-Enter new text ");
+	printf("\n 2.$L-list the entire block of text");
+	printf("\n 3.$Fk-find(retrieve)line number k ");
+	printf("\n 4.$In-insert n lines after line number k ");
+	printf("\n 5.$Dn-delete n lines after line number k ");
+	printf("\n 6.$S-save the edited block of text and end the computation");
+	printf("\n --------------------");
+	do
+	{
+		printf("\n Enter Your choice:");
+		scanf("%s",&ch);
+		switch(ch[0])
+		{
+			case 69:printf("\n Input the number of lines to be written : ");
+					scanf("%d", &n);
+					cnt=cnt+n;
+					Insert(file_name,cnt);
+					break;
+			case 76:
+					printf("\n----------------");
+					printf("\n Display Files");
+					printf("\n----------------");
+					display(file_name,cnt);
+					break;
+			case 70:
+					ch2=ch[1]-'0';
+					lno=ch2;
+					if(lno>cnt)
+						printf("\n Invalid line number");
+					else
+						get_line(file_name,cnt,lno);
+					break;
+			case 73:
+					ch2=ch[1]-'0';
+					lno=ch2;
+					if(lno>cnt)
+						printf("\n Invalid line number");
+					else
+						Insert_line_at_k(file_name,cnt,lno);
+					break;
+
+			case 68:
+					ch2=ch[1]-'0';
+					lno=ch2;
+					if(lno>cnt)
+						printf("\n Invalid line number");
+					else
+						Delete_line_at_k(file_name,cnt,lno);					
+					break;	
+			case 83:
+					exit(0);
+					break;
+			default :
+					printf("\n Invalid Choice");
+					break;
+		}	
+		printf("\n Do You want to continue:");
+		scanf("%s",&choice);
+
+	}while(choice=='y' || choice=='Y');
+	
+	getch();
+}
+
+
+
+
+// =================================================================
+// =================================================================
+// Q16
+// Command Line Average
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+
+float avg(int argc, char **argv)
+{
+    int i;
+    float average, total = 0;
+    if (argc < 2) {
+        printf("Enter atleast 1 number");
+        return 0;
+    }
+    
+
+    for (i = 1; i < argc; i++) {
+        total = total + atoi(argv[i]);
+    }
+
+    average = total / (argc - 1);
+
+    return average;
+}
+
+
+int main(int argc, char **argv)
+{
+    float avrg;
+
+    avrg = avg(argc, argv);
+    printf("Average: %.2f \n", avrg);
+
+    return 0;
+}
+
+
+
+/* =================================================
+ *
+ ajinzrathod@ajinz:~/Documents/Assgn$ ./objectFile 78 96 84 45
+    Average: 75.75
+
+ ================================================= */
+
+
+// =================================================================
+// Q16
+// Command Line Check Exectutable Files
+
+
+
+#include <stdio.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string.h>
+
+int isExecutable(char fileName[])
+{
+    struct stat sb;
+    if (stat(fileName, &sb) == 0 && sb.st_mode & S_IXUSR) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+
+int main(int argc, char **argv)
+{
+    char folderName[50];
+    DIR *d;
+    struct dirent *dir;
+    int count = 0;
+
+    if (argc == 2) {
+        strcpy(folderName, argv[1]);
+        d = opendir(folderName);       
+    }
+    else if (argc == 1){
+        printf("Checking current directory\n");
+        d = opendir(".");   
+    }
+    else {
+        printf("Enter only 1 directory");
+    }
+    if (d) {
+        while ((dir = readdir(d)) != NULL)
+        {
+            if(isExecutable(dir -> d_name)) {
+                count++;
+                printf("%s" ,dir->d_name);
+                printf(" is executable\n");
+            }
+        }
+        if(!count) {
+            printf("No executables Found");
+        }
+    }   
+    else{
+        printf("Directory Path Invalid\n");
+    }
+    return 0;
+}
+
+
+
+
+/* =================================================
+
+
+ajinzrathod@ajinz:~/Documents/Assgn/cla$ ./objFile
+
+Checking current directory
+a is executable
+.. is executable
+. is executable
+
+ ================================================= */
+
+
+
+
+// =================================================================
+// Q16
+// Command Line Factorial
+
+#include<stdio.h>
+#include<stdlib.h>
+
+
+int* factorial(int argc, char **argv, int *arr)
+{
+    if (argc < 2) {
+        printf("Enter atleast 1 number\n");
+        exit(0);
+    }
+
+    int fact(int num)
+    {
+        if(num == 0)
+            return 1;
+        return num * fact(num - 1);
+    }
+
+    int i;
+
+    for (i = 1; i < argc; i++) {
+        arr[i - 1] = fact(atoi(argv[i]));
+    }
+
+    return arr;
+}
+
+
+int main(int argc, char **argv)
+{
+    int arr[10], i;
+    int *ptr = factorial(argc, argv, arr);
+
+    puts("Factorials are as follows:\n");
+    for (i = 1; i < argc; i++)
+        printf("%02d: %5d\n", atoi(argv[i]), ptr[i - 1]);
+
+    return 0;
+}
+
+
+/* =================================================
+ ajinzrathod@ajinz:~/Documents/Assgn$ ./objectFile 3 5 8 2 4
+
+    Factorials are as follows:
+
+    03:     6
+    05:   120
+    08: 40320
+    02:     2
+    04:    24
+ ================================================= */
+
+
+
+
+
+// =================================================================
+// Q16
+// Command Line Find Word In current Directory
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<dirent.h>
+
+int findWordIn(char search_this_word[], char d_name[])
+{
+	int i = 0, length = 0, count = 0, finding = 0, first_occurance = 0;
+	char c, search;
+	FILE *f = fopen (d_name, "r"); 
+
+    // printf("\nWorking on File: %s \n", d_name);
+
+	length = strlen (search_this_word);
+
+	if (f) {
+		if(!length) {
+			exit(0);
+		}
+
+		search = search_this_word[0];
+
+		while((c = fgetc(f)) != EOF){
+			if (count == 0) {
+				first_occurance++;
+			}
+
+			if (search == c) {
+				finding = 1;
+
+				if(length == i + 1) {
+
+					i = finding = 0;
+					count++;
+					search = search_this_word[i];
+				}
+
+				else {
+					search = search_this_word[++i];
+				}
+
+			}
+			else {
+				finding = 0;
+			}
+		}
+
+		if (count > 0) {
+            // printf ("\"%s\" found 1st time at %d position \n", search_this_word, first_occurance - length + 1);
+            // printf ("\"%s\" found %d times\n", search_this_word, count);
+			return first_occurance - length + 1;
+		}
+		else {
+            // printf ("\"%s\" not found\n", search_this_word);
+			return -1;
+		}
+	}
+	else {
+        // puts ("Cannot open file to read");
+		return -1;
+	} 
+	return -1;
+}
+
+int* findWordInDirectory(int argc, char **argv, int *arr)
+{
+	int count = 0;
+	DIR *d;
+	char wordToFind[50];
+	struct dirent *dir;
+
+	if(argc != 2) {
+		printf("Enter one word to find\n");
+		exit(1);
+	}
+	d = opendir(".");
+	strcpy(wordToFind, argv[1]);
+
+	if(d) {
+		while((dir = readdir(d)) != NULL) {
+			arr[count] = findWordIn(wordToFind, dir -> d_name);
+			count += 1;
+		}
+		closedir(d);
+	}
+	return arr;
+
+}
+
+int main(int argc, char **argv)
+{
+    // Assuming max 50 files in directory 
+	int arr[50], count = 0;
+
+	int *ptr = findWordInDirectory(argc, argv, arr);
+    // Return Position where Word was found, else returns -1
+
+	DIR *d;
+	struct dirent *dir;
+
+	d = opendir(".");
+
+	if (d) {
+		printf("Position   Filename\n");
+		while ((dir = readdir(d)) != NULL){
+
+			if(ptr[count] != -1) {
+				printf("%8d   %s\n", ptr[count], dir->d_name);
+			}
+			count += 1;
+		}
+		closedir(d);
+	}
+
+	return 0;
+}
+
+/* =================================================
+
+ajinzrathod@ajinz:~/Documents/Assgn/cla$ ./objectFile Rollwala
+
+Position   Filename
+     606   01-alternate.c
+     746   02-copy-line-by-line.c
+     216   03-find-word.c
+     545   04-sort-merge.c
+     549   05-repeated-characters.c
+     231   06-count-characters-whitespaces.c
+    1055   07-remove-occurences.c
+     967   08-remove-blank-lines.c
+    1020   09-remove-comments.c
+     884   10-telephone.c
+     788   16-cla-check-executable.c
+    1877   16-cla-find-word-in-directory.c
+
+ ================================================= */
+
+
+
+
+// =================================================================
+// Q16
+// Command Line Rename File
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+
+int main(int argc, char **argv)
+{
+    if(argc != 3) {
+        printf("Invalid Arguments\n");
+        printf("Example\n objFile oldFile.txt newFile.txt\n");
+        exit(1);
+    }
+
+    if(rename(argv[1], argv[2]) == 0)
+    {
+        printf("File renamed successfully.\n");
+        exit(0);
+    }
+    printf("Cannot rename File\n");
+
+    return 0;
+}
+
+/* ==========================================================
+ *
+ * Output:
+ *
+ * ajinzrathod@ajinz:~/Documents/Assgn/cla$ ./objFile collegeNemes.c collegeNames.c
+ * File renamed successfully.
+ *
+ * ======================================================== */
+
+
+
+
+
+// =================================================================
+// Q16
+// Command Line Merge Files
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int copyFile(char sourceFile[], char destinationFile[])
+{
+    int no_of_lines = 0, success = 1;
+    char line[1000];
+
+    FILE *f1 = fopen(sourceFile, "r");
+    FILE *f2 = fopen(destinationFile, "a+");
+
+    printf("Working on \"%s\" file:\n", sourceFile);
+
+    if(f1 && f2) {
+        while(fgets(line, sizeof line, f1)) {
+            no_of_lines++;
+            // fputs (line, stdout);
+            fputs (line, f2);
+        }
+
+        printf("%d lines yanked and pasted", no_of_lines);
+
+        fclose(f1);
+        fclose(f2);
+
+    }
+
+    else {
+        success = 0;
+        printf("No such File exists");
+        // ferror(f1);
+        // ferror(f2);
+    }
+    puts ("\n");
+    return success;
+}
+
+int copyFiles(int argc, char **argv)
+{
+    int i, allSuccess = 1, success;
+    
+    if (argc < 3) {
+        printf("Enter atleast 2 File Names\n");
+        exit(1);
+    }
+
+    FILE *destinationFile = fopen(argv[argc - 1], "w");
+    fclose(destinationFile);
+    // // open in write mode to remove previous data
+
+
+    for (i = 1; i < argc - 1; i++) {
+        success = copyFile(argv[i], argv[argc - 1]);
+        if(success && allSuccess) {
+            allSuccess = 1;
+        }
+        else {
+            allSuccess = 0;
+        }
+    }
+
+    return allSuccess;
+
+}
+
+// objectFile srcFile3 srcFile2 srcFile1 ... destinationFile
+int main(int argc, char **argv)
+{
+    int success;
+    
+    success = copyFiles(argc, argv);
+
+    if(success) {
+        printf("All File are copied Successfully\n");
+    }
+    else {
+        printf("All files are NOT copied\n");
+    }
+
+    return 0;
+}
+
+
+/* =================================================
+ajinzrathod@ajinz:~/Documents/Assgn/cla$ ./a a.txt b.txt c.txt destination.txt 
+
+    Working on "a.txt" file:
+    2 lines yanked and pasted
+
+    Working on "b.txt" file:
+    5 lines yanked and pasted
+
+    Working on "c.txt" file:
+    2 lines yanked and pasted
+
+    All File are copied Successfully
+
+
+    ==========IF WE WRITE WRONG FILE NAME=========
+
+ajinzrathod@ajinz:~/Documents/Assgn/cla$ ./a b.txt e2.txt c.txt d.txt 
+
+    Working on "b.txt" file:
+    5 lines yanked and pasted
+
+    Working on "e2.txt" file:
+    No such File exists
+
+    Working on "c.txt" file:
+    3 lines yanked and pasted
+
+    All files are NOT copied
+
+ ================================================= */
+
+// ==================================================================

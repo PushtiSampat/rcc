@@ -1,3 +1,9 @@
+
+// =================================================================
+// Q16
+// Command Line Average
+
+
 #include<stdio.h>
 #include<stdlib.h>
 

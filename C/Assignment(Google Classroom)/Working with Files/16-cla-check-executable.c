@@ -1,3 +1,11 @@
+
+
+// =================================================================
+// Q16
+// Command Line Check Exectutable Files
+
+
+
 #include <stdio.h>
 #include <dirent.h>
 #include <sys/types.h>
@@ -68,3 +76,5 @@ a is executable
 . is executable
 
  ================================================= */
+
+
