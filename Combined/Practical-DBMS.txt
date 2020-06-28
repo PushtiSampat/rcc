@@ -14,6 +14,30 @@ ROLL NO   :  30
  ==================================================================== 
 QUESTION 1 : WAF which accepts the name from user and RETURNS the length of that name. 
  ====================================================================  
+  Begin
+   	 DECLARE aj INT DEFAULT 1;
+   	 DECLARE ch varchar(1);
+   	 
+   	 SET ch = substr(name,aj,1);
+    
+          WHILE(ch!="") DO
+          SET aj = aj+1;
+          end while;
+          SET aj = aj-1;
+          RETURN aj;
+     
+     End //
+
+	*********************************
+
+ 	select length("Ajinkya")as Length;
+ 	+--------+
+	| Length |
+	+--------+
+	|      7 |
+	+--------+
+
+	*********************************
 
 ==================================================================== 
 QUESTION 2 : WAF which accepts one number and RETURN TRUE IF no is prime and RETURN FALSE IF No. is not prime. 
