@@ -25,7 +25,6 @@ int findWordIn(char search_this_word[], char d_name[])
 		if(!length) {
 			exit(0);
 		}
-
 		search = search_this_word[0];
 
 		while((c = fgetc(f)) != EOF){
