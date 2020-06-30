@@ -1,0 +1,200 @@
+==================================
+Assignment 2: Procedures
+==================================
+1) Write a procedure which accepts the empno and returns the associated empname. If
+empno does not exist than give proper error message.
+EMP(Empno, Empname).
+
+CREATE TABLE IF NOT EXISTS emp3(
+	empid INT(2),
+	name VARCHAR(15),
+	salary FLOAT,
+	dept VARCHAR(15)
+);
+
+INSERT INTO emp3 VALUES
+	(1, 'Ajinkya Rathod', 70043, 'Programming');
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE getEmpName(id INT, OUT empname VARCHAR(15))
+BEGIN
+DECLARE ename VARCHAR(15);
+SELECT name INTO ename FROM emp3 WHERE empid = id;
+IF ename IS NULL THEN
+	SELECT "No such emp";
+	SET empname = '';
+ELSE
+	SET empname = ename;
+END IF;
+END//
+DELIMITER ;
+
+2) WAP which accepts the student rollno and returns the name,city and marks of all the
+subjects of that student.
+STUDENT (Stud_ID, Stud_name, m1, m2, m3).
+
+CREATE TABLE IF NOT EXISTS students (
+  rollno INT(2) NOT NULL PRIMARY KEY,
+  name VARCHAR(30) NOT NULL,
+  city VARCHAR(20) NOT NULL,
+  marks1 FLOAT,
+  marks2 FLOAT,
+  marks3 FLOAT
+);
+
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE getDetails(std_id INT, OUT std_name VARCHAR(30), OUT std_city VARCHAR(20), OUT std_m1 FLOAT, OUT std_m2 FLOAT, OUT std_m3 FLOAT)
+BEGIN
+DECLARE sid INT;
+DECLARE sname VARCHAR(30);
+DECLARE scity VARCHAR(20);
+DECLARE sm1, sm2, sm3 FLOAT;
+SELECT * INTO sid, sname, scity, sm1, sm2, sm3 FROM students WHERE rollno = std_id;
+IF sid IS NULL THEN
+	SELECT "No student";
+	SET std_name = '';
+	SET std_city = '';
+	SET std_m1 = 0;
+	SET std_m2 = 0;
+	SET std_m3 = 0;
+ELSE
+	SET std_name = sname;
+	SET std_city = scity;
+	SET std_m1 = sm1;
+	SET std_m2 = sm2;
+	SET std_m3 = sm3;
+END IF;
+END//
+DELIMITER ;
+
+
+3) WAP which accepts the name from the user. Return UPPER if name is in uppercase,
+LOWER if name is in lowercase, MIXCASE if name is entered using both the case.
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE strType(str VARCHAR(20), OUT  type VARCHAR(10))
+BEGIN
+DECLARE ch VARCHAR(1);
+DECLARE isLower, isUpper BOOLEAN;
+DECLARE lent, i INT;
+
+	SET isUpper = false;
+	SET isLower = false;
+	SET i = 1;
+	SET lent = LENGTH(str);
+
+	WHILE i <= lent DO
+		SET ch = SUBSTR(str, i, 1);
+		IF ASCII(ch) <= 90 AND ASCII(ch) <= 65 THEN
+			SET isUpper = true;
+		ELSEIF ASCII(ch) <= 122 AND ASCII(ch) >= 97 THEN
+			SET isLower = true;
+		END IF;
+		SET i = i + 1;
+	END WHILE;
+
+	IF isUpper AND isLower THEN
+		SET type = "MIXCASE";
+	ELSEIF isUpper THEN
+		SET type = "UPPER";
+	ELSE
+		SET type = "LOWER";
+	END IF;
+END//
+DELIMITER ;
+
+4) WAP which accepts the student rollno and returns the highest percent and name of that
+student to the calling block.
+STUDENT(Stud_ID,Stud_name,percent);
+
+CREATE TABLE IF NOT EXISTS students1 (
+  rollno INT(2) PRIMARY KEY,
+  name VARCHAR(30) NOT NULL,
+  percent FLOAT
+);
+
+INSERT INTO students1 VALUES(1, 'Ajinkya', 45.65);
+
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE getHighestStudent(OUT std_name VARCHAR(30), OUT std_per FLOAT)
+BEGIN
+DECLARE per FLOAT;
+DECLARE nm VARCHAR(30);
+SELECT MAX(percent) INTO per FROM students1;
+SELECT name INTO nm FROM students1 WHERE percent = per;
+SET std_name = nm;
+SET std_per = per;
+END//
+DELIMITER ;
+
+
+5) WAP which accepts the date of joining for specific employee and returns the years of
+experience along with its name. Accept the Employee no from user.
+EMP (empno, empname, DOJ);
+
+CREATE TABLE IF NOT EXISTS emp5(
+	empid INT PRIMARY KEY,
+	empname VARCHAR(20) NOT NULL,
+	doj DATE
+);
+
+INSERT INTO emp5 VALUES(1, 'Ajinkya', '2019-04-05');
+
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE getEmpExperience(id INT, OUT e_exp INT)
+BEGIN
+DECLARE count, exp INT DEFAULT -1;
+DECLARE v_doj DATE;
+	SELECT COUNT(empid) INTO count FROM emp5 WHERE empid = id;
+	IF count = 0 THEN
+		SELECT "No emp";
+	ELSEIF count > 1 THEN
+		SELECT "Multiple employee with same id exists!" AS "Error";
+	ELSE
+		SELECT doj INTO v_doj FROM emp5 WHERE empid = id;
+		SET exp = DATEDIFF(CURRENT_DATE, v_doj) / 365;
+	END IF;
+	SET e_exp = exp;
+END//
+DELIMITER ;
+
+
+6) WAP which accepts the student roll no and returns the result (in the form of class: first
+class, second class, third class or fail).
+STUDENT (Stud_ID, Stud_name,m1, m2, m3).
+
+
+CREATE TABLE IF NOT EXISTS students (
+  rollno INT(2) NOT NULL PRIMARY KEY,
+  name VARCHAR(30) NOT NULL,
+  city VARCHAR(20) NOT NULL,
+  marks1 FLOAT,
+  marks2 FLOAT,
+  marks3 FLOAT
+);
+
+INSERT INTO students VALUES(1, 'Ajinkya', 'Pune', 35, 20, 100);
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE getResult(roll INT, OUT class VARCHAR(20))
+BEGIN
+DECLARE per FLOAT;
+	SELECT ((marks1 + marks2 + marks3) / 3) INTO per FROM students WHERE rollno = roll;
+	IF per IS NULL THEN
+		SELECT "No such student" AS "Error";
+		SET class = "NULL";
+	ELSE
+		IF per >= 80 THEN
+			SET class = "1st Class";
+		ELSEIF per >= 60 THEN
+			SET class = "2nd Class";
+		ELSEIF per >= 40 THEN
+			SET class = "3rd Class";
+		ELSE
+			SET class = "Failed ## ";
+		END IF;
+	END IF;
+END//

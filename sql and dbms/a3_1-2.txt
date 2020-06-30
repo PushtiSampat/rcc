@@ -1,0 +1,591 @@
+
+
+===========================
+Assignment 3: Triggers
+===========================
+
+
+ ==================================================================== 
+ 
+ TRIGGERS 2
+ 
+ ==================================================================== 
+
+
+name        :  Ajinkya
+roll no      :  30
+
+==============================================================*
+
+QUESTION 1 :  (example 11.2) : This example is divided in three categories :
+Insert, Update and Delete Insert 
+a. Write a trigger which updates the sale value if customer already exists 
+else create new entry of customer
+
+==============================================================*
+
+ -- (ex.11-1) 
+
+ delimiter // 
+ create or replace trigger sales_bi_trg BEFORE INSERT ON sales
+ 	for each row
+ 	begin
+ 	declare row_cnt int;
+
+ 	select customer_id into row_cnt from sales where customer_id = NEW.customer_id;
+ 	if(row_cnt>0) then
+ 	update sales_s1 set sale_value = NEW.sale_value where customer_id = NEW.customer_id;
+ 		else
+ 		insert into sales_s1(customer_id,sale_value) values(NEW.customer_id,NEW.sale_value);
+ 			end if;
+ 			end // 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table sale(
+	salesid int(10) primary key,
+	customerid int(10),
+	salesname varchar(20),
+	sale_value decimal(6,2)
+);
+create table customer_sales_table(
+	customerid int(10) primary key,
+	sale_value decimal(6,2)
+);
+
+
+Delimiter // 
+create trigger sales_bi_trg
+	BEFORE INSERT ON sale
+	FOR EACH ROW
+	BEGIN
+	Declare row_count Integer;
+	Select Count(*) INTO row_count from customer_sales_table
+	where CustomerID  =  NEW.CustomerID;
+
+	IF row_count > 0 THEN
+	Update customer_sales_table
+	Set sale_value  =  sale_value + NEW.Sale_value
+	Where CustomerID  =  NEW.CustomerID;
+	ELSE
+	Insert into customer_sales_table
+	(CustomerID,sale_value)
+	values
+	(NEW.CustomerID,NEW.Sale_value);
+	END IF;
+	END // 
+
+
+	Output :
+	select * from customer_sales_table;
+
+	insert into sale(
+		customerid,
+		salesname,
+		sale_value)
+	values
+	(1,'pendrive',50.00);
+
+	select *from customer_sales_table;
+
+
+
+
+
+	===============================================================
+	b. Update : If the customer is updating , WAT to update the sales value by
+	incrementing the Sale_vale field
+	===============================================================
+
+	-- (ex.11-1) s
+
+	delimiter // 
+	create or replace trigger sales_bi_trg AFTER UPDATE ON sales
+		FOR EACH ROW
+		begin
+		update sales_s1 set sale_value = sale_value+(NEW.sale_value-OLD.sale_value)
+			where customer_id = NEW.customer_id;
+			end // 
+			delimiter ;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+delimiter // 
+create trigger sales_bu_trg
+	before update on sale
+	for each row
+	begin
+	update customer_sales_table
+		set sale_value  =  sale_value + (NEW.Sale_value-OLD.Sale_value)
+		where CustomerID  =  NEW.CustomerID;
+		END// 
+
+		Output :
+
+		select *from customer_sales_table;
+
+		update sale set sale_value = 100.00 where salesid  =  2 and customerid  =  2;
+			select *from customer_sales_table;
++-----------------+----------------+
+| customerid | sale_value |
++-----------------+----------------+
+|          1          |     450.00    |
+|          2          |     100.00    |
+|          3          |    1000.00   |
++-----------------+----------------+
+
+
+
+
+==============================================================*
+c. Delete : If the customer is deleting , WAT to update the sales value by
+decrementing the Sale_vale field
+==============================================================*
+
+ --(ex.11-1) delete //completed
+
+ delimiter // 
+ create or replace trigger sales_bi_trg BEFORE DELETE ON sales
+ 	FOR EACH ROW
+ 	begin
+ 	update sales_s1 set sale_value = sale_value-OLD.sale_value
+ 		where customer_id = OLD.customer_id;
+ 		end // 
+ 		delimiter ;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+delimiter // 
+create trigger delete_totalby_trg
+	Before delete on sale
+	for each row
+	begin
+	update customer_sales_table
+		set sale_value  =  sale_value - (OLD.Sale_value)
+		where CustomerID  =  OLD.CustomerID;
+		end// 
+
+		Output : 
+
+		select *from customer_sales_table;
++-----------------+----------------+
+| customerid | sale_value |
++-----------------+----------------+
+|          1          |     450.00    |
+|          2          |     100.00    |
+|          3          |    1000.00   |
++-----------------+----------------+
+3 rows in set (0.019 sec)
+
+delete from sale where salesid = 3 and customerid = 3;
+	Query OK, 1 row affected (0.080 sec)
+
+	select *from customer_sales_table;
++-----------------+----------------+
+| customerid | sale_value |
++-----------------+----------------+
+|          1          |     450.00    |
+|          2          |     100.00    |
+|          3          |       0.00      |
++-----------------+----------------+
+
+
+
+
+==============================================================
+-- QUESTION 2 :
+-- Q(example 11.4) Wirte a program to create trigger signal to restrict entering negative value in balance.
+=================================================================*
+
+delimiter // 
+create trigger acc_res BEFORE UPDATE ON account FOR EACH ROW
+	begin
+	if(NEW.amount<0) then
+	SIGNAL SQLSTATE '80000'
+	set message_text = 'Account amount cannot be less than 0';
+	end if;
+	end // 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+delimiter // 
+create trigger validate_nagative
+	Before Insert on sale
+	for each row
+	begin
+	IF(NEW.Sale_value < '0') Then
+	SIGNAL SQLSTATE '80000'
+	SET MESSAGE_TEXT  =  'negative value invalid';
+	END IF;
+	end// 
+	Query OK, 0 rows affected (0.163 sec)
+
+	Output :
+
+	insert into sale values(4,4,'keyboard',-500);
+		ERROR 1644 (80000): negative value invalid
+
+
+
+		===============================================================
+		-- QUESTION 3 : 
+		-- Q(example 11.5) Write a trigger to perform data validation using select statement.
+		===============================================================*
+
+		-- example 11-5 // executes even if the amount is in negative //trigger on account
+
+		delimiter //
+		create or replace trigger acc_balance BEFORE update ON account FOR EACH ROW
+			begin
+			declare dummy int;
+			if (NEW.amount<0) then
+			select 'Amount balanace has to be greater than 0' into dummy
+			from account
+			where account_id = NEW.account_id;
+			end if;
+			end //
+			delimiter ;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+delimiter // 
+create trigger data_validation
+	Before insert on sale
+	for each row
+	begin
+	Declare dummy_message varchar(200);
+	IF(NEW.SalesName  =  '' or NEW.SalesName  =  ' ') THEN
+	SIGNAL SQLSTATE '80000'
+	SET MESSAGE_TEXT  =  'Enter something in sales name';
+	END IF;
+	IF(NEW.Sale_value < '0') Then
+	SIGNAL SQLSTATE '80000'
+	SET MESSAGE_TEXT  =  'dont put negative value in sales value';
+	END IF;
+	end// 
+	Query OK, 0 rows affected (0.171 sec)
+
+	Output :
+
+	insert into sale values (5,5,'',5000.00);
+		ERROR 1644 (80000): Enter something in sales name
+		insert into sale values (5,5,'',-500);
+			ERROR 1644 (80000): dont put negative value in sales value
+
+
+
+
+			===============================================================
+			QUESTION 4 : 
+			Q(figure 2.17) :write a example to create a sales table whichprovides free shipping on orders above 500 
+			===============================================================
+
+			create table sales(salesid int(10),saleproduct varchar(20),value decimal(6,2),free_shipping varchar(2),discount decimal(4,2));
+
+				Delimiter // 
+				Create TRIGGER sale_bi_trg
+				BEFORE INSERT ON sales
+				For Each Row
+				BEGIN
+				IF NEW.value>500 THEN
+				SET NEW.free_shipping  =  'Y';
+				ELSE
+				SET NEW.free_shipping = 'N';
+				END IF;
+
+				IF NEW.value>1000 THEN
+				SET NEW.discount  =  NEW.value*.15;
+				ELSE
+				SET NEW.discount = 0;
+				END IF;
+				END// 
+
+
+				insert into sales(
+					salesid,saleproduct,value
+					) 
+				values(1,'purse',2000
+					);
+
+				insert into sales(
+					salesid,saleproduct,value)
+				values(2,'shoes',1000
+					);
+
+				insert into sales(
+					salesid,saleproduct,value) values(3,'watch',700
+					);
+
+					insert into sales(
+						salesid,saleproduct,value) values(4,'belt',500
+						);
+
+						select *from sales;
+
++-----------+-----------------+------------+--------------------+-------------+
+| salesid | saleproduct | value     | free_shipping | discount |
++-----------+-----------------+------------+--------------------+-------------+
+|       2     | shoes           | 1000.00 |            Y            |     0.00    |
+|       3     | watch           |  700.00 |            Y             |     0.00    |
+|       4     | belt               |  500.00 |            N            |     0.00    |
+|       1     | purse            | 2000.00 |           Y            |    99.99   |
++-----------+-----------------+------------+---------------------+-------------+
+
+
+
+
+
+
+==============================================================*
+QUESTION 7 :
+Q(example 8.3) : create a procedure which displays use of Savepoint with a transaction 
+===============================================================
+
+delimiter //
+create procedure  savepoint_example(in_depart_name varchar(100),in_location varchar(100),in_address1 varchar(100),
+	in_address2 varchar(100),in_zipcode varchar(100),in_manager_id int)
+begin
+declare sp_loc int default 0;
+declare duplicate_dept int default 0;
+
+start transaction;
+
+select count(*) into sp_loc from location where location = in_location;
+
+if sp_loc = 0 then
+
+insert into audit_log(audit_message)
+	values(concat('creating New location',in_location));
+
+	insert into location(location,address1,address2,zipcode)
+		values(in_location,in_address1,in_address2,in_zipcode);
+
+		else
+
+		update location set address1 = in_address1,address2 = in_address2,
+			zipcode = in_zipcode where location-in_location;
+
+			end if;
+
+			SAVEPOINT location_exist;
+
+			begin
+			declare duplicate_key condition for 1062;
+			declare continue handler for duplicate_key
+			begin
+			set duplicate_dept = 1;
+			ROLLBACK to SAVEPOINT location_exist;
+			end;
+
+			insert into audit_log(audit_message)
+				values(concat('creating New department',in_depart_name));
+
+				insert into department(dept_name,location,manager_id)
+					values(in_depart_name,in_location,in_manager_id);
+
+					if duplicate_dept = 1 then
+
+					update department set location = in_location,manager_id = in_manager_id
+						where dept_name = in_depart_name;
+
+						end if;
+
+						end;
+
+						commit;
+
+						end //
+						delimiter;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table audit_log ( audit_message varchar(100) );
+
+	create table location(location varchar(50),address1 varchar(200),address2 varchar(200),zipcode int(6));
+
+		create table department(dept_name varchar(20),manager_id int(10),location varchar(50));
+
+delimiter //
+create procedure  savepoint_example(in_depart_name varchar(100),in_location varchar(100),in_address1 varchar(100),
+	in_address2 varchar(100),in_zipcode varchar(100),in_manager_id int)
+begin
+declare sp_loc int default 0;
+declare duplicate_dept int default 0;
+
+start transaction;
+
+select count(*) into sp_loc from location where location = in_location;
+
+if sp_loc = 0 then
+
+insert into audit_log(audit_message)
+	values(concat('creating New location',in_location));
+
+	insert into location(location,address1,address2,zipcode)
+		values(in_location,in_address1,in_address2,in_zipcode);
+
+		else
+
+		update location set address1 = in_address1,address2 = in_address2,
+			zipcode = in_zipcode where location-in_location;
+
+			end if;
+
+			SAVEPOINT location_exist;
+
+			begin
+			declare duplicate_key condition for 1062;
+			declare continue handler for duplicate_key
+			begin
+			set duplicate_dept = 1;
+			ROLLBACK to SAVEPOINT location_exist;
+			end;
+
+			insert into audit_log(audit_message)
+				values(concat('creating New department',in_depart_name));
+
+				insert into department(dept_name,location,manager_id)
+					values(in_depart_name,in_location,in_manager_id);
+
+					if duplicate_dept = 1 then
+
+					update department set location = in_location,manager_id = in_manager_id
+						where dept_name = in_depart_name;
+
+						end if;
+
+						end;
+
+						commit;
+
+						end //
+
+
+
+==============================================================*
+-- QUESTION 5 :
+-- Q(example 8.1) : Create a procedure to commence a transaction using auto commit.
+===============================================================
+
+delimiter // 
+create procedure tfer_fund(from_acc int,to_acc int,tfer_amt decimal(8,2))
+	begin
+	set autocommit = 0;
+	update account set amount = amount-tfer_amt where account_id = from_acc;
+		update account set amount = amount+tfer_amt where account_id = to_acc;
+			commit;
+			end // 
+			delimiter ;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table account(
+	account_id int(10),
+	account_holder varchar(10),
+	contact int(10),
+	balance decimal(8,2));
+
+insert into account values
+	(1,'ajinkya',96387,2000),
+	(2,'vraj',99499,2000),
+
+	CREATE PROCEDURE tfer_funds
+	(from_account int, to_account int,tfer_amount numeric(10,2))
+	BEGIN
+	SET autocommit = 0;
+	UPDATE account
+	SET balance = balance-tfer_amount
+	WHERE account_id = from_account;
+	UPDATE account
+	SET balance = balance+tfer_amount
+	WHERE account_id = to_account;
+	COMMIT;
+	END //
+
+	===============================================================
+-- QUESTION 6 :
+-- create a stored procedure to commence transaction with start transaction
+===============================================================
+
+
+delimiter //
+create procedure tfer_fund1(from_acc int,to_acc int,tfer_amt decimal(8,2))
+	begin
+	start transaction;
+
+	update account
+		set amount = amount-tfer_amt
+		where account_id = from_acc;
+
+		update account
+			set amount = amount+tfer_amt
+			where account_id = to_acc;
+
+			commit;
+			end //
+			delimiter ;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+delimiter // 
+CREATE PROCEDURE tfer_fund
+(from_account int, to_account int,tfer_amount numeric(10,2))
+BEGIN
+START TRANSACTION;
+UPDATE account
+SET balance = balance-tfer_amount
+WHERE account_id = from_account;
+UPDATE account
+SET balance = balance+tfer_amount
+WHERE account_id = to_account;
+COMMIT;
+END// 
+
+
+select * from account //
++-----------------+----------------------+-------------------+-------------+
+| account_id | account_holder | contact          | balance  |
++-----------------+----------------------+-------------------+-------------+
+|          1          |     ajinkya            |  96387 | 2000.00 |
+|          2          |     vraj            | 99499 | 2000.00 |
++-----------------+-----------------------+------------------+--------------+
+
+call tfer_fund(2,'1000') //
+
+select * from account;
++----------------+-----------------------+-------------------+--------------+
+| account_id | account_holder | contact          | balance   |
++----------------+-----------------------+-------------------+--------------+
+|          1         | ajinkya                |  96387 | 2000.00 |
+|          2         | vraj               |  99499 | 3000.00 |
++----------------+-----------------------+-------------------+--------------+
+
+
+
+===========================
+Assignment 3: Transactions
+===========================
+
+
+
+
+5. Q(example 8.1) : Create a procedure to commence a transaction using auto commit.
+6. Q(example 8.2) : Create a procedure to commence a transaction using start transaction.
+7. Q(example 8.3) : create a procedure which displays use of Savepoint with a transaction
+
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE sales_commit(sv INT, uid INT)
+BEGIN 
+	DECLARE any_value INT;
+	START TRANSACTION;
+		SET autocommit = OFF;
+		SAVEPOINT aj_savepoint;
+		INSERT INTO aj_table(sv1, customer_id) VALUES(sv, uid);
+		SELECT any_value(sv1) INTO any_value FROM aj_table WHERE customer_id = uid;  
+		IF (any_value) THEN
+			ROLLBACK TO SAVEPOINT aj_savepoint;
+			SELECT "Any message";
+		END IF;
+	COMMIT;
+END//

@@ -1,0 +1,263 @@
+================================================
+					CURSORS
+================================================
+
+
+1) Create a cursor for the emp table. Produce the output in following format:
+{empname} employee working in department {deptno} earns Rs. {salary}.
+EMP(empno, empname, salary, deptno);
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE showEmployees()
+BEGIN
+
+DECLARE found BOOLEAN DEFAULT true;
+DECLARE v_id INT;
+DECLARE v_name, v_dept VARCHAR(15);
+DECLARE v_salary FLOAT;
+DECLARE list CURSOR FOR SELECT * FROM emp3;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET found = false;
+
+OPEN list;
+
+WHILE found DO 
+	FETCH list INTO v_id, v_name, v_salary, v_dept;
+	SELECT CONCAT("EmpID: ", v_id, ", ", v_name, " employee working in ",v_dept, " department earns Rs. ", v_salary) AS "Message";
+END WHILE;
+
+END//
+DELIMITER ;
+
+
+2) Create a cursor for updating the salary of emp working in deptno 10 by 20%.
+If any rows are affected than display the no of rows affected. Use implicit cursor.
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE updateSalary(u_dept VARCHAR(15))
+BEGIN
+DECLARE v_empid INT;
+DECLARE v_name VARCHAR(15);
+DECLARE v_salary FLOAT;
+DECLARE rowsAffected INT DEFAULT -1;
+DECLARE found BOOLEAN DEFAULT true;
+DECLARE salaryCur CURSOR FOR SELECT empid, name, salary FROM emp3 WHERE LOWER(dept) = LOWER(u_dept);
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET found = false;
+
+OPEN salaryCur;
+
+myLoop:LOOP
+	IF NOT found THEN
+		LEAVE myLoop;
+	END IF;
+
+	FETCH salaryCur INTO v_empid, v_name, v_salary;
+	UPDATE emp3 SET salary = v_salary + (v_salary * 20 / 100) WHERE empid = v_empid;
+	SET rowsAffected = rowsAffected + 1;
+END LOOP myLoop; 
+CLOSE salaryCur;
+IF rowsAffected = 0 THEN
+	SELECT CONCAT("No employees found belonging to ", u_dept, " department!") AS "Message";
+ELSE
+	SELECT CONCAT("Updated salary of ", rowsAffected, " employees from ", u_dept, " by 20%.") AS "Message";
+END IF;
+END//
+DELIMITER ;
+
+
+4) WAP that will display the name, department and salary of the first 10 employees
+getting the highest salary.
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE first_ten_employees()
+BEGIN
+
+DECLARE found BOOLEAN DEFAULT true;
+DECLARE count INT DEFAULT 0;
+DECLARE v_id INT;
+DECLARE v_name, v_dept VARCHAR(15);
+DECLARE v_salary FLOAT;
+DECLARE list CURSOR FOR SELECT * FROM emp3 ORDER BY salary DESC;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET found = false;
+
+OPEN list;
+WHILE found AND count < 10 DO
+	FETCH list INTO v_id, v_name, v_salary, v_dept;
+	SELECT v_name, v_salary, v_dept;
+	SET count = count + 1;
+END WHILE;
+CLOSE list;
+
+END//
+DELIMITER ;
+
+5) WAP using parameterized cursor to display all the information of employee living in
+specified city. Ask the city from user.
+
+CREATE TABLE IF NOT EXISTS emp4(
+	empid INT(2) PRIMARY KEY,
+	emp_name VARCHAR(20) NOT NULL,
+	salary FLOAT NOT NULL,
+	city VARCHAR(20)
+);
+Query OK, 0 rows affected (0.291 sec)
+
+SELECT * FROM emp4;
+Empty set (0.002 sec)
+
+INSERT INTO emp4 VALUES(401, "Juned Ajmeri", 21500, "Ahmedabad"),
+(402, "Awasthi Pratik", 21000, "Ahmedabad"),
+(403, "Baraiya Dhaval", 22000, "Bhavnagar"),
+(404, "Rathod Ajinkya", 41000, "Gandhidham"),
+(405, "Chavda Nirav", 51000, "Mundra"),
+(406, "Milind Modi", 51000, "Ahmedabad"),
+(407, "Lakshya Choudhary", 20000, "Gandhidham"),
+(408, "Kshitij Modi", 21500, "Patan"),
+(409, "Neel Rana", 24000, "Ahmedabad"),
+(410, "Pradip Karmakar", 37500, "Navsari");
+
+Query OK, 10 rows affected (0.103 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE getEmpByCity(v_city VARCHAR(20))
+BEGIN
+
+DECLARE e_id INT;
+DECLARE e_name VARCHAR(20);
+DECLARE e_salary FLOAT;
+DECLARE found INT DEFAULT 1;
+DECLARE empCity CURSOR FOR SELECT empid, emp_name, salary FROM emp4 WHERE UPPER(city) = UPPER(v_city);
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET found = 0;
+
+OPEN empCity;
+
+myLoop: LOOP
+	FETCH empCity INTO e_id, e_name, e_salary;
+	IF found = 0 THEN
+		LEAVE myLoop;
+	END IF;
+	SELECT e_id, e_name, e_salary, v_city;
+
+END LOOP myLoop;
+
+CLOSE empCity;
+
+END//
+DELIMITER ;
+
+6) WAP which display the sum of salary department wise.
+
+CREATE TABLE IF NOT EXISTS emp3 (
+  empid INT(2) DEFAULT NULL,
+  name VARCHAR(15) DEFAULT NULL,
+  salary FLOAT DEFAULT NULL,
+  dept VARCHAR(15) DEFAULT NULL
+);
+
+INSERT INTO emp3 VALUES(1, 'Juned Ajmeri', 12000, 'HR'),
+	(2, 'Pratik Awasthi', 11000, 'HR'),
+	(3, 'Dhaval Baraiya', 12500, 'HR'),
+	(5, 'Nirav Chavda', 45000, 'Finance'),
+	(7, 'Lakshya Choudhary', 21000, 'Sales'),
+	(9, 'Neel Golarana', 20000, 'Sales'),
+	(10, 'Pradip Karmakar', 24000, 'Finance'),
+	(11, 'Keshri Rakesh', 22000, 'Sales'),
+	(13, 'Rakesh Makhija', 10000, 'Production'),
+	(14, 'Harshad Makwana', 10000, 'Marketing'),
+	(21, 'Shubham Namjoshi', 21000, 'Production'),
+	(30, 'Ajinkya Rathod', 30000, 'Marketing');
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE deptSalary()
+BEGIN
+DECLARE v_dept VARCHAR(20);
+DECLARE v_sum FLOAT;
+DECLARE found INT DEFAULT 1;
+DECLARE myCur CURSOR FOR SELECT dept, SUM(salary) FROM emp3 GROUP BY dept;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET found = 0;
+
+OPEN myCur;
+myLoop: LOOP
+
+	FETCH myCur INTO v_dept, v_sum;
+	IF NOT found THEN
+		LEAVE myLoop;
+	END IF;
+	SELECT v_dept, v_sum;
+END LOOP myLoop;
+CLOSE myCur;
+END//
+DELIMITER ;
+
+
+7) Create a cursor to generate defferent two tables from one master table.
+Student(Rno, Name, Std, B_date, Sex);
+Girl_Table(Rno, Name, Std, B_date);
+Boy_Table(Rno, Name, Std, B_date);
+First fetch the row from Student table. If sex is ‘M’ then insert that row in Boy_Table
+and if ‘F’ then insert that row in Girl_Table.
+In both table Rollno entry must be in Sequence(Using create sequence command).
+
+CREATE TABLE IF NOT EXISTS stud(
+	rollno INT AUTO_INCREMENT,
+	name VARCHAR(20) NOT NULL,
+	std INT,
+	bdate DATE,
+	sex VARCHAR(1),
+	PRIMARY KEY(rollno)
+);
+Query OK, 0 rows affected (0.255 sec)
+
+CREATE TABLE IF NOT EXISTS boy_table(
+	rollno INT,
+	name VARCHAR(20) NOT NULL,
+	std INT,
+	bdate DATE,
+	PRIMARY KEY(rollno)
+);
+Query OK, 0 rows affected (0.210 sec)
+
+CREATE TABLE IF NOT EXISTS girl_table(
+	rollno INT,
+	name VARCHAR(20) NOT NULL,
+	std INT,
+	bdate DATE,
+	PRIMARY KEY(rollno)
+);
+Query OK, 0 rows affected (0.271 sec)
+
+INSERT INTO stud (name, std, bdate, sex) VALUES('Awasthi Pratik', 10, '1998-12-21', 'M'),
+('Awasthi Pratik', 10, '1998-12-21', 'M'),
+('Ankita Gaonkar', 9, '1998-12-21', 'F'),
+('Mohini Parmar', 10, '1998-12-21', 'F'),
+('Shivangi Chotaliya', 8, '1998-12-21', 'F'),
+('Pradip Karmakar', 12, '1998-12-21', 'M'),
+('Ajinkya Rathod', 11, '1998-12-21', 'M');
+Query OK, 7 rows affected (0.092 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE splitData()
+BEGIN
+	DECLARE v_rollno, v_std, found INT;
+	DECLARE v_name VARCHAR(20);
+	DECLARE v_bdate DATE;
+	DECLARE v_sex VARCHAR(1);
+	DECLARE myCur CURSOR FOR SELECT * FROM stud;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET found = 0;
+	OPEN myCur;
+	myLoop: LOOP
+		FETCH myCur INTO v_rollno, v_name, v_std, v_bdate, v_sex;
+		IF NOT found THEN
+			LEAVE myLoop;
+		END IF;
+		IF v_sex = "M" OR v_sex = "m" THEN
+			INSERT INTO boy_table VALUES(v_rollno, v_name, v_std, v_bdate);
+		ELSEIF v_sex = "F" OR v_sex = "f" THEN
+			INSERT INTO girl_table VALUES(v_rollno, v_name, v_std, v_bdate);
+		END IF;
+	END LOOP myLoop;
+	CLOSE myCur;
+END//
