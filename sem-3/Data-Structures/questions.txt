@@ -1,0 +1,12 @@
+DS Assignment
+
+1. Polynomial Addition with Array
+2. Polynomial Multiplication with Array
+3. Polynomial Addition with LL
+4. Polynomial Multiplication with LL
+5. Singly Linked List (3 Insertions, 3 Deletions, Counting, Display List)
+6. Stack with Array
+7. Stack with LL
+8. Factorial with Recursion
+9. Fibonacci Series with Recursion
+10. Any other Series with Recursion(eg. sine series)
