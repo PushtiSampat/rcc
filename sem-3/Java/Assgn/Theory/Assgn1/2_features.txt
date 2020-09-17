@@ -1,0 +1,61 @@
+1) Simple
+
+Java is easy to learn and its syntax is quite simple, clean and easy to understand.The confusing and ambiguous concepts of C++ are either left out in Java or they have been re-implemented in a cleaner way.
+
+Eg : Pointers and Operator Overloading are not there in java but were an important part of C++.
+
+-----------------
+2) Object Oriented
+
+In java, everything is an object which has some data and behaviour. Java can be easily extended as it is based on Object Model. Following are some basic concept of OOP's.
+
+    Object
+    Class
+    Inheritance
+    Polymorphism
+    Abstraction
+    Encapsulation
+
+-----------------
+3) Robust
+
+Java makes an effort to eliminate error prone codes by emphasizing mainly on compile time error checking and runtime checking. But the main areas which Java improved were Memory Management and mishandled Exceptions by introducing automatic Garbage Collector and Exception Handling.
+
+-----------------
+4) Platform Independent
+
+Unlike other programming languages such as C, C++ etc which are compiled into platform specific machines. Java is guaranteed to be write-once, run-anywhere language.
+
+On compilation Java program is compiled into bytecode. This bytecode is platform independent and can be run on any machine, plus this bytecode format also provide security. Any machine with Java Runtime Environment can run Java Programs.
+
+Java is platform Independent Language
+
+-----------------
+5) Secure
+
+When it comes to security, Java is always the first choice. With java secure features it enable us to develop virus free, temper free system. Java program always runs in Java runtime environment with almost null interaction with system OS, hence it is more secure.
+
+-----------------
+6) Multi Threading
+
+Java multithreading feature makes it possible to write program that can do many tasks simultaneously. Benefit of multithreading is that it utilizes same memory and other resources to execute multiple threads at the same time, like While typing, grammatical errors are checked along.
+
+-----------------
+7) Architectural Neutral
+
+Compiler generates bytecodes, which have nothing to do with a particular computer architecture, hence a Java program is easy to intrepret on any machine.
+
+-----------------
+8) Portable
+
+Java Byte code can be carried to any platform. No implementation dependent features. Everything related to storage is predefined, example: size of primitive data types
+
+-----------------
+9) High Performance
+
+Java is an interpreted language, so it will never be as fast as a compiled language like C or C++. But, Java enables high performance with the use of just-in-time compiler.
+
+-----------------
+10) Distributed
+
+Java is also a distributed language. Programs can be designed to run on computer networks. Java has a special class library for communicating using TCP/IP protocols. Creating network connections is very much easy in Java as compared to C/C++.

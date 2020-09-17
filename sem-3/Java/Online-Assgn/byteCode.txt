@@ -1,6 +1,0 @@
-ByteCode is highly optimized set of instructions desgined to be executed by __  which is run by JVM
-
-Jab translate to dursi code, JVM h so it is more easier in any env possible
-Any class file can be converted.
-
-Bytecode in Java which is one of the reasons how Java becomes platform-independent.
