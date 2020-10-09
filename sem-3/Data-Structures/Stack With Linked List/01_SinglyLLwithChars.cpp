@@ -1,4 +1,4 @@
-#include"01_SinglyLLStack.h"
+#include"01_SinglyLLforStack.h"
 #include<iostream>
 #include<new>
 

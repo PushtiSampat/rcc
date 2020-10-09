@@ -1,0 +1,148 @@
+1. 	 START 501		
+2. 	 READ N			501 + 09 0 521
+3. 	 READ LAST		502 + 09 0 522
+4. 	 MOVER AREG, N		503 + 04 1 521
+5. 	 ADD AREG, ='4'		504 + 01 1 514
+6. 	 SUB AREG, ='2'		505 + 02 1 515
+7. LOOP  MULT AREG, COUNT	506 + 03 1 523
+8. 	 MOVER CREG, COUNT 	507 + 04 3 523
+9. 	 ADD CREG, ONE		508 + 01 3 524
+10. 	 MOVEM CREG, COUNT	509 + 05 3 523
+11.  	 COMP CREG, LAST	510 + 06 3 522  -> LT(1), LE(2), EQ(3), GT(4), GE(5), ANY(6)
+12. 	 BC LE, LOOP		511 + 07 2 506
+13. 	 MOVEM CREG, RESULT	512 + 05 3 525
+14. 	 PRINT RESULT		513 + 10 0 525
+15. 	 LTORG 			
+		='4'		514 + 00 0 004
+		='2'		515 + 00 0 002
+16. NEXT SUB AREG, ='2'		516 + 02 1 526
+17. 	 MOVEM AREG, RESULT	517 + 05 1 525
+18. 	 COMP AREG, ='5'	518 + 06 1 527
+19. 	 BC LT, BACK		519 + 07 1 506
+20. 	 STOP			520 
+
+21. 	 BACK EQU LOOP		BACK
+22. 	 N DS 1			521
+23. 	 LAST DS 1		522
+24. 	 COUNT DC '2'		523 + 00 0 002
+25. 	 ONE DC '1'		524 + 00 0 001
+26. 	 RESULT DS 1		525
+27. 	 END			
+		='2'		526
+		='5'		527
+
+3 Type of Statements
+1. Imperative Statement(IS)  (All statements in Mnemonic table)
+2. Declarative Statement(DL) (DC(01), DS(02))
+3. Assembler Directives(AD)  (START(01), END(02), ORIGIN(03), LTORG(04), EQU(05))
+	 
+Assembly Code to Machine Code
+
+1. 1 pass	Assembly -> Machine Code
+2. 2 pass	Assembly -> Intermediate Code(IC) -> Machine Code
+
+
+
+
+loc_cntr = 0, pooltab_ptr = 1, POOLTAB[1] = 1, littal_ptr = 1, symtab_ptr = 1
+
+START 200
+	loc_cntr = 200
+
+MOVER AREG, ='5'
+	code = 04
+	loc_cntr = 200 + 1 = 201
+	LITTAB[littab_ptr] = 5
+	littaB_ptr++
+	this_entry = 1
+	IC = (IS, 04) (1) (L, 1) -> 04 1 211
+
+MOVEM AREG, A		-> 201
+	code = 05
+	loc_cntr = 201 + 1 = 202
+	SYMTAB[symtab_ptr] = A
+	symtab_ptr++
+	this_entry = 1
+	IC = (IS, 05) (1) (S, 1)   -> 05 1 217
+
+LOOP MOVER AREG, A
+	entry of LOOP in SYMTAB
+
+	code = 04
+	loc_cntr = 202 + 1 = 203
+	this_entry = 1
+	IC = (IS, 04) (1) (S, 1) -> 04 1 217
+
+MOVER CREG, B
+	code = 04
+	loc_cntr = 203 + 1 = 204
+	SYMTAB[symtab_ptr] = B
+	symtab_ptr++
+	this_entry = 3
+	IC = (IS, 04) (3) (S, 3) -> 04 3 218
+
+ADD CREG, ='1'
+	code = 01
+	loc_cntr = 204 + 1 = 205
+	LITTAB[littab_ptr] = 1
+	littal_ptr++
+	this_entry = 2
+	IC = (IS, 01) (3) (L, 2) -> 01 3 212
+
+BC ANY, NEXT 
+	code = 07
+	entry in symtab
+	LC = 206
+	IC = (IS, 07) (6) (S, 4) -> 07 6 214
+	
+LTORG
+	='5' (AD, 05) (C, 211) -> 00 0 005
+	='1' (AD, 05) (C, 212) -> 00 0 001
+
+	LITTAB[POOLTAB[pooltab_ptr]] ... LIITAB[littab_ptr - 1]
+	LITTAB[1] ... LITTAB[2]
+
+	LIITAB[1] 5 -> 211, LC = 212
+	LITTAB[2] 1 -> 212, LC = 213
+
+NEXT SUB AREG, ='1'   -> 214
+	IC = (IS, 02) (1) (L, 3) -> 02 1 219
+
+BC LT, BACK		-> 215
+	code = 07
+	entry in symtab for BACK
+	IC = (IS, 07) (1) (S, 5) -> 07 1 202
+
+LAST STOP		-> 216
+	entry in symtab for LAST
+	IC = (IS, 00)	-> 00 0 000
+
+ORIGIN LOOP + 2
+	loc_cntr = 202 + 2 = 204
+	IC = (AD, 03) (C, 204)
+
+MULT CREG, B
+	IC = (IS, 03) (3) (S, 3) -> 03 3 218
+
+ORIGIN LAST + 1
+	loc_cntr = 216 + 1 = 217
+	IC = (AD, 03) (C, 217)
+
+A DS 1
+	IC = (DL, 02) (C, 217)
+
+BACK EQU LOOP
+	IC = (AD, 04) (C, 202)
+
+B DS 1
+	IC = (DL, 02) (C, 218)
+
+END
+	='1'  (AD, 02) (C, 219) -> 00 0 001
+	LIITAL[POOLTAB[pooltab_ptr]] ... LITTAB[littab_ptr - 1]
+	LITTAB[3] ... LITTAB[3]
+	LITTAB[3] 1 -> 219
+	
+	
+	
+

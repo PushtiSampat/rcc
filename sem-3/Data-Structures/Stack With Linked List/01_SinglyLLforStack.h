@@ -1,5 +1,5 @@
-#ifndef SinglyLinkedListStack_H
-#define SinglyLinkedListStack_H
+#ifndef SinglyLLforStack_H
+#define SinglyLLforStack_H
 
 #include<iostream>
 #include<new>  // For: new(nothrow)

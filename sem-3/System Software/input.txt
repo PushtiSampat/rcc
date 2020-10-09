@@ -1,0 +1,14 @@
+
+
+
+
+
+START 200
+MOVER AREG, ='5'
+LOOP MOVER BREG, A
+MOVER AREG, B
+LTORG
+    ='5'
+A DS 1
+B DS 1
+END

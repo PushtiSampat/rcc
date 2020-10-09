@@ -1,0 +1,28 @@
+01. Polynomial Addition with Array
+02. Polynomial Multiplication with Array
+03. Polynomial Addition with LL
+04. Polynomial Multiplication with LL
+05. Singly Linked List (3 Insertions, 3 Deletions, Counting, Display List)
+06. Stack with Array
+07. Stack with LL
+08. Factorial with Recursion
+09. Fibonacci Series with Recursion
+10. Any other Series with Recursion(eg. sine series)
+
+11. Equation validation with brackets
+12. Infix to Postfix Conversion
+13. Postfix Expression Evaluation
+
+14. Queue with Array
+15.* Queue with Linked List
+
+16. Circular Queue with Array
+17.* Circular Queue with Linked List
+18.* Circular Linked List(All Insertions, All Deletions & Display)
+
+19. Binary Search Tree Creation(Rec/Non Rec), Print (Pre, In, Post Order (Recursive/NonRecursive)), Insertion, Search(Rec / NonRec), Find Min/Max, Deletion
+
+20. All Sortings & searchings
+
+21.* Doubly LL all operations
+22.* Doubly circular LL all operations
