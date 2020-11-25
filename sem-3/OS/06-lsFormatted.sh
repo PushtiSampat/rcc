@@ -6,7 +6,7 @@
 
 # ------------------------------------------
 echo "---------- Using stat----------"
-stat -c "%A %h %U %G %s %.19y" $GREEN "%n" *
+stat -c "%A %h %U %G %s %.19y %n" *
 
 
 # -------------------------------------------
@@ -19,7 +19,7 @@ ls -l | tr -s ' ' | cut -d ' ' -f 1-9 -s | awk '{print $1,$2,$3,$4,$5,$6,$7,$8,"
 # `|` is a string and thats why it is written in double quotes
 # With Concatenation
 echo ""
-ls -l | tr -s ' ' |cut -d ' ' -f 1-99 -s | awk '{print $1" | "$3" | "$4" | "$5" | "$6,$7" | "$8" |\033[32;1m "$9 "\033[0m"}'
+ls -l | tr -s ' ' |cut -d ' ' -f 1-9 -s | awk '{print $1" | "$3" | "$4" | "$5" | "$6,$7" | "$8" |\033[32;1m "$9 "\033[0m"}'
 
 
 
@@ -27,6 +27,7 @@ ls -l | tr -s ' ' |cut -d ' ' -f 1-99 -s | awk '{print $1" | "$3" | "$4" | "$5" 
 # EXPLANATION:
 
 # ---------- tr ----------
+# `tr` stands for translate
 # we use `tr` command along with squeeze option (-s flag )
 # to convert all multiple consecutive spaces to a single space
 
