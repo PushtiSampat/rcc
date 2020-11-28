@@ -1,50 +1,9 @@
-11. The script receives two file names as arguments, the script must check whether the files are same or not, if they are similar then delete the second file.
-
 12. Write a script which will display whether your friend has logged in or not, if he has logged in then send him some message.
 
 13. While executing a shell script, either the logname or uid is supplied at the command prompt, write a shell script to find out at how many terminals has this user logged in.
 
-14. Write a shell script to display the date with the format :- 25th October 2005 is a Tuesday.
-
-15. Write a shell script to display the appropriate message like : Good Morning / Good Afternoon / Good Evening
-
-16. Write a shell script to display the menu driven interface :- 1) list all files of the current directory 2) print the current directory 3) print the date 4) print the users otherwise display "Invalid Option".
-
-17. Create a menu driven calculator which asks for two integers and perform basic arithmetic operations.
-
-18. Find the factorial of any number.
-
-19. Display the fibonacci series upto some number.
-
-20 Two numbers are entered through the keyboard, find the power, one number raised to another.
-
-21. Write a script which has the functionality similar to head and tail commands.
-
-22. Write a script which reports name and size of all files in a directory. whose sizes exceed 1000. The filenames should be printed in the descending order of their sizes. The total no. of files must be reported.
-
 23. A friend of yours has promised to log in a particular time. You want to contact him as soon as he logs in, write a script which checks after every minute whether the friend has logged in or not. The logname should be supplied at command prompt. 
  (hint : use sleep)
-
-24. Print the prime nos. from 1 to 300.
-
-25. Program must display all the combinations of 1, 2, and 3.
-
-26. Write a script for renaming each file in the directory such that it will have the current shell PID as an extension. The shell script should ensure that the directories do not
- get renamed.
-
-27. A file called wordfile consists of several words. Write a shell script which will receive a list of filenames, the first of which would be wordfile. The shell script should report all occurences of each word in wordfile in the rest of the files supplied as arguments.
-
-28. Write a shell script which deletes all the lines containing the word "unix" in the files supplied as arguments to it.
-
-29. The word "unix" is present in only some of the files syupplied as arguments to the shell script. You script should search each of these files in turn and stop at the first file that it encounters containing the word unix. The filename should be displayed on the screen.
-
-30. A shell script receives even number of filenames. Suppose four filenames are supplied then the first file should get copied into second file, the third file should get copied into fourth and so on.. If odd number of filenames are supplied display error message.
-
-31. The script displays a list of all files in the current directory to which you have read, write and execute permissions.
-
-32. The script receives any number of filenames as arguments. It should check whether every argument supplied is a file or directory. If it is a directory it should be reported. If it is a filename then name of the file as well as the number of lines present in it should be reported.
-
-33. A script will receive any number of filenames as arguments. It should check whether such files already exist. If they do, then it should be reported, if not then check if a subdirectory "mydir" exists or not in the current directory, if it doesnt exist then it should be created and in it the files supplied as arguments should be created. 
 
 34. Accept the marks of 5 subjects and calculate the percentage and grade.
 
