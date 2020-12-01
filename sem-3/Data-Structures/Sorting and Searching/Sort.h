@@ -45,4 +45,9 @@ int* insertionSort(int arr[], int n)
     }
     return arr;
 }
+
+int* RadixSort(int arr[], int n)
+{
+    return arr;
+}
 #endif

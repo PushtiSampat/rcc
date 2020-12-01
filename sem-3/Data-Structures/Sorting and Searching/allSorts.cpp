@@ -30,5 +30,9 @@ int main()
     int *sortedArray3 = insertionSort(arr, n);
     printArray(sortedArray3, n);
 
+    cout << endl << "Radix Sort" << endl;
+    int *sortedArray4 = RadixSort(arr, n);
+    printArray(sortedArray4, n);
+
     return 0;
 }
