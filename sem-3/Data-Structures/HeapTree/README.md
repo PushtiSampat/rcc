@@ -1,5 +1,4 @@
 # Heap Data Structure
-Considering that array starts from 1
 
 <!-- :: is used to center Element -->
 <!-- https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables -->
