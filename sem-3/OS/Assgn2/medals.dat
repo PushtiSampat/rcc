@@ -1,0 +1,19 @@
+india 10 23 45
+Pakistan 112 10 08
+USA 45 45 45
+1) Modify Medals
+2) Delete Countries with 0 Gold Medals
+3) Calculate Total Medals Country Wise
+4) Country With Highest Gold Medals
+Invalid Option
+1) Modify Medals
+2) Delete Countries with 0 Gold Medals
+3) Calculate Total Medals Country Wise
+4) Country With Highest Gold Medals
+india
+Updated Medals Successfully
+india 10 23 45 india
+1) Modify Medals
+2) Delete Countries with 0 Gold Medals
+3) Calculate Total Medals Country Wise
+4) Country With Highest Gold Medals

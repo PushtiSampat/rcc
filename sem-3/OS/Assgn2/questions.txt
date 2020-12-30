@@ -1,0 +1,233 @@
+1.
+In a college, students are allowed to select any one sporting event during his studies. Create two files as mentioned below :
+
+File : sports.dat
+      Code     Game
+---------------------------
+    101 Cricket
+    102 Football
+    103 Tennis
+    104 Badminton
+
+File : students.dat
+Name     Code
+------------------------------
+Aamir     101
+Sharukh  103
+Salman   103
+Ajay       102
+
+
+Write a shell script to list the students according to their choice of games …
+Eg.  Cricket :  Aamir
+        Football : Ajay
+        Tennis :   Sharukh, Salman
+
+========================================================================================================================
+2
+
+Write a shell script to generate summary from the sales.dat file.
+Sales made by 3 salesman by selling 3 products are entered in a file. Add atleast 10 records. The format is as shown below:
+Salesman:Product1:Product2:Product3
+
+Sample data:
+Mr. Abhishek Sharma:21:29:12
+Mr. Akash Srivastava:11:15:28
+Mr. Abhilash Dwivedi:31:04:13
+
+
+Calculate the followings :
+    • Total sales of the company
+    • Highest sold product
+    • Best salesman (who sold the most)
+    • Worst salesman (who sold the least)
+
+========================================================================================================================
+3.
+
+Create a file “medals.dat” which contains the details of medals won by each country in Olympics. The data in the file may be as given below :
+( Country name is Primary key.)
+
+Country         Gold   Silver  Bronze
+---------------------------------------------
+India                 21      12         15
+Pakistan            12      10         08
+USA                 10      14         19
+Srilanka            00      09         07
+………….and so on………………..
+
+    • Write a shell script which will ask the user to enter the Country name, further modify the no. of medals for that country.
+    • Delete all the countries who get zero Gold medals.
+    • Calculate the total no. of medals won by each country.
+    • Find the country with highest Gold medals.
+
+========================================================================================================================
+4
+
+Write a shell script to generate summary from a file : “student.dat” with following format :
+
+Student_no : student_name : gender : marks1 : marks2 : marks3
+
+Each field must be separated by a delimeter ‘-‘
+
+Process the following queries:
+    • Calculate the total marks of each student
+    • Calculate the percentage of marks for each student
+    • Count the total number of male and female students
+    • Count the total number of students who pass and those who fail.
+
+========================================================================================================================
+5
+
+A reputed MCA institute of Gujarat has students from various states. A sample file “students.dat” is shown as under :
+
+State                M         F
+-----------------------------------
+Gujarat            18        12
+Maharashtra    12        04
+M.P.                08        04
+UP                   05        00
+Rajasthan        07        00
+
+Total Male candidates are 50 and Female are 20. Write a shell script to generate a Statewise Candidate Distribution Report as under :
+
+                             STATEWISE CANDIDATES LISTING
+---------------------------------------------------------------------------------------------
+             STATE                %MALE              %FEMALE           TOTAL
+---------------------------------------------------------------------------------------------
+             GUJARAT               36                         60                         30
+             MAHARASHTRA  24                         20                         16
+……………………….. ………. And so on …………………………………..
+
+========================================================================================================================
+6.
+
+Write a Shell script  to generate summary from  a file “books.dat” which contains the following details :
+
+Field             Description
+-------------------------------------------------------------------------
+No                Numeric (4) – uniquely identifies each book.
+Title             Alphanumeric(30) – title of the book
+Author          Character(20) – Author of the book
+Publisher      Character(20) – Publisher (PHI , TMH, BPB…)
+Edition         Numeric (2)
+
+Sample Data:
+b1001Programming in Java           Balagurusway        TMH                 Second
+b1002Computer Networks             Tanenbaum            Pearson             Fifth
+b1003Operating Systems                Chaudhari              Jaico                 First
+
+After creating the file do the followings :
+    • Your script must replace all the BPB publisher with TMH.
+    • List the titles with the name ‘Java’.
+    • List the books written ‘Balaguruswamy
+    • List the books which are not the first edition
+
+
+========================================================================================================================
+7
+
+Create a file “election.dat” which contains the Election details for a specific city.
+
+Field               Description
+------------------------------------
+Idno                Numeric    - Unique
+Name              Character – Voter’s Name
+Sex                 Character – M / F
+Age                Numeric  
+Ward              Numeric  – Ward no. / Division no. of the city.
+
+Sample data:
+e101-abhishek-M-35-44
+e102-ashutosh-M-97-14
+e103-anamika-F-21-50
+
+Suppose the same file is to be modified after 4 years. Write a shell script to simulate this process.
+Your program must update the age of all People ( Add 4 years to age). In case if the age exceeds 99 then delete the record from the file, assuming that the person is dead.
+
+Display the election.dat and final output of your program.
+
+
+========================================================================================================================
+8.
+
+In a college, students are allowed to select any one elective subject during his studies. Create two files by entering the data as mentioned below (you may skip the heading line if required) :
+
+File : elective.dat
+      Code     Game
+---------------------------
+    101 AI
+    102 Computer Graphics
+    103 Parallel Processing
+    104 Data Mining
+
+File : students.dat
+RollNo.      Name     Code
+------------------------------
+1          Sonal            101
+2          Madhu          101
+3          Mahim          103
+4          Esha              104
+
+
+Write a shell script to list the students according to their choice of electives …
+
+Eg.  AI :- Sonal, Madhu
+       Computer Graphics: -
+       Parallel Processing :- Mahim
+       Data Mining :- Esha
+
+
+========================================================================================================================
+
+9.
+
+Create two files: subjects.dat and students.dat containing the subject details and the student details. Sample data is as shown below:
+
+subjects.dat
+Course_id-Semester_id-Subject_id-Subject_name
+CS-1-1-FCO
+CS-1-2-FOP
+CS-1-3-SL
+CS-2-1-DS
+CS-2-2-DBMS
+CS-3-1-OS
+CS-3-2-JAVA
+
+faculty.dat
+Faculty_id:Semester_id:Subject_id
+F1-2-1
+F2-3-2
+F3-1-3
+F1-1-1
+
+Write a shell script to list the faculties and their respective subjects. Sample Output will be :
+F1 : FCO, DS
+F2 : JAVA
+F3 : SL
+
+========================================================================================================================
+
+10
+Create two files employee.dat and departments.dat and add atleast 10 records in the following format :
+
+employee.dat
+emp_id:department_id:birthdate
+e101:M1:11-01-1960
+e102:C1:21-03-1973
+e103:M2:21-03-1973
+e104:C1:21-03-1973
+e105:B1:08-10-1965
+e101:M1:11-11-1964
+
+departments.dat
+departmend_id:department_name
+B1:Botany
+C1:Chemistry
+M1:Mathematics
+M2:Management
+
+Write a shell script to do the followings:
+    1) List all the employee_ids department-wise
+    2) List the employee_ids born after 1970
+    3) List the employee_ids according to birthdate in sorted order
